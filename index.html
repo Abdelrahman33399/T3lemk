@@ -230,6 +230,43 @@
 
     <script src="js/subjects.js"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // نحدد كلمات السر داخل كود JavaScript
+        const subjectPasswords = {
+            'arabic': 'ARABIC123',
+            'math': 'MATH456',
+            'science': 'SCIENCE789',
+            'social': 'SOCIAL321',
+            'english': 'ENGLISH654'
+        };
 
+        const subjectLinks = document.querySelectorAll('.subject-link');
+
+        subjectLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault(); // نمنع الانتقال المباشر
+
+                const subject = this.getAttribute('data-subject');
+                const url = this.getAttribute('data-url');
+
+                // نطلب من المستخدم إدخال كلمة المرور
+                const userPassword = prompt("يجب إدخال كلمة المرور لبدء الاختبار.\nللحصول عليها، تواصل مع الدعم الفني.");
+
+                if (userPassword !== null) {
+                    // نتحقق من كلمة المرور مباشرةً
+                    if (subjectPasswords[subject] === userPassword) {
+                        // لو صحيحة، نفتح صفحة المادة
+                        window.location.href = url;
+                    } else {
+                        // لو غلط، نظهر رسالة خطأ
+                        alert("كلمة المرور غير صحيحة.");
+                    }
+                }
+            });
+        });
+    });
+</script>
 </body>
+
 </html>
