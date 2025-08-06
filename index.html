@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعليمك - الصف الثاني الإعدادي</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+            document.getElementById('login-btn').style.display = 'flex';
+            document.getElementById('register-btn').style.display = 'flex';
+        } else {
+            document.getElementById('profile-btn').style.display = 'flex';
+        }
+    });
+</script>
+<body>
+    <!-- شريط التنقل -->
+    <header>
+        <div class="container">
+            <h1 class="logo">T3lemk</h1>
+            <nav>
+                <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="btn">الرئيسية</a></li>
+                    <li><a href="index.html"  class="btn">المواد الدراسية</a></li>
+                    <li><a href="questions.html"  class="btn">بنك الأسئلة</a></li>
+                    <li><a href="exams.html"  class="btn">اختبارات شاملة</a></li>
+                    <li><a href="tips.html"  class="btn">نصائح الدراسة</a></li>
+                    <li><a href="about.html"  class="btn">عن المصمم</a></li>
+                      <a href="/profile.html" id="profile-btn" style="display: none;">
+    <img src="/assets/images/default-avatar.jpg" alt="Profile" id="profile-icon">
+</a>
+                </ul>
+            </nav>
+        </div>
+        <div id="auth-section" style="display: flex; align-items: center; gap: 15px;">
+        
+    </div>
+    </header>
+    <!-- المحتوى الرئيسي -->
+    <main class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <h2>مرحبًا بكم في منصة "تعليمك"</h2>
+                <p>منصة تعليمية متكاملة تقدم شرحًا مبسطًا لمنهج الصف الثاني الإعدادي مع أسئلة وتدريبات تفاعلية لضمان أفضل فهم للمواد الدراسية.</p>
+                <a href="index.html" class="btn">ابدأ التعلم الآن</a>
+            </div>
+            <div class="hero-image">
+                <img src="assets/images/hero-image.png" alt="صورة تعليمية">
+            </div>
+        </section>
+        <!-- بنرات المواد الدراسية -->
+        <section class="subject-banners">
+            <h2 class="section-title">الصف الثاني الاعدادي (الترم الاول)</h2>
+            <div class="banners-grid">
+                <!-- بنر اللغة العربية -->
+                <div class="banner-card" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
+                    <i class="fas fa-book-quran"></i>
+                    <h3>اللغة العربية</h3>
+                    <p>رحلة في عالم البلاغة والأدب، حيث تصبح الكلمات لوحة فنية ومعانيها ألوان ساحرة!</p>
+   <a href="#" class="subject-link" data-subject="arabic" data-url="subjects/arabic.html" style="
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid #0056b3;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+">
+    مادة اللغة العربية
+</a>
+                </div>
+                
+                <!-- بنر الرياضيات -->
+                <div class="banner-card" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                    <i class="fas fa-square-root-alt"></i>
+                    <h3>الرياضيات</h3>
+                    <p>مغامرة عقلية ممتعة حيث الأرقام تتحول إلى ألغاز والأشكال إلى لوحات فنية منطقية!</p>
+                      <a href="#" class="subject-link" data-subject="math" data-url="subjects/math.html" style="
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid #0056b3;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+">
+    مادة الرياضيات
+</a>
+
+                </div>
+                
+                <!-- بنر اللغة الإنجليزية -->
+                <div class="banner-card" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                    <i class="fas fa-language"></i>
+                    <h3>الإنجليزية</h3>
+                    <p>بوابة إلى عالم جديد، حيث تتعلم لغة تفتح لك آفاق التواصل مع العالم بأسره!</p>
+                     <a href="#" class="subject-link" data-subject="english" data-url="subjects/english.html" style="
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid #0056b3;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+">
+    مادة اللغة الإنجليزية
+</a>
+
+                </div>
+                
+                <!-- بنر العلوم -->
+                <div class="banner-card" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                    <i class="fas fa-flask"></i>
+                    <h3>العلوم</h3>
+                    <p>مختبرك الشخصي لاكتشاف أسرار الكون، من أصغر الذرات إلى أعظم الكواكب!</p>
+                      <a href="#" class="subject-link" data-subject="science" data-url="subjects/science.html" style="
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid #0056b3;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+">
+    مادة العلوم
+</a>
+                </div>
+                
+                <!-- بنر الدراسات -->
+                <div class="banner-card" style="background: linear-gradient(135deg, #f39c12, #d35400);">
+                    <i class="fas fa-globe-africa"></i>
+                    <h3>الدراسات</h3>
+                    <p>آلة زمن تأخذك في رحلة عبر التاريخ والجغرافيا لتكتشف كيف أصبح العالم كما تراه اليوم!</p>
+                    <a href="#" class="subject-link" data-subject="social" data-url="subjects/social.html" style="
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid #0056b3;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+">
+    مادة الدراسات
+</a>
+                </div>
+            </div>
+        </section>
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-book-open"></i>
+                <h3>شرح مبسط</h3>
+                <p>شرح وافي للمناهج بطريقة سهلة ومبسطة تناسب جميع المستويات</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-question-circle"></i>
+                <h3>أسئلة تفاعلية</h3>
+                <p>بنك أسئلة شامل لكل المواد مع إجابات نموذجية</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>تتبع التقدم</h3>
+                <p>إمكانية تتبع مستوى الطالب وتحديد نقاط القوة والضعف</p>
+            </div>
+        </section>
+    </main>
+
+  <!-- تذييل الصفحة -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <!-- قسم معلومات حقوق النشر -->
+            <div class="footer-section">
+                <h3>منهجك</h3>
+                <p>منصة تعليمية متكاملة للصف الثاني الإعدادي</p>
+                <p>&copy; 2025 جميع الحقوق محفوظة</p>
+            </div>
+            
+            <!-- قسم نموذج الاتصال -->
+            <div class="footer-section">
+                <h3>تواصل معنا</h3>
+                <form action="https://formspree.io/f/xvgrwdvd" method="POST" class="contact-form">
+                    <input type="text" name="name" placeholder="اسمك " required>
+                    <input type="email" name="_replyto" placeholder="بريدك الإلكتروني" required>
+                    <textarea name="message" placeholder="رسالتك..." required></textarea>
+                    <button type="submit" class="btn">إرسال الرسالة</button>
+                </form>
+            </div>
+            
+            <!-- قسم وسائل التواصل -->
+          
+                
+                <a href="https://t.me/+fu0XWxn-60EwODE8" class="telegram-btn" target="_blank">
+                    <i class="fab fa-telegram"></i> للاستفسارات الفنية والعلمية
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="js/subjects.js"></script>
+
+
+</body>
+</html>

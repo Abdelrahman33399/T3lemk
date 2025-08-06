@@ -1,0 +1,127 @@
+<script>
+  if(!checkSubjectAccess('arabic')) {
+    window.location.href = '../profile.html';
+  }
+</script>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العلوم - منهجك</title>
+    <style>
+        .lessons-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .lessons-container.open {
+            max-height: 500px; /* يكفي لعرض المحتوى */
+        }
+        .unit-header {
+            cursor: pointer;
+            user-select: none;
+        }
+          .home-btn-container {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            border-top: 1px solid #e1e1e1;
+        }
+        
+        .home-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        /* باقي الـ Styles السابقة */
+    </style>
+</head>
+<body>
+    <!-- بنرات مادة العلوم -->
+    <div class="unit-banner" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+        <div class="unit-header" onclick="toggleLessons('science-unit1')">
+            <h2>الوحدة الأولى: الكيمياء</h2>
+            <span class="unit-icon" id="science-unit1-icon">▼</span>
+        </div>
+        <div class="lessons-container" id="science-unit1-lessons">
+            <div class="lesson-banner">
+                <div>
+                    <h3>الدرس الأول: الذرة</h3>
+                    <p>مكونات الذرة والجدول الدوري</p>
+                </div>
+                <a href="#" class="btn" style="color: #f5576c;">ابدأ التعلم</a>
+            </div>
+            <div class="lesson-banner">
+                <div>
+                    <h3>الدرس الثاني: التفاعلات الكيميائية</h3>
+                    <p>أنواع التفاعلات الكيميائية وأمثلتها</p>
+                </div>
+                <a href="#" class="btn" style="color: #f5576c;">ابدأ التعلم</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="unit-banner" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+        <div class="unit-header" onclick="toggleLessons('science-unit2')">
+            <h2>الوحدة الثانية: الفيزياء</h2>
+            <span class="unit-icon" id="science-unit2-icon">▼</span>
+        </div>
+        <div class="lessons-container" id="science-unit2-lessons">
+            <div class="lesson-banner">
+                <div>
+                    <h3>الدرس الأول: الحركة</h3>
+                    <p>أنواع الحركة وقوانين نيوتن</p>
+                </div>
+                <a href="#" class="btn" style="color: #4facfe;">ابدأ التعلم</a>
+            </div>
+            <div class="lesson-banner">
+                <div>
+                    <h3>الدرس الثاني: الطاقة</h3>
+                    <p>أنواع الطاقة وتحولاتها</p>
+                </div>
+                <a href="#" class="btn" style="color: #4facfe;">ابدأ التعلم</a>
+            </div>
+        </div>
+    </div>
+ <div class="home-btn-container">
+        <a href="../index.html" class="home-btn">
+            <i class="fas fa-home"></i>
+            العودة إلى الصفحة الرئيسية
+        </a>
+    </div>
+    <script>
+    function toggleLessons(unitId) {
+        const lessonsContainer = document.getElementById(`${unitId}-lessons`);
+        const unitIcon = document.getElementById(`${unitId}-icon`);
+        const isOpen = lessonsContainer.classList.contains('open');
+        if (isOpen) {
+            lessonsContainer.classList.remove('open');
+            unitIcon.textContent = '▼';
+        } else {
+            lessonsContainer.classList.add('open');
+            unitIcon.textContent = '▲';
+        }
+    }
+    window.onload = function() {
+        toggleLessons('science-unit1');
+    };
+    </script>
+</body>
+</html>
