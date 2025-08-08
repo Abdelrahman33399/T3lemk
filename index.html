@@ -196,9 +196,9 @@
 <body>
    <header>
     <div class="container">
-        <!-- زر القائمة للشاشات الصغيرة -->
-<button class="menu-toggle"><i class="fas fa-bars"></i></button>
         <h1 class="logo">T3lemk</h1>
+          <!-- زر القائمة للشاشات الصغيرة -->
+<button class="menu-toggle"><i class="fas fa-bars"></i></button>
         <!-- زر القائمة المنسدلة -->
         <button class="menu-toggle"><i class="fas fa-bars"></i></button>
 
@@ -709,30 +709,44 @@
         });
     </script>
     <script src="js/subjects.js"></script>
-    <script>
+   <script>
     // فتح وإغلاق القائمة المنسدلة
     document.addEventListener('DOMContentLoaded', function () {
         const menuToggle = document.querySelector('.menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        if (menuToggle && mobileMenu) {
-            menuToggle.addEventListener('click', function (e) {
-                e.stopPropagation();
-                mobileMenu.classList.toggle('open');
-            });
+        // رسائل تحقق
+        console.log('DOM Loaded');
+        console.log('menuToggle:', menuToggle); // هل الزر موجود؟
+        console.log('mobileMenu:', mobileMenu);  // هل القائمة موجودة؟
 
-            // إغلاق القائمة عند النقر خارجها
-            document.addEventListener('click', function (e) {
-                if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+        if (!menuToggle || !mobileMenu) {
+            console.error('❌ خطأ: الزر أو القائمة غير موجودين في الـ HTML');
+            return;
+        }
+
+        // عند النقر على زر القائمة
+        menuToggle.addEventListener('click', function (e) {
+            console.log('تم النقر على زر القائمة');
+            e.stopPropagation();
+            mobileMenu.classList.toggle('open');
+            console.log('القائمة الآن:', mobileMenu.classList.contains('open') ? 'مفتوحة' : 'مغلقة');
+        });
+
+        // عند النقر في أي مكان في الصفحة
+        document.addEventListener('click', function (e) {
+            if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                if (mobileMenu.classList.contains('open')) {
+                    console.log('تم إغلاق القائمة بالنقر خارجها');
                     mobileMenu.classList.remove('open');
                 }
-            });
+            }
+        });
 
-            // منع إغلاق القائمة عند النقر داخلها
-            mobileMenu.addEventListener('click', function (e) {
-                e.stopPropagation();
-            });
-        }
+        // منع إغلاق القائمة عند النقر داخلها
+        mobileMenu.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
     });
 </script>
 </body>
