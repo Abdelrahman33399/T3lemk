@@ -116,45 +116,70 @@
 @media (max-width: 768px) {
  .nav-links {
  flex-direction: column;
- position: fixed; /* بدل absolute */
+ position: fixed;
  top: 0;
- left: -250px; /* تبدأ برا الشاشة */
+ left: -250px;
  width: 250px;
  height: 100vh;
- background-color: #ffffff;
- padding-top: 60px;
- display: flex;
+ background-color: #fff;
+ padding: 60px 20px 20px;
  gap: 20px;
  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-z-index: 999;
+ z-index: 1001;
  transition: left 0.3s ease;
- overflow-y: auto;
-scroll-behavior: smooth;
-
+overflow-y: auto;
  }
 
  .nav-links.show {
- left: 0; /* تظهر القائمة من الشمال */
+left: 0;
  }
 
-.menu-toggle {
- display: block;
+ .menu-toggle {
+display: block;
  position: absolute;
  top: 20px;
  left: 20px;
- z-index: 1000;
+z-index: 1002;
  font-size: 24px;
+background: none;
+ border: none;
+cursor: pointer;
+ }
+
+ .close-menu {
+ position: absolute;
+top: 15px;
+right: 15px;
+ font-size: 28px;
  background: none;
  border: none;
- cursor: pointer;
- }
+ color: #333;
+cursor: pointer;
+ z-index: 1003;
 }
 
+ #overlay {
+position: fixed;
+ top: 0;
+left: 0;
+ width: 100vw;
+ height: 100vh;
+ background-color: rgba(0, 0, 0, 0.5);
+ z-index: 1000;
+display: none;
+ transition: 0.3s ease;
+ }
+
+ #overlay.active {
+ display: block;
+ }
+}
 
     </style>
 </head>
 <body>
    <header>
+    <div id="overlay"></div>
 <div class="container">
  <h1 class="logo">T3lemk</h1>
 
@@ -163,6 +188,7 @@ scroll-behavior: smooth;
 
  <!-- القايمة الرئيسية -->
  <nav id="main-nav">
+ <button class="close-menu" id="close-menu">&times;</button>
 <ul class="nav-links">
  <li><a href="index.html" class="btn">الرئيسية</a></li>
  <li><a href="#" onclick="showGrades()" class="btn">المواد الدراسية</a></li>
@@ -674,15 +700,31 @@ scroll-behavior: smooth;
         });
     </script>
     <script src="js/subjects.js"></script>
-    <script>
- const toggleBtn = document.getElementById('menu-toggle');
+   <script>
+const toggleBtn = document.getElementById('menu-toggle');
+ const closeBtn = document.getElementById('close-menu');
  const navLinks = document.querySelector('.nav-links');
+ const overlay = document.getElementById('overlay');
 
-        toggleBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('show');
-        });
-    </script>
+// فتح القائمة
+ toggleBtn.addEventListener('click', () => {
+ navLinks.classList.add('show');
+ overlay.classList.add('active');
+ });
+
+ // إغلاق القائمة بزر ×
+ closeBtn.addEventListener('click', () => {
+ navLinks.classList.remove('show');
+overlay.classList.remove('active');
+ });
+
+ // إغلاق القائمة بالضغط على الخلفية
+ overlay.addEventListener('click', () => {
+ navLinks.classList.remove('show');
+ overlay.classList.remove('active');
+});
 </script>
 
+</script>
 </body>
 </html>
