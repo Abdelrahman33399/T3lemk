@@ -96,52 +96,30 @@
             color: rgba(255, 255, 255, 0.9);
             font-size: 14px;
         }
+
         /* --- القائمة المنسدلة للشاشات الصغيرة --- */
 .menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: #eae4e4;
-    font-size: 24px;
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
+    /* ... (احتفظ بنفس الخصائص اللي عندك) ... */
 }
 
+/* القائمة الرئيسية - في الشاشات الكبيرة تظهر أفقياً، وفي الصغيرة تتحول لقائمة منسدلة */
 #mobile-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 70%;
-    max-width: 300px;
-    height: 100vh;
-    background-color: #f7f7f7;
-    box-shadow: 2px 0 10px rgba(84, 74, 74, 0.939);
-    padding: 80px 20px 20px;
     transition: transform 0.3s ease;
-    z-index: 999;
-    transform: translateX(-100%);
-    margin: 0;
-}
-
-#mobile-menu.open {
-    transform: translateX(0);
 }
 
 #mobile-menu ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 #mobile-menu ul li {
-    margin-bottom: 15px;
+    margin-bottom: 15px; /* مسافات بين العناصر في القائمة المنسدلة */
 }
 
 #mobile-menu ul li a {
     text-decoration: none;
-    color: #ffffff;
+    color: #ffffff; /* لون الروابط في القائمة المنسدلة */
     font-weight: bold;
     font-size: 1.2em;
     display: block;
@@ -150,73 +128,98 @@
 }
 
 #mobile-menu ul li a:hover {
-    background-color: #e0e0e0;
+    background-color: #e0e0e0; /* خلفية عند مرور الماوس */
 }
 
-/* إخفاء القائمة العلوية على الشاشات الصغيرة */
+/* إخفاء زر القائمة وإظهار القائمة المنسدلة بالشكل العمودي على الشاشات الصغيرة */
 @media (max-width: 768px) {
-    header nav {
-        display: none; /* إخفاء القائمة العلوية */
-    }
     .menu-toggle {
-        display: block; /* إظهار زر القائمة */
+        display: block;
+        /* ... (تأكد من وجود الخصائص اللي عندك) ... */
+    }
+
+    #mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 70%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: #f7f7f7;
+        box-shadow: 2px 0 10px rgba(197, 186, 186, 0.939);
+        padding: 80px 20px 20px;
+        z-index: 999;
+        transform: translateX(-100%);
+    }
+
+    #mobile-menu.open {
+        transform: translateX(0);
+    }
+
+    /* يمكنك هنا إضافة تنسيق للروابط داخل القائمة المنسدلة في الشاشات الصغيرة فقط */
+    #mobile-menu ul li a {
+        color: #333; /* تغيير اللون داخل القائمة المنسدلة */
     }
 }
 
-/* إظهار القائمة العلوية على الشاشات الكبيرة */
+/* إظهار القائمة بشكل عادي وأفقي وإخفاء الزر على الشاشات الكبيرة */
 @media (min-width: 769px) {
+    .menu-toggle {
+        display: none;
+    }
+
     #mobile-menu {
         position: static;
         transform: none;
         width: auto;
         height: auto;
+        background-color: transparent;
         box-shadow: none;
         padding: 0;
-        display: flex;
-        background: none;
+        display: flex !important; /* مهم جداً عشان القائمة تظهر تلقائياً */
+        align-items: center;
     }
+
     #mobile-menu ul {
         display: flex;
         gap: 15px;
-        align-items: center;
     }
+
     #mobile-menu ul li {
         margin-bottom: 0;
     }
-    #mobile-menu ul a {
-        font-size: 1em;
+
+    #mobile-menu ul li a {
+        font-size: 1.3em;
         padding: 5px 10px;
+        color: #ffffff; /* لون الروابط في القائمة الرئيسية */
+        border-radius: 5px;
+        background-color: transparent;
     }
-    .menu-toggle {
-        display: none !important;
+
+    #mobile-menu ul li a:hover {
+        background-color: #f0f0f0; /* خلفية عند مرور الماوس */
     }
 }
     </style>
 </head>
 <body>
-   <header>
+  <header>
     <div class="container">
         <h1 class="logo">T3lemk</h1>
-          <!-- زر القائمة للشاشات الصغيرة -->
-<button class="menu-toggle"><i class="fas fa-bars"></i></button>
-        <!-- زر القائمة المنسدلة -->
+
         <button class="menu-toggle"><i class="fas fa-bars"></i></button>
 
-        <!-- القائمة العلوية (تظهر دائمًا على الشاشات الكبيرة) -->
-       <!-- القائمة المنسدلة (تظهر على الشاشات الصغيرة عند الضغط على الزر) -->
-<nav id="mobile-menu">
-    <ul class="nav-links">
-        <li><a href="index.html" class="btn">الرئيسية</a></li>
-        <li><a href="#" onclick="showGrades()" class="btn">المواد الدراسية</a></li>
-        <li><a href="questions.html" class="btn">بنك الأسئلة</a></li>
-        <li><a href="exam.html" class="btn">اختبارات شاملة</a></li>
-        <li><a href="tips.html" class="btn">نصائح الدراسة</a></li>
-        <li><a href="about.html" class="btn">عن المصمم</a></li>
-        <a href="/profile.html" id="profile-btn" style="display: none;">
-            <img src="/assets/images/default-avatar.jpg" alt="Profile" id="profile-icon">
-        </a>
-    </ul>
-</nav>
+        <nav id="mobile-menu" class="main-nav">
+            <ul class="nav-links">
+                <li><a href="index.html" class="btn">الرئيسية</a></li>
+                <li><a href="#" onclick="showGrades()" class="btn">المواد الدراسية</a></li>
+                <li><a href="questions.html" class="btn">بنك الأسئلة</a></li>
+                <li><a href="exam.html" class="btn">اختبارات شاملة</a></li>
+                <li><a href="tips.html" class="btn">نصائح الدراسة</a></li>
+                <li><a href="about.html" class="btn">عن المصمم</a></li>
+            </ul>
+        </nav>
     </div>
 </header>
 
@@ -240,8 +243,6 @@
         <div id="grade1-subjects-container" class="grade-banners-container">
             <a href="#" class="term-toggle-button" onclick="toggleTermBanners('grade1-term1', this)">الترم الأول</a>
             <a href="#" class="term-toggle-button" onclick="toggleTermBanners('grade1-term2', this)">الترم الثاني</a>
-
-            <!-- الترم الأول -->
             <section class="subject-banners term-banners" id="grade1-term1-subjects">
                 <div class="banners-grid">
                     <div class="banner-card" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
@@ -291,8 +292,6 @@
                     </div>
                 </div>
             </section>
-
-            <!-- الترم الثاني -->
             <section class="subject-banners term-banners" id="grade1-term2-subjects">
                 <div class="banners-grid">
                     <div class="banner-card" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
@@ -344,7 +343,7 @@
             </section>
         </div>
 
-        <!-- الصف الثاني الإعدادي (كما هو) -->
+        <!-- الصف الثاني الإعدادي -->
         <section class="main-subject-banner" onclick="toggleGradeBanners('grade2')">
             <h2 class="section-title">الصف الثاني الإعدادي</h2>
             <span class="toggle-icon">▼</span>
@@ -460,8 +459,6 @@
         <div id="grade3-subjects-container" class="grade-banners-container">
             <a href="#" class="term-toggle-button" onclick="toggleTermBanners('grade3-term1', this)">الترم الأول</a>
             <a href="#" class="term-toggle-button" onclick="toggleTermBanners('grade3-term2', this)">الترم الثاني</a>
-
-            <!-- الترم الأول -->
             <section class="subject-banners term-banners" id="grade3-term1-subjects">
                 <div class="banners-grid">
                     <div class="banner-card" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
@@ -511,8 +508,6 @@
                     </div>
                 </div>
             </section>
-
-            <!-- الترم الثاني -->
             <section class="subject-banners term-banners" id="grade3-term2-subjects">
                 <div class="banners-grid">
                     <div class="banner-card" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
@@ -606,7 +601,10 @@
             </div>
         </div>
     </footer>
+
+    <!-- الجافا سكريبت -->
     <script>
+        // دالة فتح/إغلاق الصف
         function toggleGradeBanners(grade) {
             const allGradeContainers = document.querySelectorAll('.grade-banners-container');
             const targetContainer = document.getElementById(grade + '-subjects-container');
@@ -625,6 +623,7 @@
             }
         }
 
+        // دالة فتح/إغلاق الترم
         function toggleTermBanners(term, button) {
             const allTermBanners = document.querySelectorAll(`#${term.split('-')[0]}-subjects-container .term-banners`);
             const targetTermBanner = document.getElementById(term + '-subjects');
@@ -637,45 +636,35 @@
             button.classList.add('active');
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        // آلية التحقق من رقم الهاتف
+        document.addEventListener('DOMContentLoaded', function () {
             const subjectLinks = document.querySelectorAll('.subject-link');
             const subjectPhoneNumbers = {
-                // الصف الأول - الترم الأول
                 "grade1-term1-arabic": ["01011111111", "01111111111"],
                 "grade1-term1-math": ["01211111111"],
                 "grade1-term1-english": ["01511111111", "01022222222"],
                 "grade1-term1-science": ["01122222222"],
                 "grade1-term1-social": ["01222222222"],
-
-                // الصف الأول - الترم الثاني
                 "grade1-term2-arabic": ["01033333333"],
                 "grade1-term2-math": ["01133333333", "01533333333"],
                 "grade1-term2-english": ["01233333333"],
                 "grade1-term2-science": ["01044444444"],
                 "grade1-term2-social": ["01144444444", "01244444444"],
-
-                // الصف الثاني - الترم الأول
                 "grade2-term1-arabic": ["01012345678", "01551706847"],
                 "grade2-term1-english": ["01551706847"],
                 "grade2-term1-math": ["01098765432", "01543210987"],
                 "grade2-term1-science": ["01112233445"],
                 "grade2-term1-social": ["01223344556", "01009988776"],
-
-                // الصف الثاني - الترم الثاني
                 "grade2_term2-arabic": ["01551706847"],
                 "grade2_term2-english": ["11111111111"],
                 "grade2_term2-math": ["01234567890"],
                 "grade2_term2-science": ["01987654321"],
                 "grade2_term2-social": ["01123456789"],
-
-                // الصف الثالث - الترم الأول
                 "grade3-term1-arabic": ["01055555555", "01155555555"],
                 "grade3-term1-math": ["01255555555"],
                 "grade3-term1-english": ["01555555555", "01066666666"],
                 "grade3-term1-science": ["01166666666"],
                 "grade3-term1-social": ["01266666666", "01077777777"],
-
-                // الصف الثالث - الترم الثاني
                 "grade3-term2-arabic": ["01177777777"],
                 "grade3-term2-math": ["01277777777", "01577777777"],
                 "grade3-term2-english": ["01088888888"],
@@ -684,7 +673,7 @@
             };
 
             subjectLinks.forEach(link => {
-                link.addEventListener('click', function(event) {
+                link.addEventListener('click', function (event) {
                     event.preventDefault();
                     const subject = this.getAttribute('data-subject');
                     const url = this.getAttribute('data-url');
@@ -697,7 +686,7 @@
 
                     let userPhone = prompt("من فضلك أدخل رقم هاتفك للوصول إلى المادة:");
                     if (userPhone) {
-                        userPhone = userPhone.trim().replace(/\D/g, ''); // تنظيف الرقم
+                        userPhone = userPhone.trim().replace(/\D/g, '');
                         if (validNumbers.includes(userPhone)) {
                             window.location.href = url;
                         } else {
@@ -707,47 +696,38 @@
                 });
             });
         });
-    </script>
-    <script src="js/subjects.js"></script>
-   <script>
-    // فتح وإغلاق القائمة المنسدلة
-    document.addEventListener('DOMContentLoaded', function () {
-        const menuToggle = document.querySelector('.menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
 
-        // رسائل تحقق
-        console.log('DOM Loaded');
-        console.log('menuToggle:', menuToggle); // هل الزر موجود؟
-        console.log('mobileMenu:', mobileMenu);  // هل القائمة موجودة؟
+        // القائمة المنسدلة
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
 
-        if (!menuToggle || !mobileMenu) {
-            console.error('❌ خطأ: الزر أو القائمة غير موجودين في الـ HTML');
-            return;
-        }
+            if (!menuToggle || !mobileMenu) {
+                console.error('الزر أو القائمة غير موجودين');
+                return;
+            }
 
-        // عند النقر على زر القائمة
-        menuToggle.addEventListener('click', function (e) {
-            console.log('تم النقر على زر القائمة');
-            e.stopPropagation();
-            mobileMenu.classList.toggle('open');
-            console.log('القائمة الآن:', mobileMenu.classList.contains('open') ? 'مفتوحة' : 'مغلقة');
-        });
+            menuToggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                mobileMenu.classList.toggle('open');
+            });
 
-        // عند النقر في أي مكان في الصفحة
-        document.addEventListener('click', function (e) {
-            if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-                if (mobileMenu.classList.contains('open')) {
-                    console.log('تم إغلاق القائمة بالنقر خارجها');
+            document.addEventListener('click', function (e) {
+                if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
                     mobileMenu.classList.remove('open');
                 }
-            }
-        });
+            });
 
-        // منع إغلاق القائمة عند النقر داخلها
-        mobileMenu.addEventListener('click', function (e) {
-            e.stopPropagation();
+            mobileMenu.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
         });
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.remove('open');
     });
-</script>
+});
+    </script>
+    <script src="js/subjects.js"></script>
 </body>
 </html>
