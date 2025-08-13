@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تعليمك - الصفوف الإعدادية</title>
+    <title>تعليمك - لطلاب المرحلة الإعدادية</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -12,7 +12,7 @@
             display: none;
             transition: all 0.5s ease-in-out;
             padding: 20px;
-            background-color: #8d8a8a;
+            background-color: #f8a348bd;
             border-radius: 12px;
             margin-top: 10px;
         }
@@ -40,7 +40,7 @@
             gap: 15px;
         }
         .main-subject-banner:hover {
-            background-color: #8f46d88b;
+            background-color: #4652d890;
         }
         .main-subject-banner .section-title {
             margin: 0;
@@ -121,7 +121,7 @@
  left: -250px;
  width: 250px;
  height: 100vh;
- background-color: #fff;
+ background-color: #6965e66c;
  padding: 60px 20px 20px;
  gap: 20px;
  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -153,7 +153,7 @@ right: 15px;
  font-size: 28px;
  background: none;
  border: none;
- color: #333;
+ color: #1e4cd5;
 cursor: pointer;
  z-index: 1003;
 }
@@ -174,7 +174,50 @@ display: none;
  display: block;
  }
 }
+.hero {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+}
 
+#cells-canvas {
+    position: absolute;
+    top: 0;
+    left:10;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.4;
+}
+
+.hero-content, .hero-image {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content {
+    flex: 1;
+    padding-right: 5rem;
+}
+
+.hero-image {
+    flex: 1;
+    text-align: center;
+}
+.animated-icon, .lottie-icon {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 15px;
+}
+
+.feature-card {
+    text-align: center;
+    padding: 20px;
+}
     </style>
 </head>
 <body>
@@ -211,17 +254,16 @@ display: none;
 
 
     <main class="container">
-        <section class="hero">
-            <div class="hero-content">
-                <h2>مرحبًا بكم في منصة "تعليمك"</h2>
-                <p>منصة تعليمية متكاملة  لمنهج الصفوف الإعدادية مع أسئلة وتدريبات تفاعلية لضمان أفضل فهم للمواد الدراسية.</p>
-                <a href="index.html" class="btn">ابدأ التعلم الآن</a>
-            </div>
-            <div class="hero-image">
-                <img src="assets/images/hero-image.png" alt="صورة تعليمية">
-            </div>
-        </section>
-
+    <section class="hero">
+    <div class="hero-content">
+            <canvas id="cells-canvas"></canvas>
+        <h2>مرحبًا بكم في منصة "تعليمك - التعليمية"</h2>
+        <p>منصة تعليمية متكاملة تقدم شرحًا مبسطًا لمناهج طلاب المرحلة الإعدادية مع أسئلة وتدريبات تفاعلية لضمان أفضل فهم للمواد الدراسية.</p>
+    </div>
+    <div class="hero-image">
+        <img src="assets/images/hero-image.png" alt="صورة تعليمية">
+    </div>
+</section>
         <!-- الصف الأول الإعدادي -->
         <section class="main-subject-banner" onclick="toggleGradeBanners('grade1')">
             <h2 class="section-title">الصف الأول الإعدادي</h2>
@@ -237,7 +279,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
                         <i class="fas fa-book-quran"></i>
                         <h3>اللغة العربية</h3>
-                        <p>رحلة في عالم الحروف، حيث تتعلم القراءة والكتابة بأسلوب شيق وممتع!</p>
+                        <p>📚✨ "هتتعلم أسرار اللغة من قواعد ونصوص، وتبدع في التعبير!" </p>
                         <a href="#" class="subject-link" data-subject="grade1-term1-arabic" data-url="subjects/grade1_term1/arabic.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة العربية
@@ -246,7 +288,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #3498db, #2980b9);">
                         <i class="fas fa-square-root-alt"></i>
                         <h3>الرياضيات</h3>
-                        <p>مغامرة في عالم الأرقام والأشكال، حيث تتعلم الأساسيات بلعب وتفاعل!</p>
+                        <p>➗🔢 "هتفك شفرة الأرقام وتستمتع بحل المعادلات والمسائل!" </p>
                         <a href="#" class="subject-link" data-subject="grade1-term1-math" data-url="subjects/grade1_term1/math.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الرياضيات
@@ -255,7 +297,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
                         <i class="fas fa-language"></i>
                         <h3>الإنجليزية</h3>
-                        <p>انطلق في رحلة لاكتشاف كلمات جديدة وأولى الجمل بلغة عالمية!</p>
+                        <p>🌎📖 "هتفتح أبواب العالم مع الإنجليزية.. اتعلم وتكلم بثقة!"</p>
                         <a href="#" class="subject-link" data-subject="grade1-term1-english" data-url="subjects/grade1_term1/english.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة الإنجليزية
@@ -264,7 +306,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
                         <i class="fas fa-flask"></i>
                         <h3>العلوم</h3>
-                        <p>استكشف عالم الحيوانات، النباتات، والطبيعة من حولك بروح الفضول!</p>
+                        <p>🧪🔍 "هتكتشف عالم الخلايا والطاقة وتجارب العلوم المدهشة!"</p>
                         <a href="#" class="subject-link" data-subject="grade1-term1-science" data-url="subjects/grade1_term1/science.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة العلوم
@@ -273,7 +315,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #f39c12, #d35400);">
                         <i class="fas fa-globe-africa"></i>
                         <h3>الدراسات</h3>
-                        <p>تعرف على بلدك، مدينتك، وعائلتك في رحلة ممتعة عبر الخرائط والقصص!</p>
+                        <p>🏺🗺️ "هتعيش رحلة عبر الزمن.. من الفراعنة لعصرك الحالي!" </p>
                         <a href="#" class="subject-link" data-subject="grade1-term1-social" data-url="subjects/grade1_term1/social.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الدراسات
@@ -288,7 +330,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
                         <i class="fas fa-book-quran"></i>
                         <h3>اللغة العربية</h3>
-                        <p>استمر في رحلة الحروف مع قصص ونحو بأسلوب شيق!</p>
+                        <p>  ✍️🎭 "هتكتب وتتحدث ببلاغة.. وتتعرف على الأدب العربي!" </p>
                         <a href="#" class="subject-link" data-subject="grade1-term2-arabic" data-url="subjects/grade1_term2/arabic.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة العربية
@@ -297,7 +339,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #3498db, #2980b9);">
                         <i class="fas fa-square-root-alt"></i>
                         <h3>الرياضيات</h3>
-                        <p>تعمق في الأرقام والعمليات الحسابية بتمارين ممتعة!</p>
+                        <p>📏📊 "هتتعلم الهندسة والإحصاء.. وتطبقهم في حياتك!"</p>
                         <a href="#" class="subject-link" data-subject="grade1-term2-math" data-url="subjects/grade1_term2/math.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الرياضيات
@@ -306,7 +348,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
                         <i class="fas fa-language"></i>
                         <h3>الإنجليزية</h3>
-                        <p>تعلم مفردات جديدة ومهارات المحادثة البسيطة!</p>
+                        <p>🗣️🎧 "هتطور مهاراتك في المحادثة والاستماع بالإنجليزية!"</p>
                         <a href="#" class="subject-link" data-subject="grade1-term2-english" data-url="subjects/grade1_term2/english.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة الإنجليزية
@@ -315,7 +357,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
                         <i class="fas fa-flask"></i>
                         <h3>العلوم</h3>
-                        <p>اكتشف أسرار الطبيعة والكون من حولك!</p>
+                        <p>⚡🌡️ "هتفهم أسرار الكهرباء والطقس.. وتجارب علمية رائعة!"</p>
                         <a href="#" class="subject-link" data-subject="grade1-term2-science" data-url="subjects/grade1_term2/science.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة العلوم
@@ -324,7 +366,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #f39c12, #d35400);">
                         <i class="fas fa-globe-africa"></i>
                         <h3>الدراسات</h3>
-                        <p>تعرف على التاريخ والجغرافيا بطريقة مبسطة!</p>
+                        <p>⛵🌍 "هتسافر حول العالم.. وتتعرف على حضارات مختلفة!"</p>
                         <a href="#" class="subject-link" data-subject="grade1-term2-social" data-url="subjects/grade1_term2/social.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الدراسات
@@ -347,7 +389,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
                         <i class="fas fa-book-quran"></i>
                         <h3>اللغة العربية</h3>
-                        <p>رحلة في عالم البلاغة والأدب، حيث تصبح الكلمات لوحة فنية ومعانيها ألوان ساحرة!</p>
+                        <p>📖🖋️ "هتتعمق في النحو والأدب.. وتصبح كاتبًا متميزًا!"</p>
                         <a href="#" class="subject-link" data-subject="grade2-term1-arabic" data-url="subjects/grade2_term1/arabic.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة العربية
@@ -356,7 +398,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #3498db, #2980b9);">
                         <i class="fas fa-square-root-alt"></i>
                         <h3>الرياضيات</h3>
-                        <p>مغامرة عقلية ممتعة حيث الأرقام تتحول إلى ألغاز والأشكال إلى لوحات فنية منطقية!</p>
+                        <p>📐🔺 "هتحل مسائل الهندسة والجبر.. وتطور تفكيرك المنطقي!"</p>
                         <a href="#" class="subject-link" data-subject="grade2-term1-math" data-url="subjects/grade2_term1/math.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الرياضيات
@@ -365,7 +407,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
                         <i class="fas fa-language"></i>
                         <h3>الإنجليزية</h3>
-                        <p>بوابة إلى عالم جديد، حيث تتعلم لغة تفتح لك آفاق التواصل مع العالم بأسره!</p>
+                        <p>📝🎬 "هتتعلم القواعد والمحادثة.. وتشاهد قصص بالإنجليزية!"</p>
                         <a href="#" class="subject-link" data-subject="grade2-term1-english" data-url="subjects/grade2_term1/english.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة الإنجليزية
@@ -374,7 +416,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
                         <i class="fas fa-flask"></i>
                         <h3>العلوم</h3>
-                        <p>مختبرك الشخصي لاكتشاف أسرار الكون، من أصغر الذرات إلى أعظم الكواكب!</p>
+                        <p>🧬⚗️ "هتغوص في عالم الكيمياء والوراثة.. وتكتشف المعامل!"</p>
                         <a href="#" class="subject-link" data-subject="grade2-term1-science" data-url="subjects/grade2_term1/science.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة العلوم
@@ -383,7 +425,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #f39c12, #d35400);">
                         <i class="fas fa-globe-africa"></i>
                         <h3>الدراسات</h3>
-                        <p>آلة زمن تأخذك في رحلة عبر التاريخ والجغرافيا لتكتشف كيف أصبح العالم كما تراه اليوم!</p>
+                        <p>⏳🏛️ "هتتعرف على تاريخ مصر الإسلامي والعصور الوسطى!"</p>
                         <a href="#" class="subject-link" data-subject="grade2-term1-social" data-url="subjects/grade2_term1/social.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الدراسات
@@ -396,7 +438,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
                         <i class="fas fa-book-quran"></i>
                         <h3>اللغة العربية</h3>
-                        <p>رحلة في عالم البلاغة والأدب، حيث تصبح الكلمات لوحة فنية ومعانيها ألوان ساحرة!</p>
+                        <p>🎨📜 "هتستمتع بالنصوص الأدبية.. وتكتب موضوعات إبداعية!"</p>
                         <a href="#" class="subject-link" data-subject="grade2_term2-arabic" data-url="subjects/grade2_term2/arabic.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة العربية
@@ -405,7 +447,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #3498db, #2980b9);">
                         <i class="fas fa-square-root-alt"></i>
                         <h3>الرياضيات</h3>
-                        <p>مغامرة عقلية ممتعة حيث الأرقام تتحول إلى ألغاز والأشكال إلى لوحات فنية منطقية!</p>
+                        <p>📈📉 "هتتعلم الإحصاء والرسوم البيانية.. وتطبقها في الحياة!"</p>
                         <a href="#" class="subject-link" data-subject="grade2_term2-math" data-url="subjects/grade2_term2/math.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الرياضيات
@@ -414,7 +456,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
                         <i class="fas fa-language"></i>
                         <h3>الإنجليزية</h3>
-                        <p>بوابة إلى عالم جديد، حيث تتعلم لغة تفتح لك آفاق التواصل مع العالم بأسره!</p>
+                        <p>✉️🎤 "هتتعلم كتابة الرسائل والتحدث بالإنجليزية بطلاقة!"</p>
                         <a href="#" class="subject-link" data-subject="grade2_term2-english" data-url="subjects/grade2_term2/english.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة الإنجليزية
@@ -423,7 +465,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
                         <i class="fas fa-flask"></i>
                         <h3>العلوم</h3>
-                        <p>مختبرك الشخصي لاكتشاف أسرار الكون، من أصغر الذرات إلى أعظم الكواكب!</p>
+                        <p>🌿🔋 "هتدرس النباتات والطاقة.. وتفهم كيف تعمل الطبيعة!"</p>
                         <a href="#" class="subject-link" data-subject="grade2_term2-science" data-url="subjects/grade2_term2/science.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة العلوم
@@ -432,7 +474,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #f39c12, #d35400);">
                         <i class="fas fa-globe-africa"></i>
                         <h3>الدراسات</h3>
-                        <p>آلة زمن تأخذك في رحلة عبر التاريخ والجغرافيا لتكتشف كيف أصبح العالم كما تراه اليوم!</p>
+                        <p>🌏💡 "هتفهم اقتصاد الدول.. وتتعرف على موارد مصر!"</p>
                         <a href="#" class="subject-link" data-subject="grade2_term2-social" data-url="subjects/grade2_term2/social.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الدراسات
@@ -457,7 +499,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
                         <i class="fas fa-book-quran"></i>
                         <h3>اللغة العربية</h3>
-                        <p>استعد للامتحانات مع شرح شامل للنحو والبلاغة والأدب!</p>
+                        <p>🏆📖 "هتتألق في النحو والأدب.. وتستعد للثانوية بمهارات قوية!"</p>
                         <a href="#" class="subject-link" data-subject="grade3-term1-arabic" data-url="subjects/grade3_term1/arabic.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة العربية
@@ -466,7 +508,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #3498db, #2980b9);">
                         <i class="fas fa-square-root-alt"></i>
                         <h3>الرياضيات</h3>
-                        <p>استعد بقوة مع تمارين شاملة في الجبر والهندسة!</p>
+                        <p>📚🧮 "هتحل مسائل متقدمة في الجبر والهندسة.. وتستعد للامتحانات!"</p>
                         <a href="#" class="subject-link" data-subject="grade3-term1-math" data-url="subjects/grade3_term1/math.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الرياضيات
@@ -475,7 +517,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
                         <i class="fas fa-language"></i>
                         <h3>الإنجليزية</h3>
-                        <p>طور مهاراتك في القراءة والكتابة والمحادثة لامتحانات نهاية العام!</p>
+                        <p>🎓📚 "هتتقن الإنجليزية.. وتستعد للمرحلة الثانوية بثقة!"</p>
                         <a href="#" class="subject-link" data-subject="grade3-term1-english" data-url="subjects/grade3_term1/english.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة الإنجليزية
@@ -484,7 +526,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
                         <i class="fas fa-flask"></i>
                         <h3>العلوم</h3>
-                        <p>مراجعة شاملة للفيزياء والكيمياء والأحياء لامتحانات الشهادة!</p>
+                        <p>🔭⚛️ "هتدرس الفيزياء الحديثة.. وتفهم أسرار الذرة والكون!"</p>
                         <a href="#" class="subject-link" data-subject="grade3-term1-science" data-url="subjects/grade3_term1/science.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة العلوم
@@ -493,7 +535,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #f39c12, #d35400);">
                         <i class="fas fa-globe-africa"></i>
                         <h3>الدراسات</h3>
-                        <p>مراجعة سريعة لتاريخ مصر وجغرافيتها قبل الامتحان!</p>
+                        <p>🏙️🌐 "هتتعمق في جغرافيا العالم.. وتفهم تحديات العصر الحديث!"</p>
                         <a href="#" class="subject-link" data-subject="grade3-term1-social" data-url="subjects/grade3_term1/social.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الدراسات
@@ -501,14 +543,13 @@ display: none;
                     </div>
                 </div>
             </section>
-
             <!-- الترم الثاني -->
             <section class="subject-banners term-banners" id="grade3-term2-subjects">
                 <div class="banners-grid">
                     <div class="banner-card" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
                         <i class="fas fa-book-quran"></i>
                         <h3>اللغة العربية</h3>
-                        <p>تدريبات نهائية على جميع أجزاء المنهج للفوز بالدرجة الكاملة!</p>
+                        <p>✨🖋️ "هتكتب بحرفية.. وتلم بكل فنون اللغة للنجاح في الثانوية!"</p>
                         <a href="#" class="subject-link" data-subject="grade3-term2-arabic" data-url="subjects/grade3_term2/arabic.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة العربية
@@ -517,7 +558,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #3498db, #2980b9);">
                         <i class="fas fa-square-root-alt"></i>
                         <h3>الرياضيات</h3>
-                        <p>تمارين نهائية على الجبر والهندسة بمستوى الامتحان!</p>
+                        <p>🧩📊 "هتتحدى نفسك بمسائل التفاضل والإحصاء.. وتستعد للامتحانات!"</p>
                         <a href="#" class="subject-link" data-subject="grade3-term2-math" data-url="subjects/grade3_term2/math.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الرياضيات
@@ -526,7 +567,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
                         <i class="fas fa-language"></i>
                         <h3>الإنجليزية</h3>
-                        <p>نماذج امتحانات وتدريبات مكثفة على كل المهارات!</p>
+                        <p></p>🌟🗣️ "هتتحدث الإنجليزية بطلاقة.. وتستعد للمرحلة القادمة!"</p>
                         <a href="#" class="subject-link" data-subject="grade3-term2-english" data-url="subjects/grade3_term2/english.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة اللغة الإنجليزية
@@ -535,7 +576,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
                         <i class="fas fa-flask"></i>
                         <h3>العلوم</h3>
-                        <p>مراجعات سريعة ونماذج امتحانات على جميع المواد العلمية!</p>
+                        <p>🌌🔬 "هتكتشف التكنولوجيا الحيوية.. وتفهم مستقبل العلوم!"</p>
                         <a href="#" class="subject-link" data-subject="grade3-term2-science" data-url="subjects/grade3_term2/science.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة العلوم
@@ -544,7 +585,7 @@ display: none;
                     <div class="banner-card" style="background: linear-gradient(135deg, #f39c12, #d35400);">
                         <i class="fas fa-globe-africa"></i>
                         <h3>الدراسات</h3>
-                        <p>نماذج امتحانات وتدريبات على جميع دروس التاريخ والجغرافيا!</p>
+                        <p></p>💼🌍 "هتفهم النظام السياسي والاقتصادي.. وتصبح مواطنًا واعيًا!"</p>
                         <a href="#" class="subject-link" data-subject="grade3-term2-social" data-url="subjects/grade3_term2/social.html" style="
                             display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #0056b3; transition: background-color 0.3s ease; cursor: pointer; text-align: center;">
                             مادة الدراسات
@@ -554,33 +595,60 @@ display: none;
             </section>
         </div>
 
-        <section class="features">
-            <div class="feature-card">
-                <i class="fas fa-book-open"></i>
-                <h3>شرح مبسط</h3>
-                <p>شرح وافي للمناهج بطريقة سهلة ومبسطة تناسب جميع المستويات</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-question-circle"></i>
-                <h3>أسئلة تفاعلية</h3>
-                <p>بنك أسئلة شامل لكل المواد مع إجابات نموذجية</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-chart-line"></i>
-                <h3>تتبع التقدم</h3>
-                <p>إمكانية تتبع مستوى الطالب وتحديد نقاط القوة والضعف</p>
-            </div>
-        </section>
+      <section class="features">
+    <div class="feature-card">
+        <img src="notebook.gif" alt="شرح مبسط" class="animated-icon">
+        <h3>شرح مبسط</h3>
+        <p>شرح وافي للمناهج بطريقة سهلة ومبسطة تناسب جميع المستويات</p>
+    </div>
+    <div class="feature-card">
+        <img src="opportunities.gif" alt="أسئلة تفاعلية" class="animated-icon">
+        <h3>أسئلة تفاعلية</h3>
+        <p>بنك أسئلة شامل لكل وحدة من المواد مع إجابات نموذجية</p>
+    </div>
+    <div class="feature-card">
+        <img src="social-media.gif" alt="متابعة دورية" class="animated-icon">
+        <h3>متابعة دورية</h3>
+        <p>تتبع مستوى الطالب وتحديد نقاط القوة والضعف من خلال الدعم العلمي</p>
+    </div>
+    <div class="feature-card">
+        <img src="exam.gif" alt="اختبارات شاملة" class="animated-icon">
+        <h3>اختبارات شاملة لكل مادة</h3>
+        <p>اختبارات شاملة لكل المواد لتدريب الطالب علي مستوي مقارب من الإمتحان</p>
+    </div>
+</section>
     </main>
 
     <footer>
+        <!-- أهم الإعلانات والعروض الحالية -->
+<section class="offers-section" style="background-color: #1d52ef77; padding: 30px 0; margin: 20px 0; border-top: 1px solid #329edc; border-bottom: 1px solid #329edc;">
+    <div class="container">
+        <h1 style="text-align: center; color: #ffffff; margin-bottom: 25px; font-family: 'Arial', sans-serif;">أهم الإعلانات والعروض الحالية</h1>
+        
+        <div class="offers-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 0 15px;">
+            <!-- العرض 1 -->
+            <div class="offer-card" style="background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <h3 style="color: #d9534f;">خصم 50%</h3>
+                <p style="color: #555;">احصل على خصم 50% على جميع المنتجات عند الشراء بأكثر من 500 جنيه.</p>
+            </div>
+            
+            <!-- العرض 2 -->
+            <div class="offer-card" style="background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <h3 style="color: #5bc0de;">عرض محدود</h3>
+                <p style="color: #555;">اشترك الآن واحصل على شهر مجاني في خدمتنا.</p>
+            </div>
+            
+            <!-- العرض 3 -->
+            <div class="offer-card" style="background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <h3 style="color: #5cb85c;">توصيل مجاني</h3>
+                <p style="color: #555;">التوصيل مجاني لجميع الطلبات فوق 300 جنيه.</p>
+            </div>
+        </div>
+    </div>
+</section>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-section">
-                    <h3>منهجك</h3>
-                    <p>منصة تعليمية متكاملة للصفوف الإعدادية</p>
-                    <p>&copy; 2025 جميع الحقوق محفوظة</p>
-                </div>
+                
                 <div class="footer-section">
                     <h3>تواصل معنا</h3>
                     <form action="https://formspree.io/f/xvgrwdvd" method="POST" class="contact-form">
@@ -591,8 +659,16 @@ display: none;
                     </form>
                 </div>
                 <a href="https://t.me/+fu0XWxn-60EwODE8" class="telegram-btn" target="_blank">
-                    <i class="fab fa-telegram"></i> للاستفسارات الفنية والعلمية
+                    <i class="fab fa-telegram"></i> جروب خاص بأهم التعليمات والعروض المستمرة
                 </a>
+                <a href="https://t.me/+201028520476" class="telegram-btn" target="_blank">
+    <i class="fab fa-telegram"></i> تواصل مع الدعم الفني للحصول على كود الاشتراك
+</a>
+<div class="footer-section">
+                    <h3>تعليمك</h3>
+                    <p>منصة تعليمية متكاملة للصفوف الإعدادية</p>
+                    <p>&copy; 2025 جميع الحقوق محفوظة</p>
+                </div>
             </div>
         </div>
     </footer>
@@ -632,46 +708,46 @@ display: none;
             const subjectLinks = document.querySelectorAll('.subject-link');
             const subjectPhoneNumbers = {
                 // الصف الأول - الترم الأول
-                "grade1-term1-arabic": ["01011111111", "01111111111"],
-                "grade1-term1-math": ["01211111111"],
-                "grade1-term1-english": ["01511111111", "01022222222"],
-                "grade1-term1-science": ["01122222222"],
-                "grade1-term1-social": ["01222222222"],
+                "grade1-term1-arabic": ["111252", ""],
+                "grade1-term1-math": [""],
+                "grade1-term1-english": ["", ""],
+                "grade1-term1-science": [""],
+                "grade1-term1-social": [""],
 
                 // الصف الأول - الترم الثاني
-                "grade1-term2-arabic": ["01033333333"],
-                "grade1-term2-math": ["01133333333", "01533333333"],
-                "grade1-term2-english": ["01233333333"],
-                "grade1-term2-science": ["01044444444"],
-                "grade1-term2-social": ["01144444444", "01244444444"],
+                "grade1-term2-arabic": ["111"],
+                "grade1-term2-math": ["", ""],
+                "grade1-term2-english": [""],
+                "grade1-term2-science": [""],
+                "grade1-term2-social": ["", ""],
 
                 // الصف الثاني - الترم الأول
-                "grade2-term1-arabic": ["01012345678", "01551706847"],
-                "grade2-term1-english": ["01551706847"],
-                "grade2-term1-math": ["01098765432", "01543210987"],
-                "grade2-term1-science": ["01112233445"],
-                "grade2-term1-social": ["01223344556", "01009988776"],
+                "grade2-term1-arabic": ["222", ""],
+                "grade2-term1-english": [""],
+                "grade2-term1-math": ["", ""],
+                "grade2-term1-science": [""],
+                "grade2-term1-social": ["", ""],
 
                 // الصف الثاني - الترم الثاني
-                "grade2_term2-arabic": ["01551706847"],
-                "grade2_term2-english": ["11111111111"],
-                "grade2_term2-math": ["01234567890"],
-                "grade2_term2-science": ["01987654321"],
-                "grade2_term2-social": ["01123456789"],
+                "grade2_term2-arabic": [""],
+                "grade2_term2-english": [""],
+                "grade2_term2-math": [""],
+                "grade2_term2-science": [""],
+                "grade2_term2-social": [""],
 
                 // الصف الثالث - الترم الأول
-                "grade3-term1-arabic": ["01055555555", "01155555555"],
-                "grade3-term1-math": ["01255555555"],
-                "grade3-term1-english": ["01555555555", "01066666666"],
-                "grade3-term1-science": ["01166666666"],
-                "grade3-term1-social": ["01266666666", "01077777777"],
+                "grade3-term1-arabic": ["", ""],
+                "grade3-term1-math": [""],
+                "grade3-term1-english": ["", ""],
+                "grade3-term1-science": [""],
+                "grade3-term1-social": ["", ""],
 
                 // الصف الثالث - الترم الثاني
-                "grade3-term2-arabic": ["01177777777"],
-                "grade3-term2-math": ["01277777777", "01577777777"],
-                "grade3-term2-english": ["01088888888"],
-                "grade3-term2-science": ["01188888888", "01288888888"],
-                "grade3-term2-social": ["01588888888"]
+                "grade3-term2-arabic": [""],
+                "grade3-term2-math": ["", ""],
+                "grade3-term2-english": [""],
+                "grade3-term2-science": ["", ""],
+                "grade3-term2-social": [""]
             };
 
             subjectLinks.forEach(link => {
@@ -686,7 +762,7 @@ display: none;
                         return;
                     }
 
-                    let userPhone = prompt("من فضلك أدخل رقم هاتفك للوصول إلى المادة:");
+                    let userPhone = prompt(" من فضلك ادخل الكود الخاص بالمادة (للحصول عليه تواصل مع الدعم الفني في اسفل المنصه)");
                     if (userPhone) {
                         userPhone = userPhone.trim().replace(/\D/g, ''); // تنظيف الرقم
                         if (validNumbers.includes(userPhone)) {
@@ -719,17 +795,125 @@ overlay.classList.remove('active');
  });
 
  // إغلاق القائمة بالضغط على الخلفية
- overlay.addEventListener('click', () => {
+overlay.addEventListener('click', () => {
  navLinks.classList.remove('show');
  overlay.classList.remove('active');
 });
 </script>
-
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('cells-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // ضبط حجم canvas ليتناسب مع العنصر
+    function resizeCanvas() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    }
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    
+    // إنشاء خلايا
+    const cells = [];
+    const cellCount = Math.floor(canvas.width * canvas.height / 5000); // عدد الخلايا حسب المساحة
+    
+    // ألوان الخلايا (درجات من الأزرق والأرجواني)
+    const colors = [
+        'rgba(200, 230, 255, 0.7)',
+        'rgba(180, 210, 255, 0.7)',
+        'rgba(220, 200, 255, 0.7)',
+        'rgba(200, 220, 255, 0.7)'
+    ];
+    
+    // إنشاء خلايا عشوائية
+    for (let i = 0; i < cellCount; i++) {
+        cells.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: 10 + Math.random() * 30,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            speedX: (Math.random() - 0.5) * 0.5,
+            speedY: (Math.random() - 0.5) * 0.5,
+            angle: 0,
+            rotationSpeed: (Math.random() - 0.5) * 0.02
+        });
+    }
+    
+    // رسم الخلايا
+    function drawCell(cell) {
+        ctx.save();
+        ctx.translate(cell.x, cell.y);
+        ctx.rotate(cell.angle);
+        
+        // شكل الخلية (بيضاوي قليلاً)
+        ctx.beginPath();
+        ctx.ellipse(0, 0, cell.radius, cell.radius * 0.8, 0, 0, Math.PI * 2);
+        ctx.fillStyle = cell.color;
+        ctx.fill();
+        
+        // نواة الخلية
+        ctx.beginPath();
+        ctx.arc(0, 0, cell.radius * 0.3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.fill();
+        
+        // بعض التفاصيل الداخلية
+        ctx.beginPath();
+        ctx.arc(cell.radius * 0.4, cell.radius * 0.3, cell.radius * 0.15, 0, Math.PI * 2);
+        ctx.arc(-cell.radius * 0.3, -cell.radius * 0.2, cell.radius * 0.1, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.fill();
+        
+        ctx.restore();
+    }
+    
+    // تحديث مواضع الخلايا
+    function updateCells() {
+        cells.forEach(cell => {
+            cell.x += cell.speedX;
+            cell.y += cell.speedY;
+            cell.angle += cell.rotationSpeed;
+            
+            // ارتداد من الحواف
+            if (cell.x < 0 || cell.x > canvas.width) cell.speedX *= -1;
+            if (cell.y < 0 || cell.y > canvas.height) cell.speedY *= -1;
+        });
+    }
+    
+    // حلقة الرسوم المتحركة
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // رسم اتصالات بين الخلايا القريبة
+        ctx.strokeStyle = 'rgba(200, 220, 255, 0.3)';
+        ctx.lineWidth = 1;
+        
+        for (let i = 0; i < cells.length; i++) {
+            for (let j = i + 1; j < cells.length; j++) {
+                const dx = cells[i].x - cells[j].x;
+                const dy = cells[i].y - cells[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 150) {
+                    ctx.beginPath();
+                    ctx.moveTo(cells[i].x, cells[i].y);
+                    ctx.lineTo(cells[j].x, cells[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        // رسم الخلايا
+        cells.forEach(drawCell);
+        updateCells();
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+});
 </script>
 </body>
-</html>
-
-
-
-
-
+</html> 
