@@ -173,41 +173,46 @@ display: none;
  #overlay.active {
  display: block;
  }
-}
-.hero {
+}.hero {
     position: relative;
     overflow: hidden;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 2rem;
     background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+    min-height: 100vh; /* يجعل القسم يأخذ ارتفاع الشاشة بالكامل */
 }
 
 #cells-canvas {
     position: absolute;
     top: 0;
-    left:10;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
-    opacity: 0.4;
+    opacity: 0.6;
 }
 
 .hero-content, .hero-image {
     position: relative;
     z-index: 1;
+    width: 100%;
+    max-width: 1200px; /* حد أقصى للعرض للحفاظ على التنسيق في الشاشات الكبيرة */
+    margin: 0 auto;
 }
 
 .hero-content {
-    flex: 1;
-    padding-right: 5rem;
+    padding: 2rem;
+    text-align: center;
 }
 
 .hero-image {
-    flex: 1;
+    padding: 1rem;
     text-align: center;
 }
+
 .animated-icon, .lottie-icon {
     width: 65px;
     height: 65px;
@@ -217,6 +222,35 @@ display: none;
 .feature-card {
     text-align: center;
     padding: 20px;
+}
+
+/* تكوينات للشاشات المتوسطة والكبيرة */
+@media (min-width: 768px) {
+    .hero {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 4rem 2rem;
+    }
+    
+    .hero-content {
+        text-align: left;
+        padding-right: 2rem;
+    }
+    
+    .hero-image {
+        padding-left: 2rem;
+    }
+}
+
+/* تكوينات للشاشات الكبيرة جدًا */
+@media (min-width: 1200px) {
+    .hero-content {
+        padding-right: 5rem;
+    }
+    
+    .hero-image {
+        padding-left: 5rem;
+    }
 }
     </style>
 </head>
