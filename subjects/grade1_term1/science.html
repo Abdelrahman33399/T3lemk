@@ -31,7 +31,7 @@
             background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
         }
         .unit-banner:nth-child(4) {
-            background: linear-gradient(135deg, #d96e26a5 0%, #d86907 100%);
+            background: linear-gradient(135deg, #ed9d08 0%, #d86907 100%);
         }
         
         .unit-header {
@@ -180,7 +180,94 @@
         /* التعديلات الجديدة */
         white-space: normal; /* التأكد من أن النص يتدفق بشكل طبيعي */
     }
+/* --- التعديلات لدعم الهواتف والنصوص العربية --- */
 
+.lesson-banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 15px 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    direction: rtl;
+    text-align: right;
+    gap: 10px;
+}
+
+.lesson-banner div {
+    flex: 1;
+    padding-right: 15px;
+    text-align: right;
+    direction: rtl;
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+.lesson-banner h3,
+.lesson-banner p {
+    text-align: right;
+    direction: rtl;
+    white-space: normal;
+    line-height: 1.6;
+}
+
+.lesson-banner .btn {
+    margin: 0 5px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    min-width: 100px;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: rgb(255, 255, 255);
+    color: #4facfe;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+/* تصميم متجاوب للهواتف */
+@media (max-width: 768px) {
+    .subjects-container {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .unit-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .lesson-banner {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .lesson-banner div {
+        padding: 0;
+        margin-bottom: 10px;
+        text-align: right;
+        direction: rtl;
+    }
+
+    .lesson-banner h3,
+    .lesson-banner p {
+        font-size: 1rem;
+        text-align: right;
+        direction: rtl;
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .unit-banner {
+        border-radius: 20px;
+    }
+}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
@@ -2504,4 +2591,5 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 </body>
+
 </html>
