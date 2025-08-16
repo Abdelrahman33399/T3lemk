@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اللغة العربية - منهجك</title>
+    <script src="../js/subjects.js"></script>
+    <style>
+        /* أنماط CSS السابقة تبقى كما هي */
+        .subjects-container {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .unit-banner {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .unit-banner:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .unit-banner:nth-child(3) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .unit-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .unit-header h2 {
+            margin: 0;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .unit-icon {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .lessons-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .lesson-banner {
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .lesson-banner div {
+            flex: 1;
+        }
+        
+        .lesson-banner h3 {
+            margin: 0 0 5px 0;
+            color: white;
+        }
+        
+        .lesson-banner p {
+            margin: 0;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            background: white;
+            color: #4facfe;
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .unit-banner:nth-child(2) .btn {
+            color: #f5576c;
+        }
+        
+        .unit-banner:nth-child(3) .btn {
+            color: #43e97b;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .home-btn-container {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            border-top: 1px solid #e1e1e1;
+        }
+        
+        .home-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <!-- نظام البنرات الديناميكية للوحدات والدروس -->
+    <div class="subjects-container">
+        <!-- بنر الوحدة الأولى -->
+        <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit1')">
+                <h2>الوحدة الأولى: النصوص الأدبية</h2>
+                <span class="unit-icon" id="unit1-icon">▼</span>
+            </div>
+            
+            <div class="lessons-container" id="unit1-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>الدرس الأول: القصة القصيرة</h3>
+                        <p>تعريف القصة القصيرة وعناصرها الأساسية</p>
+                    </div>
+                    <a href="#" class="btn">ابدأ التعلم</a>
+                </div>
+                
+                <!-- درس 2 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>الدرس الثاني: الشعر الحديث</h3>
+                        <p>خصائص الشعر العربي الحديث وأهم رواده</p>
+                    </div>
+                    <a href="#" class="btn">ابدأ التعلم</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بنر الوحدة الثانية -->
+        <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit2')">
+                <h2>الوحدة الثانية: النحو والصرف</h2>
+                <span class="unit-icon" id="unit2-icon">▼</span>
+            </div>
+            
+            <div class="lessons-container" id="unit2-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>الدرس الأول: الجملة الاسمية</h3>
+                        <p>أركان الجملة الاسمية وأنواع الخبر</p>
+                    </div>
+                    <a href="#" class="btn">ابدأ التعلم</a>
+                </div>
+                
+                <!-- درس 2 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>الدرس الثاني: الجملة الفعلية</h3>
+                        <p>أركان الجملة الفعلية وأنواع الفاعل</p>
+                    </div>
+                    <a href="#" class="btn">ابدأ التعلم</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بنر الوحدة الثالثة -->
+        <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit3')">
+                <h2>الوحدة الثالثة: البلاغة</h2>
+                <span class="unit-icon" id="unit3-icon">▼</span>
+            </div>
+            
+            <div class="lessons-container" id="unit3-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>الدرس الأول: التشبيه</h3>
+                        <p>أركان التشبيه وأنواعه في القرآن الكريم</p>
+                    </div>
+                    <a href="https://t.me/+fu0XWxn-60EwODE8" class="btn"> للاستفسارات الفنية والعلمية</a>
+                       <a href="https://t.me/+fu0XWxn-60EwODE8" class="btn"> للاستفسارات الفنية والعلمية</a>
+                </div>
+               
+                <!-- درس 2 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>الدرس الثاني: الاستعارة</h3>
+                        <p>الاستعارة وأنواعها مع أمثلة تطبيقية</p>
+                    </div>
+                    <a href="#" class="btn">ابدأ التعلم</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-btn-container">
+        <a href="../../index.html" class="home-btn">
+            <i class="fas fa-home"></i>
+            العودة إلى الصفحة الرئيسية
+        </a>
+    </div>
+
+    <script>
+        // دالة لإظهار/إخفاء الدروس
+        function toggleLessons(unitId) {
+            const lessonsContainer = document.getElementById(`${unitId}-lessons`);
+            const unitIcon = document.getElementById(`${unitId}-icon`);
+            
+            if (lessonsContainer.style.maxHeight === '0px' || !lessonsContainer.style.maxHeight) {
+                // حساب الارتفاع التلقائي بناءً على المحتوى
+                lessonsContainer.style.maxHeight = `${lessonsContainer.scrollHeight}px`;
+                unitIcon.textContent = '▲';
+            } else {
+                lessonsContainer.style.maxHeight = '0px';
+                unitIcon.textContent = '▼';
+            }
+        }
+
+        // يمكنك فتح وحدة معينة تلقائياً عند تحميل الصفحة
+        window.onload = function() {
+            // افتح الوحدة الأولى تلقائياً كمثال
+            toggleLessons('unit1');
+        }
+    </script>
+</body>
+</html>
