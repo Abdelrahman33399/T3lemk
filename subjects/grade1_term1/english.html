@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English - تعليمك</title>
+    <script src="../js/subjects.js"></script>
+    <style>
+        /* أنماط CSS السابقة تبقى كما هي */
+         .subjects-container {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .unit-banner {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 30px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .unit-banner:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .unit-banner:nth-child(3) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        .unit-banner:nth-child(4) {
+            background: linear-gradient(135deg, #ed9d08 0%, #d86907 100%);
+        }
+        
+        .unit-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .unit-header h2 {
+            margin: 0;
+            color: rgb(0, 0, 0);
+            font-size: 1.8rem;
+        }
+        
+        .unit-icon {
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .lessons-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .lesson-banner {
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .lesson-banner div {
+            flex: 1;
+        }
+        
+        .lesson-banner h3 {
+            margin: 0 0 5px 0;
+            color: rgb(6, 2, 2);
+        }
+        
+        .lesson-banner p {
+            margin: 0;
+            color: rgba(0, 0, 0, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            background: rgb(255, 255, 255);
+            color: #4facfe;
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .unit-banner:nth-child(2) .btn {
+            color: #f5576c;
+        }
+        
+        .unit-banner:nth-child(3) .btn {
+            color: #43e97b;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .home-btn-container {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            border-top: 1px solid #e1e1e1;
+        }
+        
+        .home-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+    /* أنماط CSS السابقة تبقى كما هي */
+    
+    .lessons-container {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        background: rgba(255,255,255,0.15);
+        /* التعديلات الجديدة */
+        overflow-y: auto; /* تمكين التمرير العمودي */
+        max-height: 500px; /* ارتفاع أقصى مناسب */
+    }
+    
+    .lesson-banner {
+        padding: 15px 20px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start; /* تغيير من center إلى flex-start */
+        /* التعديلات الجديدة */
+        max-height: 300px; /* يمكن تعديل هذا حسب الحاجة */
+        overflow-y: auto; /* تمكين التمرير إذا لزم الأمر */
+    }
+    
+    .lesson-banner div {
+        flex: 1;
+        /* التعديلات الجديدة */
+        padding-right: 15px; /* إضافة مساحة بين المحتوى والزر */
+        max-height: 100%; /* التأكد من أن المحتوى يملأ المساحة المتاحة */
+        overflow-y: auto; /* تمكين التمرير إذا لزم الأمر */
+    }
+    
+    .lesson-banner h3 {
+        margin: 0 0 5px 0;
+        color: rgb(6, 2, 2);
+        /* التعديلات الجديدة */
+        white-space: normal; /* التأكد من أن النص يتدفق بشكل طبيعي */
+    }
+    
+    .lesson-banner p {
+        margin: 0;
+        color: rgba(0, 0, 0, 0.8);
+        font-size: 1.1rem;
+        /* التعديلات الجديدة */
+        white-space: normal; /* التأكد من أن النص يتدفق بشكل طبيعي */
+    }
+/* --- التعديلات لدعم الهواتف والنصوص العربية --- */
+
+.lesson-banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 15px 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    direction: rtl;
+    text-align: right;
+    gap: 10px;
+}
+
+.lesson-banner div {
+    flex: 1;
+    padding-right: 15px;
+    text-align: right;
+    direction: rtl;
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+.lesson-banner h3,
+.lesson-banner p {
+    text-align: right;
+    direction: rtl;
+    white-space: normal;
+    line-height: 1.6;
+}
+
+.lesson-banner .btn {
+    margin: 0 5px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    min-width: 100px;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: rgb(255, 255, 255);
+    color: #4facfe;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+/* تصميم متجاوب للهواتف */
+@media (max-width: 768px) {
+    .subjects-container {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .unit-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .lesson-banner {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .lesson-banner div {
+        padding: 0;
+        margin-bottom: 10px;
+        text-align: right;
+        direction: rtl;
+    }
+
+    .lesson-banner h3,
+    .lesson-banner p {
+        font-size: 1rem;
+        text-align: right;
+        direction: rtl;
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .unit-banner {
+        border-radius: 20px;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- نظام البنرات الديناميكية للوحدات والدروس -->
+    <div class="subjects-container">
+        <!-- بنر الوحدة الأولى -->
+        <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit1')">
+                <h2>Unit 1: LIFE IN DIGITAL WORLD</h2>
+                <span class="unit-icon" id="unit1-icon">▼</span>
+            </div>
+            
+            <div class="lessons-container" id="unit1-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1: Present Simple</h3>
+                        <p>
+                            يُستخدم زمن المضارع البسيط في الحديث عن الحقائق والعادات والروتينات والجداول الزمنية. وهو من الأزمنة الأساسية في اللغة الإنجليزية.<br><br>
+
+يتكوّن المضارع البسيط من الفعل الأساسي، لكن هناك قاعدة مهمة: إذا كان الفاعل هو هو، هي، أو شيء مفرد، نضيف حرف s أو es إلى نهاية الفعل. أما إذا كان الفاعل أنا، نحن، أنتم، هم، أو مجموعة أشخاص، نستخدم الفعل بدون تغيير.<br><br>
+
+مثلًا:<br>
+أنا ألعب كرة القدم → I play football.<br>
+هو يلعب كرة القدم → He plays football.<br><br>
+
+نلاحظ أننا أضفنا حرف s لأن الفاعل "he" مفرد.<br>
+أما إذا انتهى الفعل بحروف مثل s, sh, ch, x, أو o، نضيف es بدلًا من s.<br><br>
+
+مثل:<br>
+She washes the dishes. (هي تغسل الصحون).<br>
+He goes to school. (هو يذهب إلى المدرسة).<br><br>
+
+وإذا انتهى الفعل بحرف y بعد حرف ساكن، نحذف الـ y ونكتب ies.<br><br>
+
+مثل:<br>
+He studies English. (هو يدرس اللغة الإنجليزية).<br>
+She tries hard. (هي تحاول جاهدة).<br><br>
+
+لعمل الجملة المنفية، نستخدم don’t مع الفاعلات: I, you, we, they، أو أي جمع.<br><br>
+
+مثل:<br>
+I don’t like coffee.<br>
+They don’t play football.<br><br>
+
+أما مع الفاعلات المفردة مثل he, she, it، نستخدم doesn’t، ونرجع الفعل إلى صورته الأساسية بدون s أو es.<br><br>
+
+مثل:<br>
+He doesn’t play football. (لا نقول plays).<br>
+She doesn’t go to school by bus.<br><br>
+
+وللسؤال، نبدأ بـ Do إذا كان الفاعل I, you, we, they، أو جمع.<br><br>
+
+مثل:<br>
+Do you like apples?<br>
+Do they live in Cairo?<br><br>
+
+أما مع he, she, it، نستخدم Does، ونرجع الفعل إلى صورته الأساسية.<br><br>
+
+مثل:<br>
+Does he play football?<br>
+Does she study English?<br><br>
+
+يُستخدم المضارع البسيط في أربع حالات رئيسية:<br><br>
+
+الأولى: للتعبير عن الحقائق العلمية والأشياء الثابتة التي لا تتغير.<br><br>
+
+مثل:<br>
+Plants need water. (النباتات تحتاج إلى ماء).<br>
+The sun rises in the east. (الشمس تشرق من الشرق).<br><br>
+
+الثانية: للحديث عن العادات والروتينات اليومية.<br><br>
+
+مثل:<br>
+He goes to school every day. (هو يذهب إلى المدرسة كل يوم).<br>
+I brush my teeth twice a day.<br><br>
+
+الثالثة: لوصف الوضع الدائم، مثل مكان السكن أو العمل.<br><br>
+
+مثل:<br>
+We live in Cairo. (نحن نعيش في القاهرة).<br>
+She works in a hospital.<br><br>
+
+الرابعة: عند الحديث عن الجداول الزمنية مثل مواعيد القطارات، الطيران، أو المدرسة.<br><br>
+
+مثل:<br>
+The train leaves at 10 o’clock. (القطار يغادر الساعة 10).<br>
+School starts at 8 a.m.<br><br>
+
+من الكلمات المهمة التي تدل على أن الجملة في زمن المضارع البسيط هي:<br><br>
+always (دائمًا)<br>
+usually (عادة)<br>
+often (غالبًا)<br>
+sometimes (أحيانًا)<br>
+hardly ever (نادرًا جدًا)<br>
+never (أبدًا)<br>
+every day, every week, every month.
+                        </p>
+                </div>
+                 <a href="https://www.youtube.com/watch?v=I6_e9mh9kEE&list=PLVmiIPsXCfwti9m2VlMBtvoYEWyLxIxJn" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/1H-ODjoyyClS5mOJ8pGb1e6Ld2xhgDtjP/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+           <!-- درس 2 -->
+            <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 2: Adverbs of Frequency</h3>
+                        <p>
+                        ظروف التكرار، وتوضع في الجملة قبل الفعل الرئيسي.<br><br>
+مثل:<br>
+She often has coffee in the morning.<br><br>
+لكن إذا كان الفعل هو فعل "to be" مثل am, is, are، توضع ظروف التكرار بعد الفعل.<br><br>
+مثل:<br>
+He is always late.<br>
+They are usually happy.<br><br>
+عند السؤال عن عدد مرات تكرار فعل ما، نستخدم السؤال:<br><br>
+How often do you play football?<br><br>
+والإجابة تكون مثل:<br><br>
+Once a week. (مرة واحدة في الأسبوع)<br>
+Twice a month. (مرتين في الشهر)<br>
+Three times a year. (ثلاث مرات في السنة)<br>
+Every day. (كل يوم)<br><br>
+نستخدم كلمات مثل once, twice, three times… مع وحدات الزمن مثل week, month, year.<br><br>
+باختصار، المضارع البسيط يُستخدم للأشياء التي تحدث بشكل منتظم أو هي حقائق ثابتة، ونستخدمه في الحياة اليومية كثيرًا، سواء في الحديث عن عاداتنا، عملنا، دراستنا، أو حتى مواعيد المواصلات.
+</p>
+                </div>
+               <a href="https://www.youtube.com/watch?v=I6_e9mh9kEE&list=PLVmiIPsXCfwti9m2VlMBtvoYEWyLxIxJn" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/1H-ODjoyyClS5mOJ8pGb1e6Ld2xhgDtjP/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+    <!--بنر الوحده 2-->
+    <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit2')">
+                <h2>Unit 2: LEARNING TO LEARN</h2>
+                <span class="unit-icon" id="unit2-icon">▼</span>
+            </div>
+            <div class="lessons-container" id="unit2-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1: Present Continuous</h3>
+                        <p>
+                           يُستخدم زمن الحاضر المستمر للحديث عن فعل يحدث في لحظة التحدث أو خلال فترة حالية مؤقتة. ويتكوّن هذا الزمن من جزئين: فعل to be في المضارع (am – is – are) + التصريف الثالث للفعل (V-ing).<br><br>
+
+إذا كان الفاعل أنا، نستخدم am.<br>
+مثل: I am studying now. (أنا أذاكر الآن).<br><br>
+
+إذا كان الفاعل هو، هي، أو شيء مفرد، نستخدم is.<br>
+مثل: He is playing football. (هو يلعب كرة القدم).<br>
+She is reading a book. (هي تقرأ كتابًا).<br><br>
+
+أما إذا كان الفاعل نحن، أنتم، هم، أو مجموعة، نستخدم are.<br>
+مثل: They are watching TV. (هم يشاهدون التلفاز).<br>
+We are having lunch. (نحن نأكل الغداء).<br><br>
+
+لعمل الجملة المنفية، نضيف not بعد فعل to be.<br><br>
+
+مثل:<br>
+I am not studying.<br>
+He is not playing football. (أو نقول: He isn’t playing football).<br>
+They are not watching TV. (أو نقول: They aren’t watching TV).<br><br>
+
+وللسؤال، نبدأ الجملة بـ Am – Is – Are، ثم نضع الفاعل، ثم الفعل مع (ing).<br><br>
+
+مثل:<br>
+Is he playing football? (هل هو يلعب كرة القدم؟)<br>
+الإجابة: نعم، هو يلعب → Yes, he is.<br>
+لا، هو لا يلعب → No, he isn’t.<br><br>
+Are they watching TV?<br>
+الإجابة: Yes, they are. / No, they aren’t.<br><br>
+
+هناك بعض القواعد المهمة عند كتابة الفعل مع (ing):<br><br>
+
+إذا انتهى الفعل بحرف واحد متحرك بعد حرف ساكن، نضاعف الحرف الأخير.<br>
+مثل: run → running، swim → swimming، sit → sitting.<br><br>
+
+إذا انتهى الفعل بحرف y، لا يتغير شيء.<br>
+مثل: study → studying، play → playing.<br><br>
+
+إذا انتهى الفعل بحرف e، نحذف الـ e ونضيف ing.<br>
+مثل: write → writing، make → making، dance → dancing.<br><br>
+
+يُستخدم الزمن المستمر في عدة حالات:<br><br>
+
+أولًا: للتعبير عن فعل يحدث الآن، في لحظة التحدث.<br><br>
+
+مثل:<br>
+Look! It is raining. (انظر! إنها تمطر).<br>
+Listen! Someone is knocking on the door. (استمع! هناك من يقرع الباب).<br><br>
+
+ثانيًا: للحديث عن أنشطة مؤقتة تحدث في الفترة الحالية، حتى لو لم تكن في اللحظة نفسها.<br><br>
+
+مثل:<br>
+I am learning English this month. (أنا أتعلم الإنجليزي هذا الشهر).<br>
+She is staying with her aunt this week.<br><br>
+
+ثالثًا: للحديث عن تغيرات تحدث تدريجيًا مع الوقت.<br><br>
+
+مثل:<br>
+It is getting colder these days. (يصبح الجو أكثر برودة هذه الأيام).<br>
+Prices are going higher and higher. (الأسعار ترتفع أكثر فأكثر).<br><br>
+
+الكلمات الدالة على الزمن المستمر هي:<br><br>
+now (الآن)<br>
+at the moment (في هذه اللحظة)<br>
+today (اليوم)<br>
+tonight (الليلة)<br>
+look (انظر)<br>
+listen (استمع)<br>
+still (لا يزال)<br>
+at present (حاليًا)<br>
+these days (في الآونة الأخيرة)
+                        </p>
+                </div>
+               <a href="https://www.youtube.com/watch?v=I6_e9mh9kEE&list=PLVmiIPsXCfwti9m2VlMBtvoYEWyLxIxJn" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/1H-ODjoyyClS5mOJ8pGb1e6Ld2xhgDtjP/view?usp=sharing" class="btn" download>تحميل المحتوى</a>
+                </div>
+           <!-- درس 2 -->
+            <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 2: Ability</h3>
+                        <p>
+بالإضافة إلى الزمن المستمر، هناك موضوع مهم يُدرّس معه أحيانًا، وهو القدرة على فعل شيء، ويُعبّر عنه بكلمة Can.<br><br>
+تُستخدم كلمة Can للتعبير عن القدرة أو المهارة.<br><br>
+مثل:<br>
+She can swim very well. (هي تستطيع السباحة جيدًا).<br>
+I can speak English. (أنا أستطيع التحدث بالإنجليزية).<br><br>
+تُستخدم Can مع جميع الفاعلات بنفس الشكل، ولا تتغير.<br><br>
+مثل:<br>
+I can run fast.<br>
+He can drive a car.<br>
+They can cook.<br><br>
+لعمل الجملة المنفية، نضيف not بعد Can، أو نستخدم can’t.<br><br>
+مثل:<br>
+He cannot swim. أو He can’t swim. (هو لا يستطيع السباحة).<br>
+I can’t play the piano. (أنا لا أستطيع العزف على البيانو).<br><br>
+وللسؤال، نبدأ الجملة بـ Can، ثم الفاعل، ثم الفعل الأساسي (بدون to).<br><br>
+مثل:<br>
+Can you help me? (هل يمكنك مساعدتي؟)<br>
+Can she dance? (هل هي تستطيع الرقص؟)<br><br>
+الإجابة تكون:<br>
+نعم، يمكن → Yes, I can. / Yes, she can.<br>
+لا، لا يمكن → No, I can’t. / No, he can’t.<br><br>
+ملاحظة مهمة: لا نستخدم Can مع is – am – are أو مع (ing).<br>
+مثل: لا نقول "He is can swim"، بل نقول "He can swim".<br><br>
+باختصار:<br>
+Present Continuous يُستخدم للأشياء التي تحدث الآن أو مؤقتًا، ويتكون من (am/is/are + V-ing).<br>
+Can يُستخدم للقدرة، ويتبعه الفعل الأساسي بدون (to)، مثل: can swim, can write, can jump.
+                        </p>
+                </div>
+                <a href="https://www.youtube.com/watch?v=I6_e9mh9kEE&list=PLVmiIPsXCfwti9m2VlMBtvoYEWyLxIxJn" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/1H-ODjoyyClS5mOJ8pGb1e6Ld2xhgDtjP/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+    <!--بنر الوحده 3-->
+    <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit3')">
+                <h2>Unit 3: ROLE MODELS</h2>
+                <span class="unit-icon" id="unit3-icon">▼</span>
+            </div>
+            <div class="lessons-container" id="unit3-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1: Past Simple</h3>
+                        <p>
+                           يُستخدم زمن الماضي البسيط للحديث عن أفعال بدأت وانتهت في الماضي. هذا الزمن مهم جدًا في اللغة الإنجليزية، ونستخدمه كثيرًا في الحديث عن ما فعلناه بالأمس، الأسبوع الماضي، أو في أي وقت من الماضي.<br><br>
+
+يتكوّن الماضي البسيط من الصيغة الثانية للفعل. هناك نوعان من الأفعال:<br><br>
+
+أفعال منتظمة (Regular verbs).<br>
+أفعال غير منتظمة (Irregular verbs).<br><br>
+
+الأفعال المنتظمة:<br>
+تُضاف ed إلى نهاية الفعل.<br><br>
+
+مثل:<br>
+play → played<br>
+watch → watched<br>
+like → liked<br>
+live → lived<br><br>
+
+لكن هناك بعض القواعد المهمة:<br><br>
+
+إذا انتهى الفعل بحرف e، نضيف فقط d.<br><br>
+
+مثل:<br>
+love → loved<br>
+dance → danced<br><br>
+
+إذا انتهى الفعل بحرف ساكن بعد حرف متحرك واحد (CVC)، نضاعف الحرف الأخير ثم نضيف ed.<br><br>
+
+مثل:<br>
+stop → stopped (لأن s-o-p: o متحرك، p ساكن)<br>
+plan → planned<br><br>
+
+إذا انتهى الفعل بحرف y بعد حرف ساكن، نحذف الـ y ونكتب ied.<br><br>
+
+مثل:<br>
+study → studied<br>
+carry → carried<br><br>
+
+أما إذا كان الحرف قبل الـ y متحركًا، نضيف فقط ed.<br><br>
+
+مثل:<br>
+play → played<br>
+enjoy → enjoyed<br><br>
+
+الأفعال غير المنتظمة:<br>
+لا تتبع قاعدة، ويجب حفظها.<br><br>
+
+مثل:<br>
+go → went<br>
+eat → ate<br>
+see → saw<br>
+take → took<br>
+have → had<br><br>
+
+مثال على جملة مثبتة:<br><br>
+
+I played football yesterday.<br>
+She went to Alexandria last week.<br><br>
+
+الجملة المنفية في الماضي البسيط:<br>
+نستخدم didn’t (وهي اختصار لـ did not) مع الفعل الأساسي (infinitive) بدون أي تغيير.<br>
+نستخدم نفس الفعل الذي نبدأ به بـ to، مثل: play, go, eat, watch.<br><br>
+
+مثل:<br>
+I didn’t play football yesterday.<br>
+She didn’t go to school last week.<br>
+They didn’t watch TV.<br><br>
+
+ملاحظة مهمة: لا نستخدم الصيغة الثانية للفعل بعد didn’t.<br>
+نقول:<br>
+❌ I didn’t played → خطأ<br>
+✅ I didn’t play → صحيح<br><br>
+
+السؤال في الماضي البسيط:<br>
+نبدأ السؤال بكلمة Did، ثم نضع الفاعل، ثم الفعل الأساسي (infinitive)، تمامًا مثل النفي.<br><br>
+
+مثل:<br>
+Did you play football yesterday?<br>
+Did she go to the party?<br>
+Did they watch the movie?<br><br>
+
+الإجابة تكون:<br>
+نعم: Yes, I did. / Yes, she did. / Yes, they did.<br>
+لا: No, I didn’t. / No, he didn’t. / No, we didn’t.<br><br>
+
+إذا كان السؤال يبدأ بـ When, Where, Why, How, What، نضع هذه الكلمة أولًا، ثم Did، ثم الفاعل، ثم الفعل.<br><br>
+
+مثل:<br>
+Where did you go last week?<br>
+When did she arrive?<br>
+What did they eat?<br><br>
+
+استخدامات الماضي البسيط:<br><br>
+
+أولًا: للتعبير عن فعل انتهى في الماضي.<br><br>
+
+مثل:<br>
+I visited my uncle yesterday.<br>
+He finished his homework an hour ago.<br><br>
+
+ثانيًا: للحديث عن عادات في الماضي (كنا نفعلها من قبل لكن لا نفعلها الآن).<br><br>
+
+مثل:<br>
+I always visited my grandmother when I was young.<br>
+We played football every day after school.<br><br>
+
+ثالثًا: للتحدث عن أحداث في زمن معين من الماضي، مثل:<br><br>
+last week (الأسبوع الماضي)<br>
+yesterday (أمس)<br>
+last month (الشهر الماضي)<br>
+last year (العام الماضي)<br>
+in 2020<br>
+one day<br>
+once<br>
+when I was a child<br><br>
+
+هذه الكلمات تسمى كلمات دالة، وتجعلنا نعرف أن الجملة في زمن الماضي
+                        </p>
+                </div>
+                 <a href="https://www.youtube.com/watch?v=I6_e9mh9kEE&list=PLVmiIPsXCfwti9m2VlMBtvoYEWyLxIxJn" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/1H-ODjoyyClS5mOJ8pGb1e6Ld2xhgDtjP/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+           <!-- درس 2 -->
+            <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 2: V.TO.BE</h3>
+                        <p>
+فعل to be في الماضي (was / were)<br>
+لأن فعل to be خاص، له قواعد مختلفة قليلًا.<br><br>
+
+نستخدم was مع:<br>
+I, he, she, it<br>
+وأي اسم مفرد<br><br>
+
+مثل:<br>
+I was tired yesterday.<br>
+She was happy.<br>
+It was a nice day.<br><br>
+
+نستخدم were مع:<br>
+we, you, they<br>
+وأي اسم جمع<br><br>
+
+مثل:<br>
+We were at home.<br>
+They were friends.<br>
+You were late.<br><br>
+
+في النفي:<br><br>
+I wasn’t busy.<br>
+She wasn’t at school.<br>
+They weren’t happy.<br><br>
+
+في السؤال:<br><br>
+Was she at home?<br>
+Were they late?<br>
+Was it cold?<br><br>
+
+الإجابة:<br>
+Yes, she was. / No, she wasn’t.<br>
+Yes, they were. / No, they weren’t.<br><br>
+
+ملحوظات مهمة:<br>
+نستخدم الماضي البسيط للأشياء التي انتهت بالفعل.<br>
+مثل: I went to Aswan last summer. (الرحلة انتهت).<br><br>
+لا نستخدم هذا الزمن للتحدث عن شيء ما زال مستمرًا.<br>
+مثل: إذا كنت ما زلت أعيش في القاهرة، نقول: I live in Cairo (بالمضارع)، وليس lived.<br><br>
+يمكن استخدام الماضي للحديث عن أشخاص أو أماكن لم تعد موجودة.<br>
+مثل: My grandfather was a teacher. (هو متوفى الآن).<br><br>
+
+باختصار:<br>
+الماضي البسيط يُستخدم للأحداث المنتهية في الماضي.<br>
+الأفعال المنتظمة تُضاف إليها ed.<br>
+نستخدم didn’t وDid مع الفعل الأساسي.<br>
+فعل to be له شكلين: was للمفرد، وwere للجمع.<br>
+الكلمات الدالة: yesterday, last week, in 2020, when I was young.
+                        </p>
+                </div>
+               <a href="https://www.youtube.com/watch?v=I6_e9mh9kEE&list=PLVmiIPsXCfwti9m2VlMBtvoYEWyLxIxJn" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/1H-ODjoyyClS5mOJ8pGb1e6Ld2xhgDtjP/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+    <!--بنر الوحده 4-->
+    <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit4')">
+                <h2>Unit 4: SMART CHOICES</h2>
+                <span class="unit-icon" id="unit4-icon">▼</span>
+            </div>
+            <div class="lessons-container" id="unit4-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1:(IF) Conditionals</h3>
+                        <p>
+                           يُستخدم حرف If للتعبير عن الشرط، أي أن شيئًا ما سيحدث بشرط أن يتحقق شرط معين.<br>
+ومن أكثر أنواع الجمل الشرطية استخدامًا في المنيا هو النوع الأول، ويُعرف بـ First Conditional.<br><br>
+
+يُستخدم First Conditional للحديث عن حدث ممكن أو محتمل في الحاضر أو المستقبل.<br>
+أي أننا نتحدث عن شيء قد يحدث إذا تحقق شرط معين.<br><br>
+
+تتكوّن الجملة من جزئين:<br><br>
+
+الجزء الأول يبدأ بـ If ويحتوي على شرط.<br>
+الجزء الثاني يحتوي على النتيجة.<br><br>
+
+في جزء الشرط (بعد If)، نستخدم زمن المضارع البسيط.<br>
+وفي جزء النتيجة، نستخدم will أو won’t مع الفعل الأساسي (infinitive).<br><br>
+
+مثال:<br><br>
+
+If you study hard, you will pass the exam.<br>
+(إذا درست بجد، فسوف تنجح في الامتحان).<br><br>
+
+هنا:<br>
+"If you study hard" = الشرط (مضارع بسيط).<br>
+"you will pass" = النتيجة (will + فعل).<br><br>
+
+مثال آخر:<br><br>
+
+If it rains, we won’t go to the park.<br>
+(إذا أمطرت، فلن نذهب إلى الحديقة).<br><br>
+
+يمكن استخدام when بدلًا من if أحيانًا، لكن مع فرق بسيط:<br><br>
+
+If تعني "إذا" (احتمال).<br>
+When تعني "متى" (يقصد أنه سيحدث بالتأكيد).<br><br>
+
+مثل:<br>
+When you finish your homework, you can watch TV.<br>
+(متى تنتهي من واجبك، يمكنك مشاهدة التلفاز).
+                        </p>
+                </div>
+                <a href="https://www.youtube.com/watch?v=I6_e9mh9kEE&list=PLVmiIPsXCfwti9m2VlMBtvoYEWyLxIxJn" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/1H-ODjoyyClS5mOJ8pGb1e6Ld2xhgDtjP/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+           <!-- درس 2 -->
+            <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 2:Advice</h3>
+                        <p>
+إلى جانب الجمل الشرطية، هناك طريقة شائعة للنصح أو إعطاء مشورة، وتكون باستخدام كلمة Should.<br><br>
+
+تُستخدم كلمة Should للتعبير عن النصيحة أو ما هو جيد أن يُفعل.<br>
+مثل: ننصح شخصًا بالدراسة، أو نحذره من أكل الطعام غير الصحي.<br><br>
+
+تُستخدم Should مع الفعل الأساسي (infinitive) بدون to.<br><br>
+
+مثل:<br>
+You should study hard. (ينبغي أن تدرس بجد).<br>
+He should drink more water. (ينبغي أن يشرب المزيد من الماء).<br><br>
+
+لعمل الجملة المنفية، نستخدم shouldn’t، وهي اختصار لـ should not.<br><br>
+
+مثل:<br>
+You shouldn’t eat too much sugar. (لا ينبغي أن تأكل كثيرًا من السكر).<br>
+She shouldn’t stay up late. (لا ينبغي أن تظل مستيقظة لوقت متأخر).<br><br>
+
+لا تتغير كلمة should بتغير الفاعل. تُستخدم مع:<br>
+I, you, he, she, it, we, they، وكل الأسماء.<br><br>
+
+مثل:<br>
+I should sleep early.<br>
+They should help their parents.<br>
+The doctor said he should rest.<br><br>
+
+عند السؤال عن النصيحة، نستخدم:<br><br>
+
+What should I do? (ماذا ينبغي أن أفعل؟)<br>
+Should I go to the doctor? (هل ينبغي أن أذهب إلى الطبيب؟)<br>
+What should we do to stay healthy? (ماذا ينبغي أن نفعل للحفاظ على صحتنا؟)<br><br>
+
+الإجابة تكون:<br>
+You should eat healthy food.<br>
+Yes, you should.<br>
+No, you shouldn’t.<br><br>
+
+الفرق بين will وshould مهم:<br><br>
+
+Will تُستخدم للتحدث عن المستقبل أو اتخاذ قرار.<br>
+مثل: I will call you later.<br><br>
+
+Should تُستخدم للنصح أو التوجيه.<br>
+مثل: You should call your friend.<br><br>
+
+باختصار:<br>
+الجملة الشرطية من النوع الأول (First Conditional) تُستخدم للحديث عن حدث ممكن في المستقبل.<br>
+تبدأ بـ If + مضارع بسيط، ثم will/won’t + فعل.<br>
+تُستخدم Should للنصح، وتعني "ينبغي".<br>
+تُستخدم Shouldn’t للتحذير أو النهي، وتعني "لا ينبغي".<br>
+لا تتغير should مع أي فاعل.
+                        </p>
+                </div>
+                <a href="https://www.youtube.com/watch?v=I6_e9mh9kEE&list=PLVmiIPsXCfwti9m2VlMBtvoYEWyLxIxJn" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/1H-ODjoyyClS5mOJ8pGb1e6Ld2xhgDtjP/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+    <!--بنر الوحده 5-->
+    <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit5')">
+                <h2>Unit 5:FUTURE DREAMS</h2>
+                <span class="unit-icon" id="unit5-icon">▼</span>
+            </div>
+            <div class="lessons-container" id="unit5-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1:Future Forms</h3>
+                        <p>
+يُستخدم المستقبل في اللغة الإنجليزية للحديث عن ما سيحدث لاحقًا، سواء كان قرارًا، وعدًا، توقعًا، أو خطة مسبقة.<br>
+وهناك طريقتان رئيسيتان للتعبير عن المستقبل:<br>
+الأولى باستخدام will + الفعل الأساسي، والثانية باستخدام going to + الفعل الأساسي.<br><br>
+
+أولًا: Will + الفعل الأساسي (infinitive)<br>
+يُستخدم will للتعبير عن عدة أمور في المستقبل:<br><br>
+
+1. اتخاذ قرار فوري (Quick decision)<br>
+عندما تقرر شيئًا في لحظة الحديث.<br><br>
+
+مثل:<br>
+I’m hungry. I will make a sandwich.<br>
+(أنا جائع، سأصنع ساندويتش).<br>
+هنا القرار اتُخذ في اللحظة، وليس مخططًا له مسبقًا.<br><br>
+
+2. الوعود (Promises)<br>
+مثل:<br>
+I promise I will call you tomorrow.<br>
+She will help her brother with homework.<br><br>
+
+3. التوقع بدون دليل (Prediction without evidence)<br>
+عندما تتوقع شيئًا دون أن يكون لديك دليل واضح.<br><br>
+
+مثل:<br>
+I think it will rain tomorrow.<br>
+I believe he will win the match.<br><br>
+
+4. حقائق مستقبلية (Future facts)<br>
+مثل:<br>
+Ali will be 16 next month.<br>
+We will have a holiday next week.<br><br>
+
+5. العرض أو المساعدة (Offers and help)<br>
+مثل:<br>
+Don’t worry, I will carry your bag.<br>
+I will help you with your homework.<br><br>
+
+6. الطلبات (Requests)<br>
+مثل:<br>
+Will you please close the door?<br>
+Will you help me?<br><br>
+
+7. التحذير أو التهديد (Threats and warnings)<br>
+مثل:<br>
+Be quiet, or I will punish you.<br>
+If you don’t study, you will fail.<br><br>
+
+تُستخدم will كثيرًا مع كلمات مثل:<br><br>
+think – I think it will be sunny.<br>
+believe – I believe she will come.<br>
+expect – I expect they will win.<br>
+hope – I hope you will be happy.<br>
+promise – I promise I will tell the truth.<br>
+probably – He will probably arrive late.<br><br>
+
+ملاحظة: لا نستخدم will في الجمل التي فيها جدول زمني ثابت مثل مواعيد القطارات أو الطيران. نستخدم المضارع البسيط بدلًا منه.<br>
+مثل: The train leaves at 8 p.m. (ليس will leaves).<br><br>
+
+                        </p>
+                </div>
+                <a href="https://www.youtube.com/watch?v=I6_e9mh9kEE&list=PLVmiIPsXCfwti9m2VlMBtvoYEWyLxIxJn" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/1H-ODjoyyClS5mOJ8pGb1e6Ld2xhgDtjP/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+           <!-- درس 2 -->
+            <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 2: V.TO.BE</h3>
+                        <p>
+
+ Going to + الفعل الأساسي (infinitive)<br>
+تتكوّن هذه الصيغة من:<br><br>
+am going to (مع I)<br>
+is going to (مع he, she, it)<br>
+are going to (مع we, you, they)<br><br>
+
+مثل:<br>
+He is going to travel to Luxor next week.<br>
+We are going to eat pizza tonight.<br><br>
+
+يُستخدم going to في الحالات التالية:<br><br>
+
+1. الخطط المسبقة (Plans)<br>
+عندما يكون لديك خطة جاهزة من قبل.<br><br>
+
+مثل:<br>
+He is going to travel to Luxor. It’s his plan.<br>
+They are going to visit their grandparents this weekend.<br><br>
+
+2. النية أو العزم (Intention)<br>
+عندما تعتزم فعل شيء.<br><br>
+
+مثل:<br>
+She is going to buy a new car next week.<br>
+I am going to start exercising.<br><br>
+
+3. اتخاذ قرار مسبق (Decision already made)<br>
+عندما تكون قد قررت الشيء من قبل، وليس في اللحظة.<br><br>
+
+مثل:<br>
+We are going to eat pizza. (لقد قررنا ذلك مسبقًا).<br><br>
+
+4. التوقع مع دليل (Prediction with evidence)<br>
+عندما تتوقع شيئًا بناءً على ما تراه أو تلاحظه.<br><br>
+
+مثل:<br>
+Look at the sky! It’s cloudy. I think it’s going to rain.<br>
+(لدي دليل: الغيوم).<br>
+He’s running fast. He is going to win the race.<br><br>
+
+5. شيء على وشك الحدوث (Something about to happen)<br>
+مثل:<br>
+Watch out! You’re going to fall!<br>
+Be careful! The glass is going to break.<br><br>
+
+الفرق بين Will و Going to<br><br>
+
+نستخدم will عندما نتخذ قرارًا في لحظة الحديث أو نُعطي وعودًا وتوقعات بدون دليل.<br>
+مثل: I’m tired. I will go to bed now. (اتخذت القرار الآن → will).<br><br>
+
+نستخدم going to عندما يكون القرار أو الخطة مسبقًا، أو عندما نرى دليلًا على أن شيئًا سيحدث.<br>
+مثل: I’m going to visit my uncle tomorrow. (الخطة كانت موجودة من قبل → going to).<br><br>
+
+مثال للتوضيح:<br><br>
+
+شخص يقرع الباب:<br>
+I’ll get it! (اتخذت القرار الآن → will).<br><br>
+
+شخص يخطط لرحلة:<br>
+I’m going to travel to Aswan next month. (الخطة مسبقة → going to).<br><br>
+
+ملحوظات مهمة:<br>
+لا نستخدم will أو going to مع أفعال الحواس مثل: know, like, want, love, hate.<br>
+نستخدم المضارع بدلًا من المستقبل.<br><br>
+
+مثل:<br>
+❌ I will know the result tomorrow → خطأ<br>
+✅ I will know the result tomorrow → صحيح (لكن في الحقيقة، نقول: I’ll find out the result tomorrow).<br><br>
+
+نستخدم going to أكثر في الحديث اليومي، بينما will تُستخدم للوعود، التوقعات، والقرارات الفورية.<br><br>
+
+خلاصة:<br>
+Will + فعل → للقرارات الفورية، الوعود، التوقعات بدون دليل، والطلبات.<br>
+Going to + فعل → للخطط، النوايا، والتنبؤ بشيء له دليل واضح.<br>
+كلا الشكلين مهمان، ويُستخدمان كثيرًا في الحياة اليومية.
+                        </p>
+                </div>
+                <a href="https://www.youtube.com/watch?v=I6_e9mh9kEE&list=PLVmiIPsXCfwti9m2VlMBtvoYEWyLxIxJn" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/1H-ODjoyyClS5mOJ8pGb1e6Ld2xhgDtjP/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+    <!--بنر الوحده 6-->
+    <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit6')">
+                <h2>Unit 6: GLOBAL CITIZENS</h2>
+                <span class="unit-icon" id="unit6-icon">▼</span>
+            </div>
+            <div class="lessons-container" id="unit6-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1: Necessity</h3>
+                        <p>
+تُستخدم كلمة Must للتعبير عن الضرورة أو الوجوب، أي أن شيئًا ما يجب فعله لأنه مهم أو مطلوب.<br>
+وهي أقوى من should، وتشبه "يجب" أو "من الضروري".<br><br>
+
+مثل:<br>
+We must respect different cultures.<br>
+(يجب أن نحترم الثقافات المختلفة).<br><br>
+You must wear a helmet when you ride a bike.<br>
+(يجب أن ترتدي خوذة عندما تركب الدراجة).<br><br>
+
+تُستخدم Must مع جميع الفاعلات (أنا، هو، هي، نحن، أنتم، هم) بدون تغيير.<br>
+لا تقول "musts" أو "mustes"، بل دائمًا must.<br><br>
+
+مثل:<br>
+I must study for the exam.<br>
+She must wake up early.<br>
+They must follow the rules.<br><br>
+
+لعمل الجملة المنفية، نستخدم mustn’t، وهي اختصار لـ must not.<br>
+وتعني أن شيئًا ممنوع أو خطير فعله، وليس فقط غير مستحسن.<br><br>
+
+مثل:<br>
+We mustn’t throw rubbish on the ground.<br>
+(ممنوع رمي القمامة على الأرض).<br><br>
+You mustn’t run near the pool.<br>
+(ممنوع الركض قرب المسبح).<br><br>
+He mustn’t tell lies.<br>
+(لا يجب أن يكذب).<br><br>
+
+الفرق بين mustn’t و shouldn’t مهم:<br><br>
+
+mustn’t تعني ممنوع تمامًا، وغالبًا بسبب قاعدة أو خطر.<br>
+مثل: You mustn’t drive without a license. (ممنوع بالقانون).<br><br>
+
+shouldn’t تعني نصيحة بعدم الفعل، لكنه ليس ممنوعًا.<br>
+مثل: You shouldn’t eat too much sugar. (نصيحة، لكن ليس ممنوعًا).<br><br>
+
+استخدامات Must:<br><br>
+للتاكيد على الضرورة:<br>
+مثل:<br>
+We must help people in need.<br>
+(من الضروري أن نساعد المحتاجين).<br><br>
+
+لإعطاء تعليمات أو قواعد:<br>
+مثل:<br>
+Students must wear uniforms at school.<br>
+(يجب على الطلاب ارتداء الزي المدرسي).<br><br>
+
+لإظهار القواعد أو القوانين:<br>
+مثل:<br>
+You must stop at a red light.<br>
+(يجب التوقف عند الإشارة الحمراء).<br><br>
+
+لإظهار الرأي الشخصي بضرورة شيء:<br>
+مثل:<br>
+You must watch this movie. It’s amazing!<br>
+(ينبغي أن تشاهد هذا الفيلم، إنه رائع!).<br><br>
+
+استخدامات Mustn’t:<br><br>
+لتحذير من خطر:<br>
+مثل:<br>
+You mustn’t swim here. The water is dangerous.<br><br>
+لإظهار ممنوعات واضحة:<br>
+مثل:<br>
+We mustn’t waste water.<br>
+You mustn’t smoke in the hospital.<br><br>
+
+السؤال عن الضرورة:<br>
+لا نستخدم Must في السؤال للسؤال عن الوجوب، بل نستخدم Do we have to…? أو Does he have to…?<br><br>
+
+مثل:<br>
+Do we have to wear a uniform?<br>
+(هل يجب أن نرتدي الزي؟)<br><br>
+Does she have to come early?<br><br>
+
+أما Must في السؤال، فيُستخدم نادرًا، وغالبًا للإلحاح أو المفاجأة:<br><br>
+
+Must you make so much noise?<br>
+(هل يجب أن تُحدث كل هذا الضجيج؟)<br><br>
+
+ملحوظات مهمة:<br>
+Must لا تُستخدم للحديث عن الماضي. نستخدم had to بدلًا منها.<br>
+مثل:<br>
+Yesterday, I had to wake up early. (ليس must).<br><br>
+لا تتغير must مع الفاعل، تبقى كما هي مع الجميع.<br><br>
+تُستخدم must كثيرًا في المدارس، المستشفيات، الأماكن العامة، والقوانين.<br><br>
+
+أمثلة من الحياة اليومية:<br>
+You must fasten your seatbelt in the car.<br>
+We must listen to our teachers.<br>
+You mustn’t talk during the exam.<br>
+Students mustn’t use mobile phones in class.<br><br>
+
+باختصار:<br>
+Must تعني "يجب" → للضرورة والقواعد.<br>
+Mustn’t تعني "ممنوع" → للتحذير والمنع.<br>
+لا تتغير الكلمة بتغير الفاعل.<br>
+تُستخدم في التعليمات، القواعد، والتحذيرات.
+                        </p>
+                </div>
+                 <a href="https://www.youtube.com/watch?v=I6_e9mh9kEE&list=PLVmiIPsXCfwti9m2VlMBtvoYEWyLxIxJn" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/1H-ODjoyyClS5mOJ8pGb1e6Ld2xhgDtjP/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+   <div class="home-btn-container">
+        <a href="../../index.html" class="home-btn">
+            <i class="fas fa-home"></i>
+            العودة إلى الصفحة الرئيسية
+        </a>
+    </div>
+
+    <script>
+        // دالة لإظهار/إخفاء الدروس
+        function toggleLessons(unitId) {
+            const lessonsContainer = document.getElementById(`${unitId}-lessons`);
+            const unitIcon = document.getElementById(`${unitId}-icon`);
+            
+            if (lessonsContainer.style.maxHeight === '0px' || !lessonsContainer.style.maxHeight) {
+                // حساب الارتفاع التلقائي بناءً على المحتوى
+                lessonsContainer.style.maxHeight = `${lessonsContainer.scrollHeight}px`;
+                unitIcon.textContent = '▲';
+            } else {
+                lessonsContainer.style.maxHeight = '0px';
+                unitIcon.textContent = '▼';
+            }
+        }
+
+        // يمكنك فتح وحدة معينة تلقائياً عند تحميل الصفحة
+        window.onload = function() {
+            // افتح الوحدة الأولى تلقائياً كمثال
+            toggleLessons('unit1');
+        }
+    
+    // دالة لإظهار/إخفاء الدروس
+    function toggleLessons(unitId) {
+        const lessonsContainer = document.getElementById(`${unitId}-lessons`);
+        const unitIcon = document.getElementById(`${unitId}-icon`);
+        
+        if (lessonsContainer.style.maxHeight === '0px' || !lessonsContainer.style.maxHeight) {
+            // تحديد ارتفاع ثابت بدلاً من الارتفاع التلقائي
+            lessonsContainer.style.maxHeight = '100px'; // يمكنك تعديل هذا الرقم حسب الحاجة
+            unitIcon.textContent = '▲';
+        } else {
+            lessonsContainer.style.maxHeight = '0px';
+            unitIcon.textContent = '▼';
+        }
+    }
+
+    // بقية الكود يبقى كما هو
+    
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const unitHeaders = document.querySelectorAll(".unit-header");
+
+    unitHeaders.forEach(header => {
+        header.addEventListener("click", function() {
+            const lessonsContainer = header.nextElementSibling;
+            const arrowIcon = header.querySelector(".unit-icon"); // السهم
+
+            // قفل كل البنرات المفتوحة وإرجاع الأسهم
+            document.querySelectorAll(".lessons-container").forEach(container => {
+                container.style.maxHeight = "0";
+            });
+            document.querySelectorAll(".unit-icon").forEach(icon => {
+                icon.style.transform = "rotate(0deg)";
+                icon.style.transition = "transform 0.3s ease";
+            });
+
+            // لو البنر الحالي كان مقفول افتحه
+            if (!lessonsContainer.style.maxHeight || lessonsContainer.style.maxHeight === "0px") {
+                lessonsContainer.style.maxHeight = lessonsContainer.scrollHeight + "px";
+                if (arrowIcon) {
+                    arrowIcon.style.transform = "rotate(180deg)";
+                    arrowIcon.style.transition = "transform 0.3s ease";
+                }
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الرياضيات - الصف الأول الإعدادي</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط عامة */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* الحاوية الرئيسية */
+        .exam-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        /* رأس الامتحان */
+        .exam-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+        }
+        
+        .exam-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        /* إحصائيات الأسئلة */
+        .stats {
+            background: #e9f5ff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            border-right: 4px solid #007bff;
+        }
+        
+        /* الأسئلة */
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .question h3 {
+            color: #007bff;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        /* النصوص والقصائد */
+        .passage, .poem {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.8;
+            font-style: italic;
+            border-right: 4px solid #6c757d;
+        }
+        
+        .poem {
+            text-align: center;
+            font-weight: bold;
+            background: #fff9e6;
+            border-right-color: #ffc107;
+        }
+        
+        /* خيارات الأسئلة */
+        .options {
+            margin: 20px 0;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            background: white;
+        }
+        
+        .option:hover {
+            background-color: #e9f5ff;
+            transform: translateX(-5px);
+        }
+        
+        .option.selected {
+            background-color: #d4edff;
+            border-left: 4px solid #007bff;
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        /* شرح الإجابة */
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-right: 3px solid #6c757d;
+        }
+        
+        /* حقول الإدخال */
+        .fill-in-blank input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .fill-in-blank input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+        
+        /* التنقل بين الأسئلة */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        /* الأزرار */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover:not(:disabled) {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover:not(:disabled) {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover:not(:disabled) {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+        
+        /* النتائج */
+        .results-container {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #007bff;
+        }
+        
+        .feedback {
+            text-align: center;
+            font-size: 18px;
+            margin: 15px 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .recommendations {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .correct-answer {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        /* عناصر التحكم */
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .exam-container {
+                padding: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .passage, .poem {
+                padding: 15px;
+            }
+        }
+    </style></head>
+<body>
+    <div class="exam-container">
+        <div class="exam-header">
+            <h1 id="exam-title">اختبار الرياضيات - الصف الأول الإعدادي ( الوحدة الرابعة ) - الترم الأول</h1>
+        </div>
+        
+        <div class="stats">السؤال <span id="current-question">1</span> من <span id="total-questions">60</span></div>
+        
+        <div id="questions-container"></div>
+        
+        <div class="navigation">
+            <button id="prev-btn" class="btn btn-secondary" disabled>السابق</button>
+            <button id="next-btn" class="btn btn-primary">التالي</button>
+        </div>
+        
+        <div class="controls">
+            <button id="restart-btn" class="btn btn-warning">إعادة البدء</button>
+            <button id="print-btn" class="btn btn-info">طباعة النتائج</button>
+            <button id="share-btn" class="btn btn-success">مشاركة النتائج</button>
+            <button id="back-btn" class="btn btn-danger">العودة للامتحانات</button>
+        </div>
+        
+        <div class="results-container" id="results-container">
+            <h2>النتيجة</h2>
+            <div id="score"></div>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+
+    <audio id="correctSound" src="../../../assets/audio/correct.mp3" preload="auto"></audio>
+    <audio id="incorrectSound" src="../../../assets/audio/incorrect.mp3" preload="auto"></audio>
+
+
+   <script>
+    // أصوات
+    const correctSound = document.getElementById('correctSound');
+    const incorrectSound = document.getElementById('incorrectSound');
+
+    // معرف الامتحان
+    const examId = "arabic-grade1-term1";
+
+    // بيانات الأسئلة (كما أرسلتها)
+    const examData = {
+        title: "اختبار الرياضيات - الصف الأول الإعدادي ( الوحدة الرابعة ) - الترم الأول",
+        questions: [
+           {
+        "id": 1,
+        "type": "multiple-choice",
+        "text": "ما تعريف الزاوية؟",
+        "options": [
+            { "id": 1, "text": "تقاطع مستقيمين فقط", "correct": false },
+            { "id": 2, "text": "اتحاد شعاعين لهما نفس نقطة البداية", "correct": true },
+            { "id": 3, "text": "قطعة مستقيمة بين نقطتين", "correct": false },
+            { "id": 4, "text": "شكل مغلق من 3 أضلاع", "correct": false }
+        ],
+        "explanation": "الزاوية تتكون من شعاعين لهما رأس مشترك."
+    },
+    {
+        "id": 2,
+        "type": "multiple-choice",
+        "text": "ما اسم النقطة المشتركة بين شعاعي الزاوية؟",
+        "options": [
+            { "id": 1, "text": "الضلع", "correct": false },
+            { "id": 2, "text": "الرأس", "correct": true },
+            { "id": 3, "text": "القاعدة", "correct": false },
+            { "id": 4, "text": "المحور", "correct": false }
+        ],
+        "explanation": "الرأس هي نقطة البداية المشتركة للشعاعين."
+    },
+    {
+        "id": 3,
+        "type": "multiple-choice",
+        "text": "ما وحدة قياس الزاوية؟",
+        "options": [
+            { "id": 1, "text": "المتر", "correct": false },
+            { "id": 2, "text": "الكيلوجرام", "correct": false },
+            { "id": 3, "text": "الدرجة", "correct": true },
+            { "id": 4, "text": "اللتر", "correct": false }
+        ],
+        "explanation": "تُقاس الزاوية بالدرجات، والدقائق، والثواني."
+    },
+    {
+        "id": 4,
+        "type": "multiple-choice",
+        "text": "ما نوع الزاوية التي قياسها 90°؟",
+        "options": [
+            { "id": 1, "text": "حادة", "correct": false },
+            { "id": 2, "text": "قائمة", "correct": true },
+            { "id": 3, "text": "منفرجة", "correct": false },
+            { "id": 4, "text": "مستقيمة", "correct": false }
+        ],
+        "explanation": "الزاوية القائمة قياسها 90° بالضبط."
+    },
+    {
+        "id": 5,
+        "type": "multiple-choice",
+        "text": "ما نوع الزاوية التي قياسها 120°؟",
+        "options": [
+            { "id": 1, "text": "حادة", "correct": false },
+            { "id": 2, "text": "قائمة", "correct": false },
+            { "id": 3, "text": "منفرجة", "correct": true },
+            { "id": 4, "text": "صفرية", "correct": false }
+        ],
+        "explanation": "الزاوية المنفرجة أكبر من 90° وأقل من 180°."
+    },
+    {
+        "id": 6,
+        "type": "multiple-choice",
+        "text": "ما مجموع قياسي زاويتين متتامتين؟",
+        "options": [
+            { "id": 1, "text": "90°", "correct": true },
+            { "id": 2, "text": "180°", "correct": false },
+            { "id": 3, "text": "360°", "correct": false },
+            { "id": 4, "text": "45°", "correct": false }
+        ],
+        "explanation": "الزاويتان المتتامتان مجموعهما 90°."
+    },
+    {
+        "id": 7,
+        "type": "multiple-choice",
+        "text": "ما مجموع قياسي زاويتين متكاملتين؟",
+        "options": [
+            { "id": 1, "text": "90°", "correct": false },
+            { "id": 2, "text": "180°", "correct": true },
+            { "id": 3, "text": "270°", "correct": false },
+            { "id": 4, "text": "360°", "correct": false }
+        ],
+        "explanation": "الزاويتان المتكاملتان مجموعهما 180°."
+    },
+    {
+        "id": 8,
+        "type": "multiple-choice",
+        "text": "ما خاصية الزاويتين المتقابلتين بالرأس؟",
+        "options": [
+            { "id": 1, "text": "مجموعهما 90°", "correct": false },
+            { "id": 2, "text": "مجموعهما 180°", "correct": false },
+            { "id": 3, "text": "متساويتان في القياس", "correct": true },
+            { "id": 4, "text": "إحداهما حادة والأخرى منفرجة", "correct": false }
+        ],
+        "explanation": "الزاويتان المتقابلتان بالرأس متساويتان دائمًا."
+    },
+    {
+        "id": 9,
+        "type": "multiple-choice",
+        "text": "ما مجموع الزوايا حول نقطة واحدة؟",
+        "options": [
+            { "id": 1, "text": "90°", "correct": false },
+            { "id": 2, "text": "180°", "correct": false },
+            { "id": 3, "text": "270°", "correct": false },
+            { "id": 4, "text": "360°", "correct": true }
+        ],
+        "explanation": "مجموع الزوايا حول نقطة يساوي 360 درجة."
+    },
+    {
+        "id": 10,
+        "type": "multiple-choice",
+        "text": "ما الشعاع الذي يقسم الزاوية إلى جزأين متساويين؟",
+        "options": [
+            { "id": 1, "text": "الوسيط", "correct": false },
+            { "id": 2, "text": "الارتفاع", "correct": false },
+            { "id": 3, "text": "منصف الزاوية", "correct": true },
+            { "id": 4, "text": "القطر", "correct": false }
+        ],
+        "explanation": "منصف الزاوية يقسمها إلى زاويتين متساويتين."
+    },
+    {
+        "id": 11,
+        "type": "multiple-choice",
+        "text": "ما تعريف المستقيمين المتوازيين؟",
+        "options": [
+            { "id": 1, "text": "يتقاطعان عند زاوية حادة", "correct": false },
+            { "id": 2, "text": "لا يتقاطعان أبدًا ويظل بينهما نفس المسافة", "correct": true },
+            { "id": 3, "text": "يتقاطعان عند نقطة واحدة", "correct": false },
+            { "id": 4, "text": "يكونان عموديين على بعضهما", "correct": false }
+        ],
+        "explanation": "المستقيمان المتوازيان لا يتقاطعان ويبقى الفاصل بينهما ثابتًا."
+    },
+    {
+        "id": 12,
+        "type": "multiple-choice",
+        "text": "ما رمز التوازي؟",
+        "options": [
+            { "id": 1, "text": "⊥", "correct": false },
+            { "id": 2, "text": "∥", "correct": true },
+            { "id": 3, "text": "≅", "correct": false },
+            { "id": 4, "text": "≠", "correct": false }
+        ],
+        "explanation": "يُرمز للتوازي بالرمز ∥."
+    },
+    {
+        "id": 13,
+        "type": "multiple-choice",
+        "text": "ما المستقيم الذي يقطع مستقيمين أو أكثر؟",
+        "options": [
+            { "id": 1, "text": "القاعدة", "correct": false },
+            { "id": 2, "text": "الارتفاع", "correct": false },
+            { "id": 3, "text": "القاطع", "correct": true },
+            { "id": 4, "text": "الوسيط", "correct": false }
+        ],
+        "explanation": "القاطع هو المستقيم الذي يقطع مستقيمين أو أكثر."
+    },
+    {
+        "id": 14,
+        "type": "multiple-choice",
+        "text": "ما الزوايا الواقعة بين مستقيمين متوازيين؟",
+        "options": [
+            { "id": 1, "text": "الزوايا الخارجية", "correct": false },
+            { "id": 2, "text": "الزوايا الداخلية", "correct": true },
+            { "id": 3, "text": "الزوايا المتجاورة", "correct": false },
+            { "id": 4, "text": "الزوايا المتقابلة", "correct": false }
+        ],
+        "explanation": "الزوايا الداخلية تقع بين المستقيمين المتوازيين."
+    },
+    {
+        "id": 15,
+        "type": "multiple-choice",
+        "text": "ما الزوايا التي تقع في نفس الجهة من القاطع وواحدة داخلية والأخرى خارجية؟",
+        "options": [
+            { "id": 1, "text": "متبادلة داخلية", "correct": false },
+            { "id": 2, "text": "متبادلة خارجية", "correct": false },
+            { "id": 3, "text": "متناظرة", "correct": true },
+            { "id": 4, "text": "متكاملة", "correct": false }
+        ],
+        "explanation": "الزاويتان المتناظرتان تكون إحداهما داخلية والأخرى خارجية وفي نفس الجهة."
+    },
+    {
+        "id": 16,
+        "type": "multiple-choice",
+        "text": "إذا كان مستقيمان متوازيان، فما خاصية الزاويتين المتبادلتين داخليًا؟",
+        "options": [
+            { "id": 1, "text": "مجموعهما 90°", "correct": false },
+            { "id": 2, "text": "مجموعهما 180°", "correct": false },
+            { "id": 3, "text": "متساويتان في القياس", "correct": true },
+            { "id": 4, "text": "إحداهما قائمة", "correct": false }
+        ],
+        "explanation": "الزاويتان المتبادلتان داخليًا متساويتان إذا كان المستقيمان متوازيين."
+    },
+    {
+        "id": 17,
+        "type": "multiple-choice",
+        "text": "ما مجموع الزاويتين الداخليتين في جهة واحدة من القاطع إذا كان المستقيمان متوازيين؟",
+        "options": [
+            { "id": 1, "text": "90°", "correct": false },
+            { "id": 2, "text": "180°", "correct": true },
+            { "id": 3, "text": "270°", "correct": false },
+            { "id": 4, "text": "360°", "correct": false }
+        ],
+        "explanation": "الزاويتان الداخليتان في جهة واحدة من القاطع تكونان متكاملتين (مجموعهما 180°)."
+    },
+    {
+        "id": 18,
+        "type": "multiple-choice",
+        "text": "كيف نثبت توازي مستقيمين؟",
+        "options": [
+            { "id": 1, "text": "بوجود زاويتين متجاورتين", "correct": false },
+            { "id": 2, "text": "بوجود زاويتين متناظرتين متساويتين", "correct": true },
+            { "id": 3, "text": "بوجود زاويتين متتامتين", "correct": false },
+            { "id": 4, "text": "بوجود زاويتين متقابلتين غير متساويتين", "correct": false }
+        ],
+        "explanation": "وجود زاويتين متناظرتين متساويتين يدل على التوازي."
+    },
+    {
+        "id": 19,
+        "type": "multiple-choice",
+        "text": "ما تعريف المثلث؟",
+        "options": [
+            { "id": 1, "text": "شكل له 4 أضلاع", "correct": false },
+            { "id": 2, "text": "شكل له 3 أضلاع و3 زوايا و3 رؤوس", "correct": true },
+            { "id": 3, "text": "شكل دائري", "correct": false },
+            { "id": 4, "text": "شكل له 5 أضلاع", "correct": false }
+        ],
+        "explanation": "المثلث شكل هندسي له 3 أضلاع و3 زوايا و3 رؤوس."
+    },
+    {
+        "id": 20,
+        "type": "multiple-choice",
+        "text": "ما مجموع الزوايا الداخلية في أي مثلث؟",
+        "options": [
+            { "id": 1, "text": "90°", "correct": false },
+            { "id": 2, "text": "180°", "correct": true },
+            { "id": 3, "text": "270°", "correct": false },
+            { "id": 4, "text": "360°", "correct": false }
+        ],
+        "explanation": "مجموع الزوايا الداخلية لأي مثلث = 180°."
+    },
+    {
+        "id": 21,
+        "type": "multiple-choice",
+        "text": "ما قياس الزاوية الخارجة في المثلث؟",
+        "options": [
+            { "id": 1, "text": "يساوي مجموع الزاويتين الداخلتين المجاورتين لها", "correct": false },
+            { "id": 2, "text": "يساوي مجموع الزاويتين الداخلتين غير المجاورة لها", "correct": true },
+            { "id": 3, "text": "يساوي الزاوية المقابلة", "correct": false },
+            { "id": 4, "text": "يساوي 90° دائمًا", "correct": false }
+        ],
+        "explanation": "الزاوية الخارجة = مجموع الزاويتين الداخليتين غير المجاورة لها."
+    },
+    {
+        "id": 22,
+        "type": "multiple-choice",
+        "text": "ما شرط وجود مثلث من حيث أطوال الأضلاع؟",
+        "options": [
+            { "id": 1, "text": "مجموع أي ضلعين أكبر من الضلع الثالث", "correct": true },
+            { "id": 2, "text": "مجموع أي ضلعين يساوي الضلع الثالث", "correct": false },
+            { "id": 3, "text": "مجموع أي ضلعين أقل من الضلع الثالث", "correct": false },
+            { "id": 4, "text": "لا يوجد شرط", "correct": false }
+        ],
+        "explanation": "شرط وجود مثلث: مجموع طولي أي ضلعين > طول الضلع الثالث."
+    },
+    {
+        "id": 23,
+        "type": "multiple-choice",
+        "text": "هل يمكن رسم مثلث أطوال أضلاعه 3، 4، 8 سم؟",
+        "options": [
+            { "id": 1, "text": "نعم", "correct": false },
+            { "id": 2, "text": "لا، لأن 3 + 4 = 7 < 8", "correct": true },
+            { "id": 3, "text": "نعم، لأنه متساوي الساقين", "correct": false },
+            { "id": 4, "text": "نعم، لأنه قائم الزاوية", "correct": false }
+        ],
+        "explanation": "3 + 4 = 7 < 8، لذا لا يمكن رسم مثلث."
+    },
+    {
+        "id": 24,
+        "type": "multiple-choice",
+        "text": "ما نوع المثلث الذي جميع أضلاعه متساوية؟",
+        "options": [
+            { "id": 1, "text": "مختلف الأضلاع", "correct": false },
+            { "id": 2, "text": "متساوي الساقين", "correct": false },
+            { "id": 3, "text": "متساوي الأضلاع", "correct": true },
+            { "id": 4, "text": "قائم الزاوية", "correct": false }
+        ],
+        "explanation": "المثلث المتساوي الأضلاع له 3 أضلاع متساوية و3 زوايا = 60°."
+    },
+    {
+        "id": 25,
+        "type": "multiple-choice",
+        "text": "ما نوع المثلث الذي ضلعان فيه متساويان؟",
+        "options": [
+            { "id": 1, "text": "مختلف الأضلاع", "correct": false },
+            { "id": 2, "text": "متساوي الساقين", "correct": true },
+            { "id": 3, "text": "متساوي الأضلاع", "correct": false },
+            { "id": 4, "text": "منفرج الزاوية", "correct": false }
+        ],
+        "explanation": "المثلث متساوي الساقين له ضلعان متساويان والزاويتان المقابلتان لهما متساويتان."
+    },
+    {
+        "id": 26,
+        "type": "multiple-choice",
+        "text": "ما مجموع الزوايا الداخلية لأي شكل رباعي؟",
+        "options": [
+            { "id": 1, "text": "180°", "correct": false },
+            { "id": 2, "text": "270°", "correct": false },
+            { "id": 3, "text": "360°", "correct": true },
+            { "id": 4, "text": "90°", "correct": false }
+        ],
+        "explanation": "الشكل الرباعي ينقسم إلى مثلثين، لذا مجموع الزوايا = 360°."
+    },
+    {
+        "id": 27,
+        "type": "multiple-choice",
+        "text": "ما الشكل الرباعي الذي فيه ضلعان فقط متوازيان؟",
+        "options": [
+            { "id": 1, "text": "متوازي الأضلاع", "correct": false },
+            { "id": 2, "text": "المستطيل", "correct": false },
+            { "id": 3, "text": "شبه المنحرف", "correct": true },
+            { "id": 4, "text": "المربع", "correct": false }
+        ],
+        "explanation": "شبه المنحرف فيه ضلعان فقط متوازيان."
+    },
+    {
+        "id": 28,
+        "type": "multiple-choice",
+        "text": "ما خاصية متوازي الأضلاع؟",
+        "options": [
+            { "id": 1, "text": "كل ضلعين متقابلين متوازيين ومتساويين", "correct": true },
+            { "id": 2, "text": "جميع الزوايا قائمة", "correct": false },
+            { "id": 3, "text": "جميع الأضلاع متساوية", "correct": false },
+            { "id": 4, "text": "القطران متساويان فقط", "correct": false }
+        ],
+        "explanation": "في متوازي الأضلاع، كل ضلعين متقابلين متوازيين ومتساويين."
+    },
+    {
+        "id": 29,
+        "type": "multiple-choice",
+        "text": "ما الشكل الذي هو متوازي أضلاع وزواياه قائمة؟",
+        "options": [
+            { "id": 1, "text": "المعين", "correct": false },
+            { "id": 2, "text": "شبه المنحرف", "correct": false },
+            { "id": 3, "text": "المستطيل", "correct": true },
+            { "id": 4, "text": "المثلث", "correct": false }
+        ],
+        "explanation": "المستطيل هو متوازي أضلاع إحدى زواياه قائمة."
+    },
+    {
+        "id": 30,
+        "type": "multiple-choice",
+        "text": "ما الشكل الذي هو متوازي أضلاع وأضلاعه متساوية؟",
+        "options": [
+            { "id": 1, "text": "المستطيل", "correct": false },
+            { "id": 2, "text": "المعين", "correct": true },
+            { "id": 3, "text": "شبه المنحرف", "correct": false },
+            { "id": 4, "text": "المربع", "correct": false }
+        ],
+        "explanation": "المعين هو متوازي أضلاع فيه ضلعان متجاوران متساويان (وبالتالي جميع الأضلاع متساوية)."
+    },
+    {
+        "id": 31,
+        "type": "multiple-choice",
+        "text": "ما الشكل الذي هو مستطيل ومعين معًا؟",
+        "options": [
+            { "id": 1, "text": "شبه منحرف", "correct": false },
+            { "id": 2, "text": "مثلث", "correct": false },
+            { "id": 3, "text": "مربع", "correct": true },
+            { "id": 4, "text": "خماسي", "correct": false }
+        ],
+        "explanation": "المربع يجمع خواص المستطيل (زوايا قائمة) والمعين (أضلاع متساوية)."
+    },
+    {
+        "id": 32,
+        "type": "multiple-choice",
+        "text": "ما الشكل الرباعي الذي فيه القطران متعامدان وينصفان بعضهما؟",
+        "options": [
+            { "id": 1, "text": "شبه منحرف", "correct": false },
+            { "id": 2, "text": "متوازي أضلاع", "correct": false },
+            { "id": 3, "text": "معين", "correct": true },
+            { "id": 4, "text": "مثلث", "correct": false }
+        ],
+        "explanation": "في المعين، القطران متعامدان وينصف كل منهما الآخر."
+    },
+    {
+        "id": 33,
+        "type": "multiple-choice",
+        "text": "ما الشكل الذي فيه القطران متساويان وينصفان بعضهما؟",
+        "options": [
+            { "id": 1, "text": "شبه منحرف", "correct": false },
+            { "id": 2, "text": "معين", "correct": false },
+            { "id": 3, "text": "مستطيل", "correct": true },
+            { "id": 4, "text": "مثلث", "correct": false }
+        ],
+        "explanation": "في المستطيل، القطران متساويان وينصف كل منهما الآخر."
+    },
+    {
+        "id": 34,
+        "type": "multiple-choice",
+        "text": "ما تعريف المضلع؟",
+        "options": [
+            { "id": 1, "text": "شكل دائري", "correct": false },
+            { "id": 2, "text": "شكل مغلق من أضلاع مستقيمة", "correct": true },
+            { "id": 3, "text": "شكل غير منتظم فقط", "correct": false },
+            { "id": 4, "text": "شكل له 3 أضلاع فقط", "correct": false }
+        ],
+        "explanation": "المضلع شكل مغلق يتكون من أضلاع مستقيمة."
+    },
+    {
+        "id": 35,
+        "type": "multiple-choice",
+        "text": "ما الفرق بين المضلع المحدب والمقعر؟",
+        "options": [
+            { "id": 1, "text": "المحدب له زاوية > 180°", "correct": false },
+            { "id": 2, "text": "المقعر له زاوية > 180°", "correct": true },
+            { "id": 3, "text": "المحدب دائري", "correct": false },
+            { "id": 4, "text": "المقعر له 3 أضلاع فقط", "correct": false }
+        ],
+        "explanation": "المضلع المقعر يحتوي على زاوية داخلية > 180°."
+    },
+    {
+        "id": 36,
+        "type": "multiple-choice",
+        "text": "ما مجموع الزوايا الداخلية لمضلع له 5 أضلاع؟",
+        "options": [
+            { "id": 1, "text": "360°", "correct": false },
+            { "id": 2, "text": "540°", "correct": true },
+            { "id": 3, "text": "720°", "correct": false },
+            { "id": 4, "text": "180°", "correct": false }
+        ],
+        "explanation": "(5 – 2) × 180 = 3 × 180 = 540°."
+    },
+    {
+        "id": 37,
+        "type": "multiple-choice",
+        "text": "ما قياس كل زاوية في خماسي منتظم؟",
+        "options": [
+            { "id": 1, "text": "90°", "correct": false },
+            { "id": 2, "text": "108°", "correct": true },
+            { "id": 3, "text": "120°", "correct": false },
+            { "id": 4, "text": "60°", "correct": false }
+        ],
+        "explanation": "540° ÷ 5 = 108°."
+    },
+    {
+        "id": 38,
+        "type": "multiple-choice",
+        "text": "ما قياس كل زاوية في سداسي منتظم؟",
+        "options": [
+            { "id": 1, "text": "108°", "correct": false },
+            { "id": 2, "text": "120°", "correct": true },
+            { "id": 3, "text": "90°", "correct": false },
+            { "id": 4, "text": "150°", "correct": false }
+        ],
+        "explanation": "(6 – 2) × 180 = 720°، 720 ÷ 6 = 120°."
+    },
+    {
+        "id": 39,
+        "type": "multiple-choice",
+        "text": "ما عدد محاور التماثل في المثلث متساوي الأضلاع؟",
+        "options": [
+            { "id": 1, "text": "1", "correct": false },
+            { "id": 2, "text": "2", "correct": false },
+            { "id": 3, "text": "3", "correct": true },
+            { "id": 4, "text": "0", "correct": false }
+        ],
+        "explanation": "له 3 محاور تماثل (من كل رأس إلى منتصف الضلع المقابل)."
+    },
+    {
+        "id": 40,
+        "type": "multiple-choice",
+        "text": "ما عدد محاور التماثل في المربع؟",
+        "options": [
+            { "id": 1, "text": "2", "correct": false },
+            { "id": 2, "text": "3", "correct": false },
+            { "id": 3, "text": "4", "correct": true },
+            { "id": 4, "text": "1", "correct": false }
+        ],
+        "explanation": "المربع له 4 محاور تماثل (قطريان ومحوران من منتصف الأضلاع)."
+    },
+    {
+        "id": 41,
+        "type": "multiple-choice",
+        "text": "ما عدد محاور التماثل في المستطيل غير المربع؟",
+        "options": [
+            { "id": 1, "text": "1", "correct": false },
+            { "id": 2, "text": "2", "correct": true },
+            { "id": 3, "text": "3", "correct": false },
+            { "id": 4, "text": "4", "correct": false }
+        ],
+        "explanation": "له محوران: من منتصف الطول ومن منتصف العرض."
+    },
+    {
+        "id": 42,
+        "type": "multiple-choice",
+        "text": "ما عدد محاور التماثل في المثلث مختلف الأضلاع؟",
+        "options": [
+            { "id": 1, "text": "3", "correct": false },
+            { "id": 2, "text": "1", "correct": false },
+            { "id": 3, "text": "0", "correct": true },
+            { "id": 4, "text": "2", "correct": false }
+        ],
+        "explanation": "لا يوجد تماثل في المثلث مختلف الأضلاع."
+    },
+    {
+        "id": 43,
+        "type": "multiple-choice",
+        "text": "ما اسم المحور الأفقي في المستوى الإحداثي؟",
+        "options": [
+            { "id": 1, "text": "محور الصادات (y)", "correct": false },
+            { "id": 2, "text": "محور السينات (x)", "correct": true },
+            { "id": 3, "text": "محور الزوايا", "correct": false },
+            { "id": 4, "text": "محور الطول", "correct": false }
+        ],
+        "explanation": "محور السينات (x) هو المحور الأفقي."
+    },
+    {
+        "id": 44,
+        "type": "multiple-choice",
+        "text": "ما اسم المحور الرأسي في المستوى الإحداثي؟",
+        "options": [
+            { "id": 1, "text": "محور السينات", "correct": false },
+            { "id": 2, "text": "محور الصادات", "correct": true },
+            { "id": 3, "text": "محور الزوايا", "correct": false },
+            { "id": 4, "text": "محور العرض", "correct": false }
+        ],
+        "explanation": "محور الصادات (y) هو المحور الرأسي."
+    },
+    {
+        "id": 45,
+        "type": "multiple-choice",
+        "text": "ما إحداثيات نقطة الأصل؟",
+        "options": [
+            { "id": 1, "text": "(1، 1)", "correct": false },
+            { "id": 2, "text": "(0، 0)", "correct": true },
+            { "id": 3, "text": "(1، 0)", "correct": false },
+            { "id": 4, "text": "(0، 1)", "correct": false }
+        ],
+        "explanation": "نقطة الأصل هي (0، 0)، حيث يتقاطع المحوران."
+    },
+    {
+        "id": 46,
+        "type": "multiple-choice",
+        "text": "في أي ربع تقع النقطة (–3، 4)؟",
+        "options": [
+            { "id": 1, "text": "الربع الأول", "correct": false },
+            { "id": 2, "text": "الربع الثاني", "correct": true },
+            { "id": 3, "text": "الربع الثالث", "correct": false },
+            { "id": 4, "text": "الربع الرابع", "correct": false }
+        ],
+        "explanation": "سالب، موجب → الربع الثاني."
+    },
+    {
+        "id": 47,
+        "type": "multiple-choice",
+        "text": "إذا كانت النقطة (5، 0)، فأين تقع؟",
+        "options": [
+            { "id": 1, "text": "على محور الصادات", "correct": false },
+            { "id": 2, "text": "على محور السينات", "correct": true },
+            { "id": 3, "text": "في الربع الأول", "correct": false },
+            { "id": 4, "text": "في الربع الرابع", "correct": false }
+        ],
+        "explanation": "إذا كانت ص = 0، فالنقطة على محور السينات."
+    },
+    {
+        "id": 48,
+        "type": "multiple-choice",
+        "text": "ما إحداثيات مسقط النقطة (4، 7) على محور السينات؟",
+        "options": [
+            { "id": 1, "text": "(4، 0)", "correct": true },
+            { "id": 2, "text": "(0، 7)", "correct": false },
+            { "id": 3, "text": "(7، 0)", "correct": false },
+            { "id": 4, "text": "(0، 4)", "correct": false }
+        ],
+        "explanation": "مسقط النقطة على محور السينات يُبقي السيني ويجعل الصادي صفرًا."
+    },
+    {
+        "id": 49,
+        "type": "multiple-choice",
+        "text": "ما إحداثيات مسقط النقطة (–2، 5) على محور الصادات؟",
+        "options": [
+            { "id": 1, "text": "(–2، 0)", "correct": false },
+            { "id": 2, "text": "(0، 5)", "correct": true },
+            { "id": 3, "text": "(5، 0)", "correct": false },
+            { "id": 4, "text": "(0، –2)", "correct": false }
+        ],
+        "explanation": "مسقط النقطة على محور الصادات يُبقي الصادي ويجعل السيني صفرًا."
+    },
+    {
+        "id": 50,
+        "type": "multiple-choice",
+        "text": "ما إحداثيات منتصف القطعة بين A(2, 4) و B(6, 2)؟",
+        "options": [
+            { "id": 1, "text": "(4، 3)", "correct": true },
+            { "id": 2, "text": "(3، 4)", "correct": false },
+            { "id": 3, "text": "(8، 6)", "correct": false },
+            { "id": 4, "text": "(4، 6)", "correct": false }
+        ],
+        "explanation": "س = (2+6)/2 = 4، ص = (4+2)/2 = 3 → (4، 3)"
+    },
+    {
+        "id": 51,
+        "type": "multiple-choice",
+        "text": "ما طول مسقط القطعة بين A(3, 2) و B(–2, 4) على محور السينات؟",
+        "options": [
+            { "id": 1, "text": "3 وحدات", "correct": false },
+            { "id": 2, "text": "5 وحدات", "correct": true },
+            { "id": 3, "text": "2 وحدات", "correct": false },
+            { "id": 4, "text": "4 وحدات", "correct": false }
+        ],
+        "explanation": "مسقط A: (3,0)، مسقط B: (–2,0)، المسافة = |3 – (–2)| = 5"
+    },
+    {
+        "id": 52,
+        "type": "multiple-choice",
+        "text": "ما مجموع الزوايا الداخلية لمضلع له 6 أضلاع؟",
+        "options": [
+            { "id": 1, "text": "540°", "correct": false },
+            { "id": 2, "text": "720°", "correct": true },
+            { "id": 3, "text": "360°", "correct": false },
+            { "id": 4, "text": "900°", "correct": false }
+        ],
+        "explanation": "(6 – 2) × 180 = 4 × 180 = 720°"
+    },
+    {
+        "id": 53,
+        "type": "multiple-choice",
+        "text": "ما مجموع الزوايا الداخلية لمضلع له 7 أضلاع؟",
+        "options": [
+            { "id": 1, "text": "720°", "correct": false },
+            { "id": 2, "text": "900°", "correct": true },
+            { "id": 3, "text": "540°", "correct": false },
+            { "id": 4, "text": "360°", "correct": false }
+        ],
+        "explanation": "(7 – 2) × 180 = 5 × 180 = 900°"
+    },
+    {
+        "id": 54,
+        "type": "multiple-choice",
+        "text": "ما قياس كل زاوية في مثلث متساوي الأضلاع؟",
+        "options": [
+            { "id": 1, "text": "30°", "correct": false },
+            { "id": 2, "text": "60°", "correct": true },
+            { "id": 3, "text": "90°", "correct": false },
+            { "id": 4, "text": "45°", "correct": false }
+        ],
+        "explanation": "180° ÷ 3 = 60°"
+    },
+    {
+        "id": 55,
+        "type": "multiple-choice",
+        "text": "ما مساحة متوازي أضلاع قاعدته 5 وحدات وارتفاعه 3 وحدات؟",
+        "options": [
+            { "id": 1, "text": "8 وحدات مربعة", "correct": false },
+            { "id": 2, "text": "15 وحدة مربعة", "correct": true },
+            { "id": 3, "text": "10 وحدات مربعة", "correct": false },
+            { "id": 4, "text": "7 وحدات مربعة", "correct": false }
+        ],
+        "explanation": "المساحة = القاعدة × الارتفاع = 5 × 3 = 15"
+    },
+    {
+        "id": 56,
+        "type": "multiple-choice",
+        "text": "ما شكل الناتج عند تمثيل النقاط A(1,0), B(–3,0), C(–1,2), D(3,2)؟",
+        "options": [
+            { "id": 1, "text": "مثلث", "correct": false },
+            { "id": 2, "text": "مربع", "correct": false },
+            { "id": 3, "text": "مستطيل", "correct": false },
+            { "id": 4, "text": "متوازي أضلاع", "correct": true }
+        ],
+        "explanation": "الأضلاع المتقابلة متوازية ومتساوية."
+    },
+    {
+        "id": 57,
+        "type": "multiple-choice",
+        "text": "ما مجموع الزوايا الداخلية لمضلع له 8 أضلاع؟",
+        "options": [
+            { "id": 1, "text": "720°", "correct": false },
+            { "id": 2, "text": "900°", "correct": false },
+            { "id": 3, "text": "1080°", "correct": true },
+            { "id": 4, "text": "1260°", "correct": false }
+        ],
+        "explanation": "(8 – 2) × 180 = 6 × 180 = 1080°"
+    },
+    {
+        "id": 58,
+        "type": "multiple-choice",
+        "text": "ما عدد محاور التماثل في السداسي المنتظم؟",
+        "options": [
+            { "id": 1, "text": "4", "correct": false },
+            { "id": 2, "text": "5", "correct": false },
+            { "id": 3, "text": "6", "correct": true },
+            { "id": 4, "text": "3", "correct": false }
+        ],
+        "explanation": "كل مضلع منتظم له عدد محاور تماثل = عدد أضلاعه."
+    },
+    {
+        "id": 59,
+        "type": "multiple-choice",
+        "text": "ما إحداثيات منتصف القطعة بين (–1, 3) و (5, –1)؟",
+        "options": [
+            { "id": 1, "text": "(2، 1)", "correct": true },
+            { "id": 2, "text": "(4، 2)", "correct": false },
+            { "id": 3, "text": "(3، 1)", "correct": false },
+            { "id": 4, "text": "(2، 2)", "correct": false }
+        ],
+        "explanation": "س = (–1 + 5)/2 = 2، ص = (3 + (–1))/2 = 1 → (2، 1)"
+    },
+    {
+        "id": 60,
+        "type": "multiple-choice",
+        "text": "ما الربع الذي تقع فيه النقطة (0, –4)؟",
+        "options": [
+            { "id": 1, "text": "الربع الأول", "correct": false },
+            { "id": 2, "text": "الربع الرابع", "correct": false },
+            { "id": 3, "text": "على محور الصادات", "correct": true },
+            { "id": 4, "text": "على محور السينات", "correct": false }
+        ],
+        "explanation": "السيني = 0 → تقع على محور الصادات."
+    }
+        ]
+    };
+
+   // متغيرات
+    let currentQuestionIndex = 0;
+    let userAnswers = {};
+    let answered = {};
+
+    // تحميل البيانات المحفوظة
+    function loadSavedData() {
+        const saved = localStorage.getItem(`exam_${examId}`);
+        if (saved) {
+            const data = JSON.parse(saved);
+            userAnswers = data.answers || {};
+            currentQuestionIndex = data.currentQuestionIndex || 0;
+            return true;
+        }
+        return false;
+    }
+
+    // حفظ البيانات
+    function saveData() {
+        const data = {
+            answers: userAnswers,
+            currentQuestionIndex: currentQuestionIndex,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem(`exam_${examId}`, JSON.stringify(data));
+    }
+
+    // الحصول على رقم السؤال الحقيقي (باستثناء النصوص والشعر)
+    function getQuestionNumber(index) {
+        let realCount = 0;
+        for (let i = 0; i <= index; i++) {
+            if (examData.questions[i].type !== "passage" && examData.questions[i].type !== "poem") {
+                realCount++;
+            }
+        }
+        return realCount;
+    }
+
+    // تحديث زر التالي
+    function updateNextButton() {
+        const nextBtn = document.getElementById('next-btn');
+        const currentQuestion = examData.questions[currentQuestionIndex];
+        
+        // إذا كان السؤال الحالي نصًا أو شعرًا، فعّل الزر مباشرة
+        if (currentQuestion.type === "passage" || currentQuestion.type === "poem") {
+            nextBtn.disabled = false;
+            return;
+        }
+        
+        // تحقق مما إذا كان السؤال الحالي قد تمت الإجابة عليه
+        nextBtn.disabled = !answered[currentQuestionIndex];
+    }
+
+    // تحديد خيار في سؤال متعدد الخيارات
+    function selectOption(element, questionId, optionId, isCorrect) {
+        // منع التحديد إذا كانت الإجابة معروضة بالفعل
+        if (userAnswers[questionId]) return;
+        
+        // إلغاء تحديد جميع الخيارات الأخرى
+        const options = document.querySelectorAll(`.option[data-question="${questionId}"]`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        
+        // تحديد الخيار الحالي
+        element.classList.add('selected');
+        
+        // حفظ الإجابة
+        userAnswers[questionId] = {
+            selected: optionId,
+            correct: isCorrect
+        };
+        
+        // تشغيل الصوت المناسب
+        if (isCorrect) {
+            correctSound.play();
+        } else {
+            incorrectSound.play();
+        }
+        
+        // عرض التفسير
+        const explanationEl = document.getElementById(`explanation-${questionId}`);
+        if (explanationEl) {
+            explanationEl.style.display = 'block';
+        }
+        
+        // تمييز الإجابة الصحيحة والخاطئة
+        options.forEach(opt => {
+            const optCorrect = opt.getAttribute('data-correct') === 'true';
+            if (optCorrect) {
+                opt.classList.add('correct');
+            } else if (parseInt(opt.getAttribute('data-option')) === optionId && !isCorrect) {
+                opt.classList.add('incorrect');
+            }
+        });
+        
+        // تمكين زر التالي
+        answered[currentQuestionIndex] = true;
+        updateNextButton();
+        saveData();
+    }
+
+    // معالجة إدخال الإجابة في الأسئلة المقالية
+    function onFillInput(questionId) {
+        const input = document.getElementById(`fill-${questionId}`);
+        userAnswers[questionId] = {
+            answer: input.value
+        };
+        
+        // تمكين زر التالي إذا كان هناك إدخال
+        if (input.value.trim() !== '') {
+            answered[currentQuestionIndex] = true;
+        } else {
+            answered[currentQuestionIndex] = false;
+        }
+        
+        updateNextButton();
+        saveData();
+    }
+
+    // الانتقال إلى السؤال التالي
+    function nextQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex < examData.questions.length - 1) {
+            currentQuestionIndex++;
+            const nextId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${nextId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            
+            // إذا كان السؤال تاليًا نصًا أو شعرًا، فعّل الزر مباشرة
+            const nextQ = examData.questions[currentQuestionIndex];
+            if (nextQ.type === "passage" || nextQ.type === "poem") {
+                answered[currentQuestionIndex] = true;
+                document.getElementById('next-btn').disabled = false;
+            } else {
+                updateNextButton();
+            }
+            
+            saveData();
+        } else {
+            showResults();
+        }
+    }
+
+    // الانتقال إلى السؤال السابق
+    function prevQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            const prevId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${prevId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            updateNextButton();
+            
+            saveData();
+        }
+    }
+
+    // عرض النتائج
+// عرض النتائج - بدون حساب الأسئلة المقالية في الدرجة
+function showResults() {
+    // حساب النتيجة: فقط الأسئلة متعددة الخيارات
+    let correctCount = 0;
+    let totalQuestions = 0;
+
+    examData.questions.forEach(q => {
+        if (q.type === "multiple-choice") {
+            totalQuestions++;
+            if (userAnswers[q.id] && userAnswers[q.id].correct) {
+                correctCount++;
+            }
+        }
+    });
+
+    // حساب النسبة المئوية بناءً على الأسئلة متعددة الخيارات فقط
+    const score = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+
+    // كلمات تشجيعية
+    let feedback = "";
+    if (score >= 90) feedback = "ممتاز! أحسنت، استمر على هذا النحو 🌟";
+    else if (score >= 75) feedback = "جيد جدًا! أداء رائع 👏";
+    else if (score >= 60) feedback = "جيد، يمكنك التحسن أكثر 💪";
+    else feedback = "لا بأس، راجع الدروس وحاول مرة أخرى ❤️";
+
+    // توصيات
+    let recommendations = "";
+    if (score < 60) {
+        recommendations = "ننصحك بمراجعة القواعد النحوية والبلاغية، وحل المزيد من الأسئلة.";
+    } else if (score < 80) {
+        recommendations = "أداء جيد، ركّز على أنواع الأسئلة التي أخطأت فيها.";
+    } else {
+        recommendations = "أداء ممتاز! استمر في التقدم وجرّب امتحانات أصعب.";
+    }
+
+    // بناء النتائج التفصيلية
+    let detailedResults = '';
+    let questionNumber = 0; // رقم السؤال الحقيقي (للأسئلة القابلة للتصحيح فقط)
+
+    examData.questions.forEach(q => {
+        const userAnswer = userAnswers[q.id];
+        let answerText = 'لم تُجب';
+        let statusText = 'لم تُجب ❌';
+
+        // عرض الفقرات والشعر
+        if (q.type === "passage") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📖 فقرة نصية</h4>
+                    <div class="passage">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        if (q.type === "poem") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📜 نص شعري</h4>
+                    <div class="poem">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        // زيادة رقم السؤال فقط للأسئلة القابلة للتصحيح (اختيار من متعدد)
+        if (q.type === "multiple-choice") {
+            questionNumber++;
+        }
+
+        // معالجة الإجابة
+        if (q.type === "multiple-choice") {
+            const selectedOption = q.options.find(opt => opt.id == userAnswer?.selected);
+            answerText = selectedOption ? selectedOption.text : 'لم تُجب';
+            
+            if (userAnswer && selectedOption?.correct) {
+                statusText = 'إجابة صحيحة ✅';
+            } else if (userAnswer && !selectedOption?.correct) {
+                statusText = 'إجابة خاطئة ❌';
+            } else {
+                statusText = 'لم تُجب ❌';
+            }
+        } 
+        else if (q.type === "fill-in-blank") {
+            // السؤال المقالي: يظهر لكن بدون تأثير على العد
+            answerText = userAnswer?.answer?.trim() || 'لم تُجب';
+            statusText = (userAnswer && answerText !== 'لم تُجب') ? 'تمت الإجابة (تحت المراجعة)' : 'لم تُجب ❌';
+        }
+
+        // عرض السؤال بالشكل المطلوب
+        detailedResults += `
+            <div class="result-item">
+                ${q.type === "multiple-choice" ? `<p><strong>السؤال ${questionNumber}: ${q.text}</strong></p>` : `<p><strong>${q.text}</strong></p>`}
+                <p><strong>إجابتك:</strong> ${answerText}</p>
+                <p><strong>الحالة:</strong> ${statusText}</p>
+                <p><strong>📌 التفسير الكامل:</strong> ${q.explanation}</p>
+            </div>
+        `;
+    });
+
+    // عرض النتيجة النهائية
+    document.getElementById('score').innerHTML = `
+        <div class="stats">الإجابات الصحيحة: ${correctCount} من ${totalQuestions}</div>
+        <div class="stats">النسبة المئوية: ${score}%</div>
+        <div class="feedback">${feedback}</div>
+        <div class="recommendations"><strong>توصية:</strong> ${recommendations}</div>
+    `;
+
+    document.getElementById('detailed-results').innerHTML = detailedResults;
+
+    // إخفاء الأسئلة وإظهار النتائج
+    document.getElementById('questions-container').style.display = 'none';
+    document.querySelector('.navigation').style.display = 'none';
+    document.querySelector('.controls').style.display = 'flex';
+    document.getElementById('results-container').style.display = 'block';
+}
+    // طباعة النتائج
+    function printResults() {
+        window.print();
+    }
+
+    // مشاركة النتائج
+    function shareResults() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'نتيجة الامتحان',
+                text: `حصلت على ${document.getElementById('score').textContent} في امتحان اللغة العربية`,
+                url: window.location.href
+            })
+            .catch(error => {
+                console.log('Error sharing:', error);
+                alert('لم يتمكن المتصفح من مشاركة النتائج. يرجى المحاولة لاحقًا.');
+            });
+        } else {
+            alert('مشاركة النتائج غير مدعومة في هذا المتصفح. يمكنك استخدام زر الطباعة بدلاً من ذلك.');
+        }
+    }
+
+    // إعادة بدء الامتحان
+    function restartExam() {
+        if (confirm('هل تريد إعادة بدء الامتحان؟ سيتم حذف جميع إجاباتك الحالية.')) {
+            userAnswers = {};
+            answered = {};
+            currentQuestionIndex = 0;
+            localStorage.removeItem(`exam_${examId}`);
+            location.reload();
+        }
+    }
+
+    // العودة إلى قائمة الامتحانات
+    function backToExams() {
+        if (confirm('هل تريد العودة إلى قائمة الامتحانات؟ سيتم فقدان تقدمك الحالي إذا لم تحفظه.')) {
+            window.location.href = '/questions.html'; // تغيير هذا الرابط حسب الصفحة المناسبة
+        }
+    }
+
+    // تهيئة الامتحان
+    function initExam() {
+        const container = document.getElementById('questions-container');
+        const totalQuestions = examData.questions.filter(q => q.type !== "passage" && q.type !== "poem").length;
+        document.getElementById('total-questions').textContent = totalQuestions;
+        document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+
+        // تحميل الحالة
+        const wasResumed = loadSavedData();
+
+        // إنشاء الأسئلة
+        examData.questions.forEach((q, index) => {
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question';
+            questionEl.id = `question-${q.id}`;
+            questionEl.style.display = index === currentQuestionIndex ? 'block' : 'none';
+
+            if (q.type === "passage") {
+                questionEl.innerHTML = `<div class="passage">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة النص كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else if (q.type === "poem") {
+                questionEl.innerHTML = `<div class="poem">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة الشعر كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else {
+                let content = `<h3>السؤال ${getQuestionNumber(index)}: ${q.text}</h3>`;
+
+                if (q.type === "multiple-choice") {
+                    let optionsHtml = '<div class="options">';
+                    q.options.forEach(opt => {
+                        const selected = userAnswers[q.id]?.selected == opt.id;
+                        const isAnswered = userAnswers[q.id];
+                        const correct = opt.correct;
+                        optionsHtml += `
+                            <div class="option ${selected ? 'selected' : ''} ${isAnswered && correct ? 'correct' : ''} ${isAnswered && !correct && selected ? 'incorrect' : ''}"
+                                 data-question="${q.id}" data-option="${opt.id}" data-correct="${opt.correct}"
+                                 onclick="selectOption(this, ${q.id}, ${opt.id}, ${opt.correct})">
+                                ${opt.text}
+                            </div>
+                        `;
+                    });
+                    optionsHtml += '</div>';
+                    content += optionsHtml;
+                } else if (q.type === "fill-in-blank") {
+                    const value = userAnswers[q.id]?.answer || '';
+                    content += `
+                        <div class="fill-in-blank">
+                            <input type="text" id="fill-${q.id}" value="${value}" placeholder="أدخل إجابتك هنا" oninput="onFillInput(${q.id})">
+                        </div>
+                    `;
+                }
+
+                content += `<div class="explanation" id="explanation-${q.id}" style="${userAnswers[q.id] ? 'display:block' : 'display:none'}">
+                    <strong>التفسير:</strong> ${q.explanation}
+                </div>`;
+                questionEl.innerHTML = content;
+                
+                // تحديد ما إذا كان السؤال قد تمت الإجابة عليه
+                answered[index] = !!userAnswers[q.id];
+            }
+
+            container.appendChild(questionEl);
+        });
+
+        // تحديث زر التالي بناءً على السؤال الحالي
+        updateNextButton();
+
+        // ربط الأحداث
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+        document.getElementById('print-btn').addEventListener('click', printResults);
+        document.getElementById('share-btn').addEventListener('click', shareResults);
+        document.getElementById('restart-btn').addEventListener('click', restartExam);
+        document.getElementById('back-btn').addEventListener('click', backToExams);
+
+        if (wasResumed) {
+            alert(`تم استئناف الامتحان من السؤال ${getQuestionNumber(currentQuestionIndex)}`);
+        }
+    }
+
+    // بدء الامتحان عند تحميل الصفحة
+    window.onload = initExam;
+</script>
+</body>
+</html>

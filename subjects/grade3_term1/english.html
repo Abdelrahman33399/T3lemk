@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English - تعليمك</title>
+    <script src="../js/subjects.js"></script>
+    <style>
+        /* أنماط CSS السابقة تبقى كما هي */
+         .subjects-container {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .unit-banner {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 30px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .unit-banner:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .unit-banner:nth-child(3) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        .unit-banner:nth-child(4) {
+            background: linear-gradient(135deg, #ed9d08 0%, #d86907 100%);
+        }
+        
+        .unit-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .unit-header h2 {
+            margin: 0;
+            color: rgb(0, 0, 0);
+            font-size: 1.8rem;
+        }
+        
+        .unit-icon {
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .lessons-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .lesson-banner {
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .lesson-banner div {
+            flex: 1;
+        }
+        
+        .lesson-banner h3 {
+            margin: 0 0 5px 0;
+            color: rgb(6, 2, 2);
+        }
+        
+        .lesson-banner p {
+            margin: 0;
+            color: rgba(0, 0, 0, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            background: rgb(255, 255, 255);
+            color: #4facfe;
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .unit-banner:nth-child(2) .btn {
+            color: #f5576c;
+        }
+        
+        .unit-banner:nth-child(3) .btn {
+            color: #43e97b;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .home-btn-container {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            border-top: 1px solid #e1e1e1;
+        }
+        
+        .home-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+    /* أنماط CSS السابقة تبقى كما هي */
+    
+    .lessons-container {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        background: rgba(255,255,255,0.15);
+        /* التعديلات الجديدة */
+        overflow-y: auto; /* تمكين التمرير العمودي */
+        max-height: 500px; /* ارتفاع أقصى مناسب */
+    }
+    
+    .lesson-banner {
+        padding: 15px 20px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start; /* تغيير من center إلى flex-start */
+        /* التعديلات الجديدة */
+        max-height: 300px; /* يمكن تعديل هذا حسب الحاجة */
+        overflow-y: auto; /* تمكين التمرير إذا لزم الأمر */
+    }
+    
+    .lesson-banner div {
+        flex: 1;
+        /* التعديلات الجديدة */
+        padding-right: 15px; /* إضافة مساحة بين المحتوى والزر */
+        max-height: 100%; /* التأكد من أن المحتوى يملأ المساحة المتاحة */
+        overflow-y: auto; /* تمكين التمرير إذا لزم الأمر */
+    }
+    
+    .lesson-banner h3 {
+        margin: 0 0 5px 0;
+        color: rgb(6, 2, 2);
+        /* التعديلات الجديدة */
+        white-space: normal; /* التأكد من أن النص يتدفق بشكل طبيعي */
+    }
+    
+    .lesson-banner p {
+        margin: 0;
+        color: rgba(0, 0, 0, 0.8);
+        font-size: 1.1rem;
+        /* التعديلات الجديدة */
+        white-space: normal; /* التأكد من أن النص يتدفق بشكل طبيعي */
+    }
+/* --- التعديلات لدعم الهواتف والنصوص العربية --- */
+
+.lesson-banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 15px 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    direction: rtl;
+    text-align: right;
+    gap: 10px;
+}
+
+.lesson-banner div {
+    flex: 1;
+    padding-right: 15px;
+    text-align: right;
+    direction: rtl;
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+.lesson-banner h3,
+.lesson-banner p {
+    text-align: right;
+    direction: rtl;
+    white-space: normal;
+    line-height: 1.6;
+}
+
+.lesson-banner .btn {
+    margin: 0 5px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    min-width: 100px;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: rgb(255, 255, 255);
+    color: #4facfe;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+/* تصميم متجاوب للهواتف */
+@media (max-width: 768px) {
+    .subjects-container {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .unit-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .lesson-banner {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .lesson-banner div {
+        padding: 0;
+        margin-bottom: 10px;
+        text-align: right;
+        direction: rtl;
+    }
+
+    .lesson-banner h3,
+    .lesson-banner p {
+        font-size: 1rem;
+        text-align: right;
+        direction: rtl;
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .unit-banner {
+        border-radius: 20px;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- نظام البنرات الديناميكية للوحدات والدروس -->
+    <div class="subjects-container">
+        <!-- بنر الوحدة الأولى -->
+        <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit1')">
+                <h2>Unit 1: Personal Identity</h2>
+                <span class="unit-icon" id="unit1-icon">▼</span>
+            </div>
+            
+            <div class="lessons-container" id="unit1-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1&2: Present Perfect (المضارع التام)</h3>
+                        <p>
+يُستخدم للتحدث عن حدث حدث في الماضي، لكن نتائجه تستمر في الحاضر، أو لا نذكر متى حدث بالضبط.<br><br>
+🔹 الصيغة (Structure)<br><br>
+مثبتة → S + have/has + PP → I have finished my homework.<br>
+منفية → S + haven't/hasn't + PP → She hasn't cooked dinner.<br>
+سؤال (Yes/No) → Have/Has + S + PP? → Have you visited Aswan?<br>
+سؤال (كلمة استفهام) → Wh- + have/has + S + PP? → How long have you lived here?<br><br>
+✅ PP = Past Participle (التصريف الثالث للأفعال)<br><br>
+✅ have → مع: I, you, we, they, الأسماء الجمع<br>
+✅ has → مع: he, she, it, الاسم المفرد<br><br>
+🔹 أمثلة<br>
+✅ I have sent the email. (لقد أرسلت البريد الإلكتروني)<br>
+❌ I haven’t visited Luxor yet. (لم أزُر الأقصر بعد)<br>
+❓ Have you visited Aswan? (هل زرت أسوان؟)<br>
+✔️ Yes, I have.<br>
+❌ No, I haven’t.<br>
+❓ How long have you lived here? (منذ متى وأنت تعيش هنا؟)<br>
+✅ I have lived here for 10 years.<br><br>
+                        </p>
+                </div>
+                 <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+           <!-- درس 2 -->
+            <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 3&4:استخدامات المضارع التام + الكلمات الدالة علية</h3>
+                        <p>
+                        
+🔹 الكلمات الدالة على المضارع التام<br><br>
+already → بالفعل → في الجملة المثبتة: I have already eaten.<br>
+just → للتو → I have just finished.<br>
+yet → بعد → في الجملة المنفية أو السؤال: I haven’t finished yet.<br>
+never → قط → في الجملة المنفية: I have never been to Paris.<br>
+ever → من قبل → في السؤال: Have you ever seen a ghost?<br>
+since → منذ → مع نقطة زمنية: since 2020, since Monday<br>
+for → لمدة → مع فترة زمنية: for 5 years, for 2 hours<br>
+lately / recently → مؤخرًا / حديثًا → I have read many books recently.<br><br>
+🔹 استخدامات المضارع التام<br><br>
+✅ حدث انتهى في الماضي دون تحديد الوقت:<br>
+I have lost my keys. (لا أعرف متى، لكن النتيجة: أنا لا أملك المفاتيح الآن)<br><br>
+✅ حدث حدث منذ فترة قصيرة (مع just / already):<br>
+She has just arrived.<br>
+They have already finished.<br><br>
+✅ تكرار الفعل في فترة زمنية غير منتهية (مع ever / never / lately):<br>
+Have you ever ridden a horse?<br>
+I have never eaten sushi.<br><br>
+✅ حدث بدأ في الماضي ويستمر حتى الآن (مع since / for):<br>
+I have lived here since 2020.<br>
+She has studied English for 3 years.<br><br>
+🔹 ملاحظات مهمة<br><br>
+✅ already يمكن أن تأتي في نهاية الجملة للتأكيد:<br>
+I’ve cleaned the room already.<br><br>
+✅ في السؤال: تُستخدم للدهشة:<br>
+Really? Have you finished already?<br><br>
+✅ over بمعنى "من قبل" تأتي بعد الفاعل:<br>
+Have you ridden a horse over?<br><br>
+
+</p>
+                </div>
+               <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+                <!-- درس 3 -->
+            <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 5&6: since و for – الفرق</h3>
+                        <p>
+                    
+since → منذ → نقطة زمنية (تاريخ، وقت، حدث) → I have worked here since 2020.<br>
+for → لمدة → فترة زمنية (كم من الوقت) → I have worked here for 4 years.<br><br>
+🔹 قواعد استخدام since و for<br><br>
+✅ since + نقطة زمنية:<br>
+since 2020<br>
+since Monday<br>
+since I was 10<br>
+since I graduated<br><br>
+✅ for + فترة زمنية:<br>
+for 5 years<br>
+for two weeks<br>
+for a long time<br>
+for an hour<br><br>
+🔹 ملاحظات مهمة على since<br><br>
+بعد since نستخدم الماضي البسيط:<br>
+✅ I have lived here since I graduated. (graduated = ماضي)<br>
+✅ He has worked here since he was 20.<br><br>
+🔹 الفرق بين: has been to vs has gone to<br><br>
+She has been to the market. → ذهبت إلى السوق وعادت. (الآن ليست هناك)<br>
+She has gone to the market. → ذهبت إلى السوق وما زالت هناك. (الآن في السوق)<br><br>
+✅ has been to = ذهب وعاد<br>
+✅ has gone to = ذهب وما زال هناك<br><br>
+
+✅ ملاحظات عامة للمتفوقين<br><br>
+✅ نستخدم المضارع التام مع تكرار الأفعال إذا كان الفاعل لا يزال حيًا أو نشطًا:<br>
+Adel Emam has acted in 50 films. (ما زال حيًا)<br>
+Ismail Yassin acted in 50 films. (متوفي → نستخدم الماضي البسيط)<br><br>
+✅ just في المضارع التام = a short time ago في الماضي البسيط:<br>
+I have just played football.<br>
+I played football a short time ago.<br><br>
+✅ إذا جاء in + سنة → نستخدم الماضي البسيط:<br>
+He worked in Cairo in 2020.<br><br>
+✅ إذا جاء since + سنة → نستخدم المضارع التام:<br>
+He has worked in Cairo since 2020.<br><br>
+✅ نستخدم المضارع التام مع lately / recently:<br>
+They have visited the pyramids recently.<br><br>
+✅ يمكن أن يبدأ السؤال بـ Have/Has والإجابة بـ Yes, I did إذا ذُكر وقت محدد:<br>
+❓ Have you visited Aswan?<br>
+✔️ Yes, I did last year.<br><br>
+🔹 ما هو المبني للمجهول؟<br><br>
+في الجملة الفعالة (active): الفاعل يفعل الفعل.<br>
+The mechanic repaired the car.<br><br>
+في الجملة المجهولة (passive): نركز على المفعول به، وليس على الفاعل.<br>
+The car was repaired (by the mechanic).<br><br>
+🔹 صيغة المبني للمجهول مع المضارع التام<br><br>
+Object + have/has + been + PP<br><br>
+They have sent the email.<br>
+The email has been sent.<br><br>
+She has cooked dinner.<br>
+Dinner has been cooked.<br><br>
+They have taken many photos.<br>
+Many photos have been taken.<br><br>
+🔹 الجملة المنفية في المبني للمجهول<br><br>
+Object + haven't/hasn't + been + PP<br><br>
+They haven’t sent the email.<br>
+→ The email hasn’t been sent.<br><br>
+She hasn’t cooked dinner.<br>
+→ Dinner hasn’t been cooked.<br><br>
+🔹 السؤال في المبني للمجهول<br><br>
+1. سؤال بنعم/لا:<br>
+Have/Has + object + been + PP?<br><br>
+Have they fixed the car?<br>
+→ Has the car been fixed?<br><br>
+2. سؤال بكلمة استفهام:<br>
+Wh- + have/has + object + been + PP?<br><br>
+Where did you buy the car?<br>
+→ Where has the car been bought?<br><br>
+Since when have they watched the movie?<br>
+→ Since when has the movie been watched?<br><br>
+🔹 ملاحظات<br><br>
+by + الفاعل اختياري:<br>
+The book has been written by Naguib Mahfouz.<br><br>
+نستخدم been دائمًا بعد have/has في المبني للمجهول.<br><br>
+
+✅ خلاصة سريعة (للحفظ)<br><br>
+Present Perfect → S + have/has + PP<br>
+already / just → في الجملة المثبتة<br>
+yet → في الجملة المنفية أو السؤال<br>
+never → في الجملة المنفية<br>
+ever → في السؤال<br>
+since → مع نقطة زمنية (2020, Monday)<br>
+for → مع فترة زمنية (5 years, 2 hours)<br>
+has been to → ذهب وعاد<br>
+has gone to → ذهب وما زال هناك<br>
+Passive Voice → Object + have/has + been + PP<br><br>
+
+✅ جملة للتفكير:<br>
+"Your past actions shape your present. Use the present perfect wisely — because what you’ve done matters."    
+</p>
+                </div>
+               <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+    <!--بنر الوحده 2-->
+    <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit2')">
+                <h2>Unit 2:  Communication with Family and Friends</h2>
+                <span class="unit-icon" id="unit2-icon">▼</span>
+            </div>
+            <div class="lessons-container" id="unit2-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1&2:  Past Perfect (الماضي التام)</h3>
+                        <p>
+🔹 ما هو الماضي التام؟<br>
+يُستخدم للتحدث عن حدث وقع قبل حدث آخر في الماضي.<br>
+يعني: "كان قد فعل شيئًا قبل أن يحدث شيء آخر".<br><br>
+🔹 الصيغة (Structure)<br><br>
+مثبتة → S + had + PP → He had finished his homework.<br>
+منفية → S + hadn’t + PP → She hadn’t booked the ticket.<br>
+سؤال (Yes/No) → Had + S + PP? → Had they finished their homework?<br>
+سؤال (كلمة استفهام) → Wh- + had + S + PP? → How long had they lived here?<br><br>
+✅ PP = Past Participle (التصريف الثالث للأفعال)<br><br>
+🔹 أمثلة<br>
+✅ He had finished his homework before he watched TV.<br>
+(كان قد أنهى واجبه قبل أن يشاهد التلفاز)<br><br>
+❌ She hadn’t booked the ticket before the concert started.<br>
+(لم تحجز التذكرة قبل بدء الحفلة)<br><br>
+❓ Had they played football before they went home?<br>
+(هل لعبوا كرة القدم قبل أن يذهبوا إلى المنزل؟)<br><br>
+🔹 الروابط الزمنية مع الماضي التام<br><br>
+before → قبل → He had eaten before he left.<br>
+after → بعد → After he had eaten, he left.<br>
+as soon as → بمجرد أن → As soon as she had arrived, they started.<br>
+by the time → بحلول الوقت الذي → By the time I arrived, the train had left.<br>
+until / till → حتى → He didn’t leave until he had taken the money.<br><br>
+✅ ملاحظة مهمة:<br>
+إذا لم يُذكر الفاعل بعد after / before، نستخدم التصريف الثالث (PP):<br><br>
+After finishing his homework, he slept.<br>
+Before leaving, she had helped her mother.<br><br>
+                        </p>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+           <!-- درس 2 -->
+            <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 3&4: Third Conditional (الشرط الثالث)</h3>
+                        <p>
+
+🔹 ما هو الشرط الثالث؟<br>
+يُستخدم للتحدث عن ما لم يحدث في الماضي، ونُعبّر عن الندم أو الاستحالة.<br><br>
+يعني: "لو حدث شيء ما في الماضي، لكان الوضع مختلفًا"، لكنه لم يحدث.<br><br>
+🔹 الصيغة (Structure)<br><br>
+If + S + had + PP, S + would have + PP<br><br>
+أو<br><br>
+S + would have + PP if + S + had + PP<br><br>
+If he had studied hard, he would have passed.<br>
+لو درس بجد، لكان قد نجح. (لكنه لم يدرس، فلم ينجح)<br><br>
+If we had brought the map, we wouldn’t have got lost.<br>
+لو جلبنا الخريطة، لما ضللنا الطريق. (لكننا لم نجلبها، فضللنا)<br><br>
+If she had cooked, we wouldn’t have eaten outside.<br>
+لو طهت، لما أكلنا في الخارج. (لكنها لم تطبخ، فأكلنا في الخارج)<br><br>
+🔹 النفي في الشرط الثالث<br><br>
+If he hadn’t been careful, he would have had an accident.<br>
+لو لم يكن حذرًا، لكان قد تعرض لحادث. (لكنه كان حذرًا، فلم يُصب)<br><br>
+🔹 السؤال في الشرط الثالث<br><br>
+Would + S + have + PP if + S + had + PP?<br><br>
+❓ Would you have bought the car if you had had enough money?<br>
+(هل كنت ستشتري السيارة لو كان لديك ما يكفي من المال؟)<br><br>
+🔹 مكان "If" في الجملة<br>
+يمكن أن تكون في البداية أو في المنتصف:<br><br>
+✅ If I had known, I would have helped him.<br>
+✅ I would have helped him if I had known.<br><br>
+🔹 ملاحظات مهمة<br><br>
+✅ had had = "كان لديه" أو "كان قد تناول":<br><br>
+If I had had time, I would have visited them.<br>
+(لو كان لدي وقت، كنت سأزورهم)<br><br>
+If she had had lunch, she wouldn’t have bought fast food.<br>
+(لو كانت قد تناولت الغداء، لما اشترت طعامًا سريعًا)<br><br>
+✅ معنى الجملة يدل على أن الحدث لم يحدث:<br><br>
+If he had arrived early, he would have caught the bus.<br>
+→ لكنه لم يصل مبكرًا، لذلك لم يركب الحافلة.<br><br>
+✅ الجملة تعبر عن الندم أو التخيل في الماضي:<br><br>
+If I had studied, I would have passed.<br>
+(أنا أندم لأنني لم أدرس)<br><br>
+🔹 اكتب معنى الجملة بالإنجليزية<br><br>
+If she had cooked, we wouldn’t have eaten outside.<br><br>
+Meaning in English:<br><br>
+We ate outside because she didn’t cook.<br><br>
+أو:<br><br>
+She didn’t cook, so we ate outside.<br><br>
+
+✅ خلاصة سريعة (للحفظ)<br><br>
+Past Perfect → S + had + PP (حدث قبل حدث آخر في الماضي)<br>
+After / Before / As soon as / By the time → تُستخدم مع الماضي التام<br>
+Until / Till → مع جملة منفية + ماضي تام<br>
+Third Conditional → If + S + had + PP, S + would have + PP<br>
+Would have + PP → للتعبير عن نتيجة لم تحدث<br>
+Had had → "كان لديه" أو "كان قد تناول"<br>
+الجملة تعبر عن استحالة أو ندم في الماضي<br>
+الحدث لم يحدث<br><br>
+
+✅ جملة للتفكير:<br>
+"We can't change the past, but we can learn from it. That's what the third conditional teaches us."
+                        </p>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+    <!--بنر الوحده 3-->
+    <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit3')">
+                <h2>Unit 3:  Artificial Intelligence</h2>
+                <span class="unit-icon" id="unit3-icon">▼</span>
+            </div>
+            <div class="lessons-container" id="unit3-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1&2:Future Simple Passive (المستقبل البسيط المبني للمجهول)</h3>
+                        <p>
+                          
+🔹 ما هو المستقبل البسيط؟<br>
+يُستخدم للتحدث عن أحداث ستحدث في المستقبل، مثل: وعود، قرارات، تنبؤات.<br><br>
+✅ الصيغة الفعالة (Active Voice):<br>
+S + will + V (infinitive)<br><br>
+We will finish the project.<br>
+سنُنهي المشروع.<br><br>
+They will buy a car.<br>
+سيشترون سيارة.<br><br>
+✅ النفي:<br>
+S + will not (won’t) + V<br><br>
+They won’t sell the car.<br>
+(لن يبيعوا السيارة)<br><br>
+✅ السؤال (Yes/No):<br>
+Will + S + V?<br><br>
+Will you visit the zoo?<br>
+(هل ستزور حديقة الحيوانات؟)<br>
+✔️ Yes, I will. / ❌ No, I won’t.<br><br>
+✅ السؤال بكلمة استفهام:<br>
+Wh- + will + S + V?<br><br>
+Where will you travel?<br>
+(إلى أين ستسافر؟)<br>
+→ I will travel to England.<br><br>
+🔹 المستقبل البسيط المبني للمجهول (Passive Voice)<br>
+في الجملة المجهولة، نركز على المفعول به، وليس على الفاعل.<br><br>
+✅ الصيغة:<br>
+Object + will + be + PP (Past Participle)<br><br>
+We will finish the project.<br>
+The project will be finished.<br><br>
+They will buy a car.<br>
+The car will be bought.<br><br>
+The teacher will check the exam papers.<br>
+The exam papers will be checked.<br><br>
+✅ النفي في المبني للمجهول:<br>
+Object + won’t + be + PP<br><br>
+The car won’t be bought.<br>
+(لن تُشترى السيارة)<br><br>
+✅ السؤال في المبني للمجهول:<br>
+سؤال بنعم/لا:<br>
+Will + object + be + PP?<br>
+Will the car be bought?<br>
+(هل ستُشترى السيارة؟)<br>
+✔️ Yes, it will. / ❌ No, it won’t.<br><br>
+سؤال بكلمة استفهام:<br>
+Wh- + will + object + be + PP?<br><br>
+Where will the mobile phone be bought?<br>
+(من أين سيُشترى الهاتف المحمول؟)<br>
+→ It will be bought from the electronics store.<br><br>
+Who will the gift be given to?<br>
+(لمن سيُعطى الهدية؟)<br>
+→ It will be given to my sister.<br><br>
+                        </p>
+                </div>
+                  <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+           <!-- درس 2 -->
+            <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 2:استخدامات المستقبل البسيط + الكلمات الدالة علية</h3>
+                        <p>
+
+🔹 الكلمات الدالة على المستقبل البسيط<br><br>
+tomorrow → غدًا → I will call you tomorrow.<br>
+next week / month / year → الأسبوع/الشهر/العام القادم → She will travel next month.<br>
+soon → قريبًا → They will arrive soon.<br>
+in the future → في المستقبل → I want to be a doctor in the future.<br><br>
+🔹 استخدامات المستقبل البسيط (will + مصدر)<br><br>
+1. ✅ الوعود (Promises)<br>
+I will help you with your homework.<br>
+(سأساعدك في واجبك)<br>
+I promise I will call you.<br>
+(أعدك أنني سأتصل بك)<br><br>
+2. ✅ القرارات السريعة (Spontaneous decisions)<br>
+I’m hungry! I will buy a sandwich.<br>
+(جائع! سأشتري شطيرة)<br>
+The phone is ringing! I will answer it.<br>
+(الهاتف يرن! سأرد عليه)<br><br>
+3. ✅ التنبؤ بدون دليل (Predictions without evidence)<br>
+I think it will rain tomorrow.<br>
+(أعتقد أن الجو سيُمطر غدًا)<br>
+I’m sure he will win the match.<br>
+(أنا متأكد أنه سيفوز بالمباراة)<br><br>
+4. ✅ التعبير عن الرأي الشخصي<br>
+I’m sure you will enjoy the movie.<br>
+(متأكد أنك ستستمتع بالفيلم)<br>
+I expect she will pass the exam.<br>
+(أتوقع أنها ستنجح في الامتحان)<br><br>
+5. ✅ التعبير عن العمر أو السن في المستقبل<br>
+My brother will be 50 next year.<br>
+(أخي سيبلغ 50 عامًا العام المقبل)<br>
+She will turn 18 in June.<br>
+(ست cumplir 18 سنة في يونيو)<br><br>
+🔹 ملاحظات مهمة<br><br>
+✅ لا نستخدم will مع when, if, after, before في الجمل الشرطية:<br>
+❌ I will call you when I will arrive.<br>
+✅ I will call you when I arrive.<br>
+(بعد when نستخدم المضارع البسيط)<br><br>
+✅ يمكن حذف الفاعل في الجواب إذا كان واضحًا:<br>
+Will you come?<br>
+→ Yes, I will. / No, I won’t.<br><br>
+✅ في المبني للمجهول، لا نهتم بـ "من فعل الفعل"، بل بـ "ما الذي سيُفعل؟"<br><br>
+✅ خلاصة سريعة (للحفظ)<br><br>
+Future Simple (Active) → S + will + V<br>
+Future Simple (Passive) → Object + will + be + PP<br>
+النفي → won’t + V أو won’t + be + PP<br>
+السؤال (Yes/No) → Will + S/object + be + PP?<br>
+السؤال (Wh-) → Wh- + will + object + be + PP?<br>
+الكلمات الدالة → tomorrow, next, soon, in the future<br>
+الاستخدامات → وعود، قرارات سريعة، تنبؤات، آراء، سن في المستقبل<br><br>
+
+✅ جملة للتفكير:<br>
+"The future is not written yet — but with 'will', we can imagine it, promise it, and make it happen."<br><br>
+                        </p>
+                </div>
+              <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+    <!--بنر الوحده 4-->
+    <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit4')">
+                <h2>Unit 4:  Screen Time</h2>
+                <span class="unit-icon" id="unit4-icon">▼</span>
+            </div>
+            <div class="lessons-container" id="unit4-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1&2:Modal Verbs</h3>
+                        <p>
+
+🔹 ما هي الأفعال الناقصة؟<br>
+هي أفعال تُستخدم مع مصدر (infinitive) بدون (to) وتعبر عن الإذن، الضرورة، النهي، النصيحة، القدرة.<br><br>
+🔹 1. must – يجب (الإلزام والضرورة)<br>
+S + must + V (infinitive)<br><br>
+You must follow the safety rules.<br>
+يجب عليك اتباع قواعد السلامة.<br><br>
+They must arrive early.<br>
+يجب أن يصلوا مبكرًا.<br><br>
+✅ تُستخدم عندما يكون هناك واجب أو قانون.<br><br>
+🔹 2. mustn’t – ممنوع (التحريم والمنع)<br>
+S + mustn’t + V (infinitive)<br><br>
+You mustn’t lie about your identity online.<br>
+لا يجب أن تكذب حول هويتك عبر الإنترنت.<br><br>
+You mustn’t park your car here.<br>
+لا يُسمح لك بركن سيارتك هنا.<br><br>
+✅ تُستخدم للتعبير عن ما هو ممنوع أو مخالف للقانون.<br><br>
+🔹 3. should / shouldn’t – يجب / لا يجب (نصيحة)<br>
+S + should / shouldn’t + V (infinitive)<br><br>
+You should limit your screen time.<br>
+يجب أن تقلل من وقت استخدام الشاشة.<br><br>
+You shouldn’t arrive late.<br>
+لا يجب أن تصل متأخرًا.<br><br>
+✅ تُستخدم لتقديم نصيحة أو رأي (ليس أمرًا إلزاميًا).<br><br>
+🔹 4. can / can’t – يمكن / لا يمكن (القدرة أو الإذن)<br>
+S + can / can’t + V (infinitive)<br><br>
+He can speak English.<br>
+يمكنه التحدث بالإنجليزية.<br><br>
+You can change your phone settings.<br>
+يمكنك تغيير إعدادات هاتفك.<br><br>
+You can’t use my mobile now.<br>
+لا يمكنك استخدام هاتفي الآن.<br><br>
+✅ تُستخدم للتعبير عن:<br>
+القدرة (Can he swim?)<br>
+الإذن (Can I go out?)<br>
+المنع (You can’t enter)<br><br>
+                        </p>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+           <!-- درس 2 -->
+            <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 3&4:Connectors</h3>
+                        <p>
+
+🔹 1. Although / Even though / While – بالرغم من أن (التناقض)<br>
+تُستخدم هذه الروابط للربط بين جملتين متناقضتين.<br><br>
+✅ Although / Even though + جملة مرفوعة، + جملة منخفضة<br>
+أو<br>
+✅ Although / Even though + جملة، S + V<br><br>
+Although he is rich, he isn’t happy.<br>
+بالرغم من أنه غني، إلا أنه ليس سعيدًا.<br><br>
+Even though the film was long, it was interesting.<br>
+على الرغم من أن الفيلم كان طويلًا، إلا أنه كان ممتعًا.<br><br>
+While he was tired, he finished his task.<br>
+رغم أنه كان متعبًا، إلا أنه أنهى مهمته.<br><br>
+⚠️ لا تستخدم "but" بعد Although / Even though<br>
+❌ Although he is rich, but he isn’t happy. → خطأ<br>
+✅ Although he is rich, he isn’t happy. → صواب<br><br>
+
+🔹 2. On one hand / On the other hand – من ناحية / من ناحية أخرى (التوازن)<br>
+تُستخدم لعرض جانبين مختلفين من الموضوع: إيجابيات وسلبيات.<br><br>
+On one hand, … / On the other hand, …<br><br>
+On one hand, online learning is easy.<br>
+On the other hand, it’s hard to focus.<br>
+من ناحية، الدراسة عبر الإنترنت سهلة. من ناحية أخرى، من الصعب التركيز.<br><br>
+On one hand, social media is useful.<br>
+On the other hand, it can waste your time.<br>
+من ناحية، وسائل التواصل الاجتماعي مفيدة. من ناحية أخرى، يمكن أن تضيع وقتك.<br><br>
+✅ تُستخدم في الكتابة التعبيرية أو الحوار المتزن.<br><br>
+
+✅ خلاصة سريعة (للحفظ)<br><br>
+must → يجب → إلزام، ضرورة<br>
+mustn’t → ممنوع → تحريم، منع<br>
+should → ينبغي → نصيحة<br>
+shouldn’t → لا ينبغي → نصيحة سلبية<br>
+can → يمكن → قدرة أو إذن<br>
+can’t → لا يمكن → عدم قدرة أو منع<br><br>
+Although / Even though / While → بالرغم من أن → التناقض<br>
+On one hand / On the other hand → من ناحية / من ناحية أخرى → عرض وجهتي نظر<br><br>
+
+✅ نصائح للطلاب المتفوقين<br><br>
+✅ لا تستخدم but مع Although.<br>
+✅ بعد must / should / can نستخدم مصدر بدون to.<br>
+✅ mustn’t ≠ don’t have to:<br>
+You mustn’t smoke = ممنوع التدخين (حرام).<br>
+You don’t have to smoke = لا يُطلب منك التدخين (ليس إلزاميًا).<br>
+✅ While يمكن أن تعني "بينما" أو "بالرغم من أن" – انتبه للسياق.<br><br>
+
+                        </p>
+                </div>
+                 <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+    <!--بنر الوحده 5-->
+    <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit5')">
+                <h2>Unit 5: Design Thinking</h2>
+                <span class="unit-icon" id="unit5-icon">▼</span>
+            </div>
+            <div class="lessons-container" id="unit5-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1&2:Commands / Imperatives</h3>
+                        <p>
+
+🔹 ما هي جملة الأمر؟<br>
+تُستخدم للطلب، أو التوجيه، أو إعطاء تعليمات (مثل: في التعليمات، الإرشادات، أو النصائح).<br><br>
+🔹 1. الأمر المثبت (Affirmative Command)<br>
+يبدأ بالمصدر (Verb) بدون أي إضافات<br><br>
+Open the door, please.<br>
+افتح الباب من فضلك.<br><br>
+Study your lessons.<br>
+ادرس دروسك.<br><br>
+Listen carefully.<br>
+استمع جيدًا.<br><br>
+✅ لا نستخدم "you" في الجملة، لكنها مفهومة ضمنًا.<br><br>
+🔹 2. الأمر المنفي (Negative Command)<br>
+Don’t + مصدر<br><br>
+Don’t waste your time.<br>
+لا تضيع وقتك.<br><br>
+Don’t be late again.<br>
+لا تتأخر مرة أخرى.<br><br>
+Don’t forget your homework.<br>
+لا تنسَ واجبك.<br><br>
+🔹 كلمات تُستخدم مع الأوامر<br><br>
+Always → في بداية الجملة للتأكيد على التكرار → Always study your lessons.<br>
+Never → في بداية الجملة للأمر المنفي القوي → Never be late to school.<br><br>
+✅ Always = دائمًا<br>
+✅ Never = أبدًا (أقوى من "don’t")<br><br>
+                        </p>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+           <!-- درس 2 -->
+            <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 3&4:Sequence Connectors روابط التسلسل الزمني</h3>
+                        <p>
+
+تُستخدم لترتيب الخطوات عند شرح كيف تفعل شيئًا، مثل: وصف تجربة، أو خطوات حل مشكلة.<br><br>
+🔹 1. البداية (Beginning)<br>
+تُستخدم لبدء سرد الخطوات:<br><br>
+First → أولًا → First, identify the problem.<br>
+Firstly → أولًا (رسمي أكثر) → Firstly, write down your ideas.<br>
+To begin with → للبدء → To begin with, collect all the information.<br><br>
+🔹 2. الاستمرار (Middle Steps)<br>
+تُستخدم للانتقال بين الخطوات:<br><br>
+Then → ثم → Then, analyze the data.<br>
+Next → التالي → Next, think of possible solutions.<br>
+After that → بعد ذلك → After that, test your idea.<br>
+Later → لاحقًا → Later, review the results.<br><br>
+🔹 3. النهاية (Ending)<br>
+تُستخدم لإنهاء السرد:<br><br>
+Finally → أخيرًا → Finally, choose the best solution.<br>
+Lastly → في النهاية → Lastly, present your project.<br>
+In the end → في النهاية → In the end, we succeeded.<br>
+At last → أخيرًا (بعد انتظار) → At last, the problem was solved.<br><br>
+✅ مثال كامل باستخدام روابط التسلسل:<br>
+First, I identified the problem.<br>
+Next, I collected information from different sources.<br>
+Then, I thought of several solutions.<br>
+After that, I tested the best idea.<br>
+Finally, I presented my project to the class.<br><br>
+
+✅ خلاصة سريعة (للحفظ)<br><br>
+🔹 الأوامر<br>
+مثبت → مصدر فقط → Study hard.<br>
+منفي → Don’t + مصدر → Don’t be late.<br>
+مع Always → Always + مصدر → Always help others.<br>
+مع Never → Never + مصدر → Never give up.<br><br>
+🔹 روابط التسلسل<br>
+البداية → First, Firstly, To begin with → لبدء الخطوات<br>
+الاستمرار → Then, Next, After that → للاستمرار في السرد<br>
+النهاية → Finally, Lastly, In the end → لإنهاء الخطوات<br><br>
+
+✅ نصائح للطلاب المتفوقين<br><br>
+✅ لا تستخدم "you" في جملة الأمر:<br>
+❌ You open the door → ❌<br>
+✅ Open the door → ✅<br><br>
+✅ "Never" أقوى من "Don’t".<br>
+✅ استخدم روابط التسلسل في كتابة الشرح، التعليمات، أو سرد الأحداث.<br>
+✅ تجنب تكرار نفس الرابط (مثل: ثم، ثم، ثم).<br><br>
+
+                        </p>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+    <!--بنر الوحده 6-->
+    <div class="unit-banner">
+            <div class="unit-header" onclick="toggleLessons('unit6')">
+                <h2>Unit 6: Why do We Like Stories?</h2>
+                <span class="unit-icon" id="unit6-icon">▼</span>
+            </div>
+            <div class="lessons-container" id="unit6-lessons">
+                <!-- درس 1 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 1&2: التحويل من الكلام المباشر إلى غير المباشر</h3>
+                        <p>
+
+🔹 ما هو الكلام المباشر وغير المباشر؟<br><br>
+الكلام المباشر (Direct Speech):<br>
+ننقل الكلام حرفيًا كما قيل، بين علامتي تنصيص ("...").<br>
+مثال:<br>
+قال أحمد: "سأذهب إلى المدرسة غدًا."<br><br>
+الكلام غير المباشر (Reported Speech):<br>
+ننقل معنى الكلام دون نقله حرفيًا، ونحذف علامات التنصيص.<br>
+مثال:<br>
+قال أحمد إنه سيذهب إلى المدرسة في اليوم التالي.<br><br>
+✅ خطوات التحويل من المباشر إلى غير المباشر<br><br>
+🔹 الخطوة 1: تغيير فعل القول (Reporting Verb)<br><br>
+Said → بدون مفعول (لا يأتي بعده "to + شخص")<br>
+→ He said, "I’m tired." → He said he was tired.<br><br>
+Told → مع مفعول (يأتي بعده شخص: told + someone)<br>
+→ He told me, "I’m tired." → He told me he was tired.<br><br>
+Explained / Reported / Added / Answered → تُستخدم مع "that" وبدون مفعول مباشر<br>
+→ He explained, "I was late." → He explained that he was late.<br><br>
+🔹 الخطوة 2: حذف علامات التنصيص وربط الجملة بكلمة "that"<br><br>
+قالت: "أحمد سيشتري سيارة."<br>
+→ أخبرت علي أن أحمد سيشتري سيارة.<br>
+→ She told Ali that Ahmed would buy a car.<br><br>
+✅ نحذف علامات التنصيص (")<br>
+✅ نربط الجملة بكلمة that (يمكن حذفها أحيانًا)<br><br>
+🔹 الخطوة 3: تغيير الزمن (إذا كان فعل القول في الماضي)<br><br>
+الحاضر البسيط → "I like apples." → الماضي البسيط → He said he liked apples.<br>
+المضارع المستمر → "I am studying." → الماضي المستمر → He said he was studying.<br>
+المضارع التام → "I have finished." → الماضي التام → He said he had finished.<br>
+المستقبل (will) → "I will go." → would → He said he would go.<br>
+can → "I can swim." → could → He said he could swim.<br>
+may → "I may come." → might → He said he might come.<br><br>
+✅ إذا كان فعل القول في المضارع أو الحاضر، لا نغير الزمن!<br>
+He says, "I am busy." → He says he is busy.<br><br>
+                        </p>
+                </div>
+                  <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+                    <!-- درس 2 -->
+                <div class="lesson-banner">
+                    <div>
+                        <h3>Lesson 3&4: تغيير الضمائر، الإشارات، والزمن</h3>
+                        <p>
+🔹 1. تغيير الضمائر<br><br>
+I / me → حسب الفاعل (he, she, I, we...)<br>
+you → حسب المستمع (him, her, me, them...)<br>
+we → they / us<br>
+my → his / her<br>
+your → his / her / their<br>
+our → their<br><br>
+مثال:<br>
+قالت لي: "أنا متعبة." → She told me she was tired.<br>
+قال لي: "يمكنك الخروج." → He told me I could go out.<br><br>
+🔹 2. تغيير كلمات الإشارة والزمن (إذا كان فعل القول في الماضي)<br><br>
+this → that<br>
+these → those<br>
+here → there<br>
+now → then / at that time<br>
+today → that day<br>
+tonight → that night<br>
+yesterday → the day before / the previous day<br>
+tomorrow → the next day / the following day<br>
+next week → the following week<br>
+last week → the week before / the previous week<br>
+ago → before<br><br>
+مثال:<br>
+قال: "سأشتري هذه السيارة غدًا."<br>
+→ He said he would buy that car the next day.<br><br>
+🔹 3. حالات لا نغير فيها الزمن<br><br>
+✅ 1. إذا كان الحديث عن حقيقة علمية أو عامة:<br>
+قال: "الشمس أكبر من القمر."<br>
+→ He said the sun is bigger than the moon.<br>
+(الحقيقة لا تتغير، لذا لا نغير الزمن)<br><br>
+✅ 2. إذا كان الكلام قيل منذ فترة قصيرة (just now, a moment ago):<br>
+قال للتو: "سأسافر غدًا."<br>
+→ He said he would travel tomorrow.<br>
+(لا نغير "tomorrow" لأن الحدث قريب)<br><br>
+قالت قبل لحظة: "سأزورهم الأسبوع المقبل."<br>
+→ She said she would visit them the following week.<br>
+(نغير "الأسبوع المقبل" إلى "the following week" لأن فعل القول في الماضي)<br><br>
+✅ خلاصة سريعة (للحفظ)<br><br>
+Said → بدون مفعول مباشر<br>
+Told → مع مفعول (told + someone)<br>
+That → تُستخدم لربط الجملة (يمكن حذفها)<br>
+تغيير الزمن → فقط إذا كان فعل القول في الماضي<br>
+الضمائر → تتغير حسب السياق (I → he, you → him...)<br>
+الإشارات → this → that، here → there، now → then...<br>
+الزمن → today → that day، tomorrow → the next day...<br>
+لا يتغير الزمن → في الحقائق أو إذا كان الحديث حديثًا (just now)<br><br>
+✅ أمثلة تطبيقية<br><br>
+He said: "I am happy."<br>
+→ He said he was happy.<br><br>
+She told me: "You can help me."<br>
+→ She told me I could help her.<br><br>
+They said: "We saw them yesterday."<br>
+→ They said they had seen them the day before.<br><br>
+He said: "The Earth is round."<br>
+→ He said the Earth is round. ✅ (حقيقة)<br><br>
+She said a moment ago: "I will call you tomorrow."<br>
+→ She said she would call me the next day.
+                        </p>
+                </div>
+                 <a href="https://www.youtube.com/watch?v=Hrmf356K0Bo&list=PLuCiHs8gzZA95RGTnXcMB4RvFVomJQ-s9" target="_blank" class="btn">شرح الدرس</a>
+                 <a href="https://drive.google.com/file/d/19JB8NmKPtoKV69qWtc40cGEg0gyvCaDw/view?usp=sharing" target="_blank" class="btn">تحميل المحتوى</a>
+                </div>
+        </div>
+    </div>
+   <div class="home-btn-container">
+        <a href="../../index.html" class="home-btn">
+            <i class="fas fa-home"></i>
+            العودة إلى الصفحة الرئيسية
+        </a>
+    </div>
+
+    <script>
+        // دالة لإظهار/إخفاء الدروس
+        function toggleLessons(unitId) {
+            const lessonsContainer = document.getElementById(`${unitId}-lessons`);
+            const unitIcon = document.getElementById(`${unitId}-icon`);
+            
+            if (lessonsContainer.style.maxHeight === '0px' || !lessonsContainer.style.maxHeight) {
+                // حساب الارتفاع التلقائي بناءً على المحتوى
+                lessonsContainer.style.maxHeight = `${lessonsContainer.scrollHeight}px`;
+                unitIcon.textContent = '▲';
+            } else {
+                lessonsContainer.style.maxHeight = '0px';
+                unitIcon.textContent = '▼';
+            }
+        }
+
+        // يمكنك فتح وحدة معينة تلقائياً عند تحميل الصفحة
+        window.onload = function() {
+            // افتح الوحدة الأولى تلقائياً كمثال
+            toggleLessons('unit1');
+        }
+    
+    // دالة لإظهار/إخفاء الدروس
+    function toggleLessons(unitId) {
+        const lessonsContainer = document.getElementById(`${unitId}-lessons`);
+        const unitIcon = document.getElementById(`${unitId}-icon`);
+        
+        if (lessonsContainer.style.maxHeight === '0px' || !lessonsContainer.style.maxHeight) {
+            // تحديد ارتفاع ثابت بدلاً من الارتفاع التلقائي
+            lessonsContainer.style.maxHeight = '100px'; // يمكنك تعديل هذا الرقم حسب الحاجة
+            unitIcon.textContent = '▲';
+        } else {
+            lessonsContainer.style.maxHeight = '0px';
+            unitIcon.textContent = '▼';
+        }
+    }
+
+    // بقية الكود يبقى كما هو
+    
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const unitHeaders = document.querySelectorAll(".unit-header");
+
+    unitHeaders.forEach(header => {
+        header.addEventListener("click", function() {
+            const lessonsContainer = header.nextElementSibling;
+            const arrowIcon = header.querySelector(".unit-icon"); // السهم
+
+            // قفل كل البنرات المفتوحة وإرجاع الأسهم
+            document.querySelectorAll(".lessons-container").forEach(container => {
+                container.style.maxHeight = "0";
+            });
+            document.querySelectorAll(".unit-icon").forEach(icon => {
+                icon.style.transform = "rotate(0deg)";
+                icon.style.transition = "transform 0.3s ease";
+            });
+
+            // لو البنر الحالي كان مقفول افتحه
+            if (!lessonsContainer.style.maxHeight || lessonsContainer.style.maxHeight === "0px") {
+                lessonsContainer.style.maxHeight = lessonsContainer.scrollHeight + "px";
+                if (arrowIcon) {
+                    arrowIcon.style.transform = "rotate(180deg)";
+                    arrowIcon.style.transition = "transform 0.3s ease";
+                }
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>

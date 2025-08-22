@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار اللغة العربية - الصف الثالث الإعدادي</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط عامة */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* الحاوية الرئيسية */
+        .exam-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        /* رأس الامتحان */
+        .exam-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+        }
+        
+        .exam-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        /* إحصائيات الأسئلة */
+        .stats {
+            background: #e9f5ff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            border-right: 4px solid #007bff;
+        }
+        
+        /* الأسئلة */
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .question h3 {
+            color: #007bff;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        /* النصوص والقصائد */
+        .passage, .poem {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.8;
+            font-style: italic;
+            border-right: 4px solid #6c757d;
+        }
+        
+        .poem {
+            text-align: center;
+            font-weight: bold;
+            background: #fff9e6;
+            border-right-color: #ffc107;
+        }
+        
+        /* خيارات الأسئلة */
+        .options {
+            margin: 20px 0;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            background: white;
+        }
+        
+        .option:hover {
+            background-color: #e9f5ff;
+            transform: translateX(-5px);
+        }
+        
+        .option.selected {
+            background-color: #d4edff;
+            border-left: 4px solid #007bff;
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        /* شرح الإجابة */
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-right: 3px solid #6c757d;
+        }
+        
+        /* حقول الإدخال */
+        .fill-in-blank input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .fill-in-blank input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+        
+        /* التنقل بين الأسئلة */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        /* الأزرار */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover:not(:disabled) {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover:not(:disabled) {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover:not(:disabled) {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+        
+        /* النتائج */
+        .results-container {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #007bff;
+        }
+        
+        .feedback {
+            text-align: center;
+            font-size: 18px;
+            margin: 15px 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .recommendations {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .correct-answer {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        /* عناصر التحكم */
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .exam-container {
+                padding: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .passage, .poem {
+                padding: 15px;
+            }
+        }
+    </style></head>
+<body>
+    <div class="exam-container">
+        <div class="exam-header">
+            <h1 id="exam-title">اختبار اللغة العربية - الصف الثالث الإعدادي (الوحدة الأولي) - الترم الأول</h1>
+        </div>
+        
+        <div class="stats">السؤال <span id="current-question">1</span> من <span id="total-questions">60</span></div>
+        
+        <div id="questions-container"></div>
+        
+        <div class="navigation">
+            <button id="prev-btn" class="btn btn-secondary" disabled>السابق</button>
+            <button id="next-btn" class="btn btn-primary">التالي</button>
+        </div>
+        
+        <div class="controls">
+            <button id="restart-btn" class="btn btn-warning">إعادة البدء</button>
+            <button id="print-btn" class="btn btn-info">طباعة النتائج</button>
+            <button id="share-btn" class="btn btn-success">مشاركة النتائج</button>
+            <button id="back-btn" class="btn btn-danger">العودة للامتحانات</button>
+        </div>
+        
+        <div class="results-container" id="results-container">
+            <h2>النتيجة</h2>
+            <div id="score"></div>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+
+    <audio id="correctSound" src="../../../assets/audio/correct.mp3" preload="auto"></audio>
+    <audio id="incorrectSound" src="../../../assets/audio/incorrect.mp3" preload="auto"></audio>
+
+
+   <script>
+    // أصوات
+    const correctSound = document.getElementById('correctSound');
+    const incorrectSound = document.getElementById('incorrectSound');
+
+    // معرف الامتحان
+    const examId = "arabic-grade1-term1";
+
+    // بيانات الأسئلة (كما أرسلتها)
+    const examData = {
+        title: "اختبار اللغة العربية - الصف الثالث الإعدادي (الوحدة الأولي) - الترم الأول",
+        questions: [
+            {
+        "id": 1,
+        "type": "multiple-choice",
+        "text": "ما السورة التي ورد فيها وصف \"عباد الرحمن\"؟",
+        "options": [
+            { "id": 1, "text": "سورة البقرة", "correct": false },
+            { "id": 2, "text": "سورة الفرقان", "correct": true },
+            { "id": 3, "text": "سورة الكهف", "correct": false },
+            { "id": 4, "text": "سورة يس", "correct": false }
+        ],
+        "explanation": "وصف \"عباد الرحمن\" ورد في سورة الفرقان، الآيات من 63 إلى 77."
+    },
+    {
+        "id": 2,
+        "type": "multiple-choice",
+        "text": "ما معنى \"يمشون على الأرض هونًا\"؟",
+        "options": [
+            { "id": 1, "text": "بسرعة وعجلة", "correct": false },
+            { "id": 2, "text": "بتكبر وغرور", "correct": false },
+            { "id": 3, "text": "بسكينة ووقار", "correct": true },
+            { "id": 4, "text": "بخوف وذعر", "correct": false }
+        ],
+        "explanation": "\"هونًا\" تعني بخضوع وسكينة، دليل على التواضع."
+    },
+    {
+        "id": 3,
+        "type": "multiple-choice",
+        "text": "ما دلالة قول عباد الرحمن \"سلامًا\" عند مخاطبتهم من الجاهلين؟",
+        "options": [
+            { "id": 1, "text": "ضعف وخوف", "correct": false },
+            { "id": 2, "text": "ردّ الإساءة بالإساءة", "correct": false },
+            { "id": 3, "text": "الحلم والصبر وحسن الخلق", "correct": true },
+            { "id": 4, "text": "السخرية منهم", "correct": false }
+        ],
+        "explanation": "الرد بالسلام دليل على الحلم، وعدم التورط في الجدال."
+    },
+    {
+        "id": 4,
+        "type": "multiple-choice",
+        "text": "ما دلالة قضاء الليل في الصلاة؟",
+        "options": [
+            { "id": 1, "text": "التعب والمرض", "correct": false },
+            { "id": 2, "text": "الخشوع والاجتهاد في العبادة", "correct": true },
+            { "id": 3, "text": "الهروب من العمل", "correct": false },
+            { "id": 4, "text": "التباهي بالعبادة", "correct": false }
+        ],
+        "explanation": "\"يبيتون لربهم سجداً وقياماً\" يدل على الخشوع والخوف من الله."
+    },
+    {
+        "id": 5,
+        "type": "multiple-choice",
+        "text": "ما معنى \"عذابها كان غراماً\"؟",
+        "options": [
+            { "id": 1, "text": "عذاب خفيف", "correct": false },
+            { "id": 2, "text": "عذاب مؤقت", "correct": false },
+            { "id": 3, "text": "عذاب ملازِم لا ينفك", "correct": true },
+            { "id": 4, "text": "عذاب اختياري", "correct": false }
+        ],
+        "explanation": "\"غرامًا\" تعني لازب، أي لا ينفك عن أهل النار."
+    },
+    {
+        "id": 6,
+        "type": "multiple-choice",
+        "text": "ما دلالة الدعاء \"ربنا اصرف عنا عذاب جهنم\"؟",
+        "options": [
+            { "id": 1, "text": "الجبن والخوف من الدنيا", "correct": false },
+            { "id": 2, "text": "التوكل فقط دون عمل", "correct": false },
+            { "id": 3, "text": "الخوف من الله والتوسل إليه", "correct": true },
+            { "id": 4, "text": "الشك في رحمة الله", "correct": false }
+        ],
+        "explanation": "الدعاء المستمر يدل على التضرع والخوف من العذاب."
+    },
+    {
+        "id": 7,
+        "type": "multiple-choice",
+        "text": "ما معنى \"لم يسرفوا ولم يقتروا\"؟",
+        "options": [
+            { "id": 1, "text": "يبذرون المال بغير حساب", "correct": false },
+            { "id": 2, "text": "يبخلون ولا ينفقون", "correct": false },
+            { "id": 3, "text": "ينفقون بعدل بين البذخ والبخل", "correct": true },
+            { "id": 4, "text": "ينفقون فقط في الشر", "correct": false }
+        ],
+        "explanation": "الاعتدال في الإنفاق من صفات عباد الرحمن."
+    },
+    {
+        "id": 8,
+        "type": "multiple-choice",
+        "text": "ما معنى \"وكان بين ذلك قواماً\"؟",
+        "options": [
+            { "id": 1, "text": "ميلاً إلى البخل", "correct": false },
+            { "id": 2, "text": "ميلاً إلى السرف", "correct": false },
+            { "id": 3, "text": "وسطاً معتدلاً", "correct": true },
+            { "id": 4, "text": "تردداً بين الخير والشر", "correct": false }
+        ],
+        "explanation": "\"قوامًا\" تعني عدلاً واعتدالاً في السلوك."
+    },
+    {
+        "id": 9,
+        "type": "multiple-choice",
+        "text": "ما من الكبائر التي نهت عنها الآية؟",
+        "options": [
+            { "id": 1, "text": "الصلاة في وقتها", "correct": false },
+            { "id": 2, "text": "الصيام في رمضان", "correct": false },
+            { "id": 3, "text": "الشرك بالله", "correct": true },
+            { "id": 4, "text": "قراءة القرآن", "correct": false }
+        ],
+        "explanation": "الشرك بالله من أعظم الكبائر، وهو ما نهت عنه الآية."
+    },
+    {
+        "id": 10,
+        "type": "multiple-choice",
+        "text": "ما شرط تبديل السيئات حسنات؟",
+        "options": [
+            { "id": 1, "text": "الغنى والقوة", "correct": false },
+            { "id": 2, "text": "التوبة، الإيمان، العمل الصالح", "correct": true },
+            { "id": 3, "text": "النسب العالي", "correct": false },
+            { "id": 4, "text": "كثرة الصلاة فقط", "correct": false }
+        ],
+        "explanation": "من تاب وآمن وعمل صالحاً، يُبدّل الله سيئاته حسنات."
+    },
+    {
+        "id": 11,
+        "type": "multiple-choice",
+        "text": "ما دلالة \"يُبدّل سيئاتهم حسنات\"؟",
+        "options": [
+            { "id": 1, "text": "أن الله يُضاعف الذنوب", "correct": false },
+            { "id": 2, "text": "رحمة الله وسعة مغفرته", "correct": true },
+            { "id": 3, "text": "أن التوبة غير مقبولة", "correct": false },
+            { "id": 4, "text": "أن العمل الصالح لا يُكفر السيئات", "correct": false }
+        ],
+        "explanation": "هذه الجملة تُظهر عظمة رحمة الله وتشجيعه على التوبة."
+    },
+    {
+        "id": 12,
+        "type": "multiple-choice",
+        "text": "ما نوع الجمال في عبارة \"يمشون هونًا\"؟",
+        "options": [
+            { "id": 1, "text": "تشبيه", "correct": false },
+            { "id": 2, "text": "تعبير دقيق يدل على التواضع", "correct": true },
+            { "id": 3, "text": "تكرار", "correct": false },
+            { "id": 4, "text": "استعارة", "correct": false }
+        ],
+        "explanation": "\"هونًا\" تعبير دقيق يُظهر الوقار والتواضع."
+    },
+    {
+        "id": 13,
+        "type": "multiple-choice",
+        "text": "ما نوع النداء في \"يا طالبَ اجتهد\"؟",
+        "options": [
+            { "id": 1, "text": "منادى مبنى", "correct": false },
+            { "id": 2, "text": "منادى منصوب بالفتحة", "correct": true },
+            { "id": 3, "text": "منادى منصوب بالكسرة", "correct": false },
+            { "id": 4, "text": "منادى منصوب بالياء", "correct": false }
+        ],
+        "explanation": "\"طالب\" منادى مفرد معرف، يُنصب بالفتحة."
+    },
+    {
+        "id": 14,
+        "type": "multiple-choice",
+        "text": "كيف يُنصب \"طالبات\" في \"يا طالباتِ العلمِ اجتهدنَ\"؟",
+        "options": [
+            { "id": 1, "text": "بالفتحة", "correct": false },
+            { "id": 2, "text": "بالكسرة", "correct": true },
+            { "id": 3, "text": "بالياء", "correct": false },
+            { "id": 4, "text": "بالألف", "correct": false }
+        ],
+        "explanation": "الجمع المؤنث السالم يُنصب بالكسرة."
+    },
+    {
+        "id": 15,
+        "type": "multiple-choice",
+        "text": "كيف يُنصب \"طالبي\" في \"يا طالبي العلمِ اجتهدوا\"؟",
+        "options": [
+            { "id": 1, "text": "بالفتحة", "correct": false },
+            { "id": 2, "text": "بالكسرة", "correct": false },
+            { "id": 3, "text": "بالياء", "correct": true },
+            { "id": 4, "text": "بالألف", "correct": false }
+        ],
+        "explanation": "الجمع المذكر السالم يُنصب بالياء."
+    },
+    {
+        "id": 16,
+        "type": "multiple-choice",
+        "text": "كيف يُنصب \"ذا\" في \"يا ذا العلمِ انفع به\"؟",
+        "options": [
+            { "id": 1, "text": "بالفتحة", "correct": false },
+            { "id": 2, "text": "بالكسرة", "correct": false },
+            { "id": 3, "text": "بالياء", "correct": false },
+            { "id": 4, "text": "بالألف", "correct": true }
+        ],
+        "explanation": "\"ذا\" من الأسماء الخمسة، ويُنصب بالألف إذا كان مضافًا."
+    },
+    {
+        "id": 17,
+        "type": "multiple-choice",
+        "text": "ما نوع المنادى في \"يا ربي استجب\"؟",
+        "options": [
+            { "id": 1, "text": "منادى مضاف إلى ياء المتكلم", "correct": true },
+            { "id": 2, "text": "منادى نكرة غير مقصودة", "correct": false },
+            { "id": 3, "text": "منادى شبيه بالمضاف", "correct": false },
+            { "id": 4, "text": "منادى مبنى على الضم", "correct": false }
+        ],
+        "explanation": "\"ربي\" = يا عبدك، وهو مضاف إلى ياء المتكلم، يُنصب بالفتحة المقدرة."
+    },
+    {
+        "id": 18,
+        "type": "multiple-choice",
+        "text": "ما نوع المنادى في \"يا قائلَ الصدقِ صدّق\"؟",
+        "options": [
+            { "id": 1, "text": "منادى مفرد", "correct": false },
+            { "id": 2, "text": "منادى شبيه بالمضاف", "correct": true },
+            { "id": 3, "text": "منادى نكرة غير مقصودة", "correct": false },
+            { "id": 4, "text": "منادى مبنى", "correct": false }
+        ],
+        "explanation": "\"قائلَ الصدقِ\" شبيه بالمضاف لأنه متبوع بجار ومجرور، يُنصب بالفتحة."
+    },
+    {
+        "id": 19,
+        "type": "multiple-choice",
+        "text": "ما الفرق بين \"يا طالبَ\" و\"يا طالبًا\"؟",
+        "options": [
+            { "id": 1, "text": "لا فرق", "correct": false },
+            { "id": 2, "text": "الأول مقصود، الثاني غير مقصود", "correct": true },
+            { "id": 3, "text": "الأول غير مقصود، الثاني مقصود", "correct": false },
+            { "id": 4, "text": "الأول مثنى، الثاني مفرد", "correct": false }
+        ],
+        "explanation": "\"يا طالبَ\" تُنادِي شخصًا معينًا (مُقصود)، \"يا طالبًا\" أي طالب (غير مقصود)."
+    },
+    {
+        "id": 20,
+        "type": "multiple-choice",
+        "text": "من هو الشاعر الذي كتب \"كن جميلاً\"؟",
+        "options": [
+            { "id": 1, "text": "محمود درويش", "correct": false },
+            { "id": 2, "text": "نزار قباني", "correct": false },
+            { "id": 3, "text": "إيليا أبو ماضي", "correct": true },
+            { "id": 4, "text": "أحمد شوقي", "correct": false }
+        ],
+        "explanation": "إيليا أبو ماضي شاعر لبناني من أعلام الحداثة."
+    },
+    {
+        "id": 21,
+        "type": "multiple-choice",
+        "text": "ما ديوان الشاعر الذي ينتمي إليه النص؟",
+        "options": [
+            { "id": 1, "text": "ديوان \"الأزهار\"", "correct": false },
+            { "id": 2, "text": "ديوان \"تراب وحب\"", "correct": true },
+            { "id": 3, "text": "ديوان \"أعياد الميلاد\"", "correct": false },
+            { "id": 4, "text": "ديوان \"النجوم\"", "correct": false }
+        ],
+        "explanation": "\"تراب وحب\" من أشهر دواوين إيليا أبو ماضي."
+    },
+    {
+        "id": 22,
+        "type": "multiple-choice",
+        "text": "ما الفكرة العامة للنص \"كن جميلاً\"؟",
+        "options": [
+            { "id": 1, "text": "النقد الاجتماعي", "correct": false },
+            { "id": 2, "text": "الدعوة للتشاؤم", "correct": false },
+            { "id": 3, "text": "التفاؤل ورؤية الجمال في الحياة", "correct": true },
+            { "id": 4, "text": "وصف الطبيعة فقط", "correct": false }
+        ],
+        "explanation": "النص يدعو إلى التفاؤل ورؤية الجمال في الكون."
+    },
+    {
+        "id": 23,
+        "type": "multiple-choice",
+        "text": "ما معنى \"كيف تعدو إذا غدوت عليلاً؟\"",
+        "options": [
+            { "id": 1, "text": "كيف تركض إذا أصبحت مريضًا؟", "correct": true },
+            { "id": 2, "text": "كيف تسافر إذا كنت سليمًا؟", "correct": false },
+            { "id": 3, "text": "كيف تنام إذا كنت مرهقًا؟", "correct": false },
+            { "id": 4, "text": "كيف تضحك إذا كنت حزينًا؟", "correct": false }
+        ],
+        "explanation": "استفهام تقريري يُظهر أن حالك أسوأ عند المرض."
+    },
+    {
+        "id": 24,
+        "type": "multiple-choice",
+        "text": "ما المقصود بـ \"شر الجناة في الأرض نفسًا\"؟",
+        "options": [
+            { "id": 1, "text": "من يرتكب السرقة", "correct": false },
+            { "id": 2, "text": "من يعيش في خوف وتشاؤم", "correct": true },
+            { "id": 3, "text": "من يقتل", "correct": false },
+            { "id": 4, "text": "من يكذب", "correct": false }
+        ],
+        "explanation": "الشاعر يعتبر التشاؤم جريمة أسوأ من الجرائم المادية."
+    },
+    {
+        "id": 25,
+        "type": "multiple-choice",
+        "text": "ما دلالة \"وترى الشوك في الورود\"؟",
+        "options": [
+            { "id": 1, "text": "رؤية الجمال فقط", "correct": false },
+            { "id": 2, "text": "رؤية المتاعب في الجمال", "correct": true },
+            { "id": 3, "text": "نسيان الألم", "correct": false },
+            { "id": 4, "text": "التفاؤل", "correct": false }
+        ],
+        "explanation": "صورة تجسيدية تعبر عن من يركز على السلبيات."
+    },
+    {
+        "id": 26,
+        "type": "multiple-choice",
+        "text": "ما معنى \"الندى إكليلاً\"؟",
+        "options": [
+            { "id": 1, "text": "قطرات الندى كتاج على الوردة", "correct": true },
+            { "id": 2, "text": "الندى يفسد الوردة", "correct": false },
+            { "id": 3, "text": "الندى يجف بسرعة", "correct": false },
+            { "id": 4, "text": "الندى يُشكل سحابة", "correct": false }
+        ],
+        "explanation": "تشبيه جميل يُظهر الجمال في التفاصيل."
+    },
+    {
+        "id": 27,
+        "type": "multiple-choice",
+        "text": "ما الدعوة في \"فتمتع بالصبح ما تمتعت فيه\"؟",
+        "options": [
+            { "id": 1, "text": "الحزن على الماضي", "correct": false },
+            { "id": 2, "text": "الاستمتاع بالحاضر", "correct": true },
+            { "id": 3, "text": "الخوف من المستقبل", "correct": false },
+            { "id": 4, "text": "تجاهل الجمال", "correct": false }
+        ],
+        "explanation": "الدعوة للاستمتاع باللحظة الجميلة."
+    },
+    {
+        "id": 28,
+        "type": "multiple-choice",
+        "text": "ما الرسالة في \"كن جميلاً تَرَ الوجود جميلاً\"؟",
+        "options": [
+            { "id": 1, "text": "الجمال خارجي فقط", "correct": false },
+            { "id": 2, "text": "الجمال يبدأ من الداخل", "correct": true },
+            { "id": 3, "text": "الكون قاتم دائمًا", "correct": false },
+            { "id": 4, "text": "لا يمكن رؤية الجمال", "correct": false }
+        ],
+        "explanation": "الجمال نابع من النفس، فالتغيير الداخلي يؤدي للرؤية الجميلة."
+    },
+    {
+        "id": 29,
+        "type": "multiple-choice",
+        "text": "ما نوع النداء في \"يا هذا الشاكي\"؟",
+        "options": [
+            { "id": 1, "text": "نداء لفظ الجلالة", "correct": false },
+            { "id": 2, "text": "نداء بالمعرف بـ\"الـ\"", "correct": false },
+            { "id": 3, "text": "نداء باسم إشارة", "correct": true },
+            { "id": 4, "text": "نداء لنكرة غير مقصودة", "correct": false }
+        ],
+        "explanation": "\"هذا\" اسم إشارة، يستخدم مع المعرف."
+    },
+    {
+        "id": 30,
+        "type": "multiple-choice",
+        "text": "أين تقع الكنيسة المعلقة؟",
+        "options": [
+            { "id": 1, "text": "في الإسكندرية", "correct": false },
+            { "id": 2, "text": "في مصر القديمة", "correct": true },
+            { "id": 3, "text": "في الأقصر", "correct": false },
+            { "id": 4, "text": "في أسوان", "correct": false }
+        ],
+        "explanation": "تقع في منطقة مصر القديمة، بالقاهرة."
+    },
+    {
+        "id": 31,
+        "type": "multiple-choice",
+        "text": "لماذا سُميت \"المعلقة\"؟",
+        "options": [
+            { "id": 1, "text": "لأنها معلقة في الهواء", "correct": false },
+            { "id": 2, "text": "لأنها بُنيت على برجين من حصن قديم", "correct": true },
+            { "id": 3, "text": "لأنها تهتز بالرياح", "correct": false },
+            { "id": 4, "text": "لأنها لا تُستخدم", "correct": false }
+        ],
+        "explanation": "بُنيت فوق أعمدة حصن بابليون، فكأنها مُعلقة."
+    },
+    {
+        "id": 32,
+        "type": "multiple-choice",
+        "text": "ما الحدث الديني المرتبط بالكنيسة المعلقة؟",
+        "options": [
+            { "id": 1, "text": "مولد النبي محمد", "correct": false },
+            { "id": 2, "text": "هروب العائلة المقدسة", "correct": true },
+            { "id": 3, "text": "بناء الأهرامات", "correct": false },
+            { "id": 4, "text": "وفاة الفراعنة", "correct": false }
+        ],
+        "explanation": "يُعتقد أن العائلة المقدسة اختبأت فيها."
+    },
+    {
+        "id": 33,
+        "type": "multiple-choice",
+        "text": "من جدد الكنيسة المعلقة؟",
+        "options": [
+            { "id": 1, "text": "هارون الرشيد والعزيز بالله", "correct": true },
+            { "id": 2, "text": "صلاح الدين ونابليون", "correct": false },
+            { "id": 3, "text": "محمد علي ونفرتيتي", "correct": false },
+            { "id": 4, "text": "كليوباترا وقيصر", "correct": false }
+        ],
+        "explanation": "جُددت في العهدين العباسي والفاطمي."
+    },
+    {
+        "id": 34,
+        "type": "multiple-choice",
+        "text": "ما دلالة تجديد الكنيسة من قبل الخلفاء؟",
+        "options": [
+            { "id": 1, "text": "كراهية الأديان", "correct": false },
+            { "id": 2, "text": "سماحة الإسلام واحترامه للأديان", "correct": true },
+            { "id": 3, "text": "رغبة في التبشير", "correct": false },
+            { "id": 4, "text": "تدمير الأديان الأخرى", "correct": false }
+        ],
+        "explanation": "يدل على التسامح الديني في الدولة الإسلامية."
+    },
+    {
+        "id": 35,
+        "type": "multiple-choice",
+        "text": "أين تقع قلعة قايتباي؟",
+        "options": [
+            { "id": 1, "text": "في الأقصر", "correct": false },
+            { "id": 2, "text": "في الإسكندرية", "correct": true },
+            { "id": 3, "text": "في أسوان", "correct": false },
+            { "id": 4, "text": "في القاهرة", "correct": false }
+        ],
+        "explanation": "تقع على ساحل البحر المتوسط في الإسكندرية."
+    },
+    {
+        "id": 36,
+        "type": "multiple-choice",
+        "text": "على أي موقع بُنيت قلعة قايتباي؟",
+        "options": [
+            { "id": 1, "text": "على قمة جبل", "correct": false },
+            { "id": 2, "text": "مكان منارة الإسكندرية القديمة", "correct": true },
+            { "id": 3, "text": "على نهر النيل", "correct": false },
+            { "id": 4, "text": "في الصحراء الغربية", "correct": false }
+        ],
+        "explanation": "بُنيت مكان إحدى عجائب الدنيا القديمة."
+    },
+    {
+        "id": 37,
+        "type": "multiple-choice",
+        "text": "من بناها؟",
+        "options": [
+            { "id": 1, "text": "محمد علي", "correct": false },
+            { "id": 2, "text": "صلاح الدين", "correct": false },
+            { "id": 3, "text": "السلطان قايتباي", "correct": true },
+            { "id": 4, "text": "نابليون", "correct": false }
+        ],
+        "explanation": "بُنيت في عهد السلطان المملوكي قايتباي."
+    },
+    {
+        "id": 38,
+        "type": "multiple-choice",
+        "text": "ما شكل القلعة؟",
+        "options": [
+            { "id": 1, "text": "دائري", "correct": false },
+            { "id": 2, "text": "مثلث", "correct": false },
+            { "id": 3, "text": "مستطيل", "correct": true },
+            { "id": 4, "text": "مربع", "correct": false }
+        ],
+        "explanation": "شكلها مستطيل (60م × 50م)."
+    },
+    {
+        "id": 39,
+        "type": "multiple-choice",
+        "text": "ما مادة البناء الرئيسية للقلعة؟",
+        "options": [
+            { "id": 1, "text": "الخشب", "correct": false },
+            { "id": 2, "text": "الطوب", "correct": false },
+            { "id": 3, "text": "الحجر الجيري", "correct": true },
+            { "id": 4, "text": "الحديد", "correct": false }
+        ],
+        "explanation": "بُنيت من الحجر الجيري."
+    },
+    {
+        "id": 40,
+        "type": "multiple-choice",
+        "text": "ما واجبنا نحو الآثار؟",
+        "options": [
+            { "id": 1, "text": "تدميرها", "correct": false },
+            { "id": 2, "text": "الحفاظ عليها ورعايتها", "correct": true },
+            { "id": 3, "text": "بيعها", "correct": false },
+            { "id": 4, "text": "نسيانها", "correct": false }
+        ],
+        "explanation": "الآثار جزء من الهوية، وواجبنا حمايتها."
+    },
+    {
+        "id": 41,
+        "type": "multiple-choice",
+        "text": "كيف ننادي على \"الطالب\" المعرف بـ\"الـ\"؟",
+        "options": [
+            { "id": 1, "text": "يا طالب", "correct": false },
+            { "id": 2, "text": "يا أيها الطالب", "correct": true },
+            { "id": 3, "text": "يا هذا الطالب", "correct": true },
+            { "id": 4, "text": "(ب و ج) صحيحان", "correct": true }
+        ],
+        "explanation": "نقول \"يا أيها الطالب\" أو \"يا هذا الطالب\"."
+    },
+    {
+        "id": 42,
+        "type": "multiple-choice",
+        "text": "كيف ننادي على \"الطالبة\" المعرفة؟",
+        "options": [
+            { "id": 1, "text": "يا أيها الطالبة", "correct": false },
+            { "id": 2, "text": "يا أيتها الطالبة", "correct": true },
+            { "id": 3, "text": "يا هذه الطالبة", "correct": true },
+            { "id": 4, "text": "(ب و ج) صحيحان", "correct": true }
+        ],
+        "explanation": "للمؤنث نقول \"يا أيتها\" أو \"يا هذه\"."
+    },
+    {
+        "id": 43,
+        "type": "multiple-choice",
+        "text": "كيف ننادي على \"الله\"؟",
+        "options": [
+            { "id": 1, "text": "يا اللهُ", "correct": false },
+            { "id": 2, "text": "يا الله", "correct": true },
+            { "id": 3, "text": "يا الهُ", "correct": false },
+            { "id": 4, "text": "يا الهي", "correct": false }
+        ],
+        "explanation": "لا يُبنى لفظ الجلالة، يُقال \"يا الله\" أو \"اللهم\"."
+    },
+    {
+        "id": 44,
+        "type": "multiple-choice",
+        "text": "ما الفرق بين \"يا بني\" بفتح الياء وكسرها؟",
+        "options": [
+            { "id": 1, "text": "لا فرق", "correct": false },
+            { "id": 2, "text": "الفتح: مفرد، الكسر: جمع", "correct": true },
+            { "id": 3, "text": "الفتح: جمع، الكسر: مفرد", "correct": false },
+            { "id": 4, "text": "الفتح: مؤنث، الكسر: مذكر", "correct": false }
+        ],
+        "explanation": "\"يا بني\" بفتح الياء = مفرد، \"يا بني\" بكسر الياء = جمع."
+    },
+    {
+        "id": 45,
+        "type": "multiple-choice",
+        "text": "ما نوع \"وطني\" في \"يا وطني حافظ على وطنك\"؟",
+        "options": [
+            { "id": 1, "text": "ياء النسب", "correct": true },
+            { "id": 2, "text": "ياء المتكلم", "correct": false },
+            { "id": 3, "text": "ياء النداء", "correct": false },
+            { "id": 4, "text": "ياء الملكية", "correct": false }
+        ],
+        "explanation": "\"مصريٌ\" يُنون → ياء النسب."
+    },
+    {
+        "id": 46,
+        "type": "multiple-choice",
+        "text": "ما نوع \"وطني\" في \"يا وطني لحب كل ذرة تراب\"؟",
+        "options": [
+            { "id": 1, "text": "ياء النسب", "correct": false },
+            { "id": 2, "text": "ياء المتكلم", "correct": true },
+            { "id": 3, "text": "ياء الملكية", "correct": false },
+            { "id": 4, "text": "ياء الإشارة", "correct": false }
+        ],
+        "explanation": "\"وطني\" = يا وطنِ + ي، لا يُنون → ياء المتكلم."
+    },
+    {
+        "id": 47,
+        "type": "multiple-choice",
+        "text": "كيف نحول \"يا باذلَ الجهد\" إلى مضاف؟",
+        "options": [
+            { "id": 1, "text": "يا باذل الجهد", "correct": false },
+            { "id": 2, "text": "يا باذل الجهد", "correct": true },
+            { "id": 3, "text": "يا باذل الجهد", "correct": false },
+            { "id": 4, "text": "يا باذل الجهد", "correct": false }
+        ],
+        "explanation": "\"يا باذل الجهد\" (مضاف)، بدلاً من \"يا باذلَ الجهد\" (شبيه بالمضاف)."
+    },
+    {
+        "id": 48,
+        "type": "multiple-choice",
+        "text": "ما نوع المنادى في \"يا محمدُ قم\"؟",
+        "options": [
+            { "id": 1, "text": "منادى منصوب", "correct": false },
+            { "id": 2, "text": "منادى مبنى على الضم", "correct": true },
+            { "id": 3, "text": "منادى مبنى على الفتحة", "correct": false },
+            { "id": 4, "text": "منادى مبنى على الكسرة", "correct": false }
+        ],
+        "explanation": "\"محمدُ\" مبنى على الضم في محل نصب."
+    },
+    {
+        "id": 49,
+        "type": "multiple-choice",
+        "text": "ما نوع المنادى في \"يا محمدانِ قوما\"؟",
+        "options": [
+            { "id": 1, "text": "مفرد", "correct": false },
+            { "id": 2, "text": "مثنى مبنى على الألف", "correct": true },
+            { "id": 3, "text": "جمع مذكر", "correct": false },
+            { "id": 4, "text": "جمع مؤنث", "correct": false }
+        ],
+        "explanation": "المثنى من الأسماء الخمسة يُبنى على الألف."
+    },
+    {
+        "id": 50,
+        "type": "multiple-choice",
+        "text": "ما نوع المنادى في \"يا محمدونَ قوموا\"؟",
+        "options": [
+            { "id": 1, "text": "مفرد", "correct": false },
+            { "id": 2, "text": "مثنى", "correct": false },
+            { "id": 3, "text": "جمع مذكر سالم مبنى على الواو", "correct": true },
+            { "id": 4, "text": "جمع مؤنث سالم", "correct": false }
+        ],
+        "explanation": "الجمع المذكر السالم يُبنى على الواو."
+    },
+    {
+        "id": 51,
+        "type": "multiple-choice",
+        "text": "ما نوع المنادى في \"يا فاطماتُ اجتهدنَ\"؟",
+        "options": [
+            { "id": 1, "text": "مفرد", "correct": false },
+            { "id": 2, "text": "مثنى", "correct": false },
+            { "id": 3, "text": "جمع مذكر", "correct": false },
+            { "id": 4, "text": "جمع مؤنث سالم مبنى على الضم", "correct": true }
+        ],
+        "explanation": "الجمع المؤنث السالم المعرف يُبنى على الضم."
+    },
+    {
+        "id": 52,
+        "type": "multiple-choice",
+        "text": "ما الفكرة الرئيسية لنص \"قصة أثر\"؟",
+        "options": [
+            { "id": 1, "text": "تدمير الآثار", "correct": false },
+            { "id": 2, "text": "الحفاظ على الآثار كجزء من الهوية", "correct": true },
+            { "id": 3, "text": "السياحة فقط", "correct": false },
+            { "id": 4, "text": "تاريخ الفراعنة فقط", "correct": false }
+        ],
+        "explanation": "النص يدعو للحفاظ على الآثار كتراث وطن."
+    },
+    {
+        "id": 53,
+        "type": "multiple-choice",
+        "text": "ما دلالة \"تضاء لها الشموع\" في الكنيسة المعلقة؟",
+        "options": [
+            { "id": 1, "text": "تدمير", "correct": false },
+            { "id": 2, "text": "تكريم وتقديس", "correct": true },
+            { "id": 3, "text": "إنارة فقط", "correct": false },
+            { "id": 4, "text": "تجارة", "correct": false }
+        ],
+        "explanation": "الشموع رمز للتقدير والاحترام."
+    },
+    {
+        "id": 54,
+        "type": "multiple-choice",
+        "text": "ما أهمية منارة الإسكندرية؟",
+        "options": [
+            { "id": 1, "text": "واحدة من عجائب الدنيا القديمة", "correct": true },
+            { "id": 2, "text": "مكان للزراعة", "correct": false },
+            { "id": 3, "text": "ميناء تجاري فقط", "correct": false },
+            { "id": 4, "text": "قلعة حربية", "correct": false }
+        ],
+        "explanation": "منارة الإسكندرية من عجائب الدنيا السبع."
+    },
+    {
+        "id": 55,
+        "type": "multiple-choice",
+        "text": "ما الدور الثقافي للآثار؟",
+        "options": [
+            { "id": 1, "text": "جذب السياح فقط", "correct": false },
+            { "id": 2, "text": "تعليم الأجيال وربطهم بتاريخهم", "correct": true },
+            { "id": 3, "text": "بيع القطع الأثرية", "correct": false },
+            { "id": 4, "text": "بناء مدن جديدة", "correct": false }
+        ],
+        "explanation": "الآثار وسيلة للتربية والتاريخ."
+    },
+    {
+        "id": 56,
+        "type": "multiple-choice",
+        "text": "ما ميزة \"الشبيه بالمضاف\"؟",
+        "options": [
+            { "id": 1, "text": "لا يتبعه جار ومجرور", "correct": false },
+            { "id": 2, "text": "يتبعه جار أو مصدر", "correct": true },
+            { "id": 3, "text": "يكون معرفًا فقط", "correct": false },
+            { "id": 4, "text": "لا يُنصب", "correct": false }
+        ],
+        "explanation": "يتبعه جار ومجرور أو مصدر، ويُنصب بالفتحة."
+    },
+    {
+        "id": 57,
+        "type": "multiple-choice",
+        "text": "ما نوع النداء في \"يا أيها الرجلُ\"؟",
+        "options": [
+            { "id": 1, "text": "نكرة غير مقصودة", "correct": false },
+            { "id": 2, "text": "معرفة بـ\"الـ\"", "correct": true },
+            { "id": 3, "text": "شبيه بالمضاف", "correct": false },
+            { "id": 4, "text": "مضاف إلى ياء المتكلم", "correct": false }
+        ],
+        "explanation": "\"يا أيها\" تُستخدم مع المعرف."
+    },
+    {
+        "id": 58,
+        "type": "multiple-choice",
+        "text": "ما دلالة \"تتوقى قبل الرحيل الرحيلا\"؟",
+        "options": [
+            { "id": 1, "text": "الفرح بالموت", "correct": false },
+            { "id": 2, "text": "الخوف من الموت قبل حدوثه", "correct": true },
+            { "id": 3, "text": "الرغبة في الحياة", "correct": false },
+            { "id": 4, "text": "الشجاعة", "correct": false }
+        ],
+        "explanation": "تكرار \"الرحيل\" يُظهر الخوف والقلق."
+    },
+    {
+        "id": 59,
+        "type": "multiple-choice",
+        "text": "ما الفرق بين المنادى المقصود وغير المقصود؟",
+        "options": [
+            { "id": 1, "text": "لا فرق", "correct": false },
+            { "id": 2, "text": "المقصود: شخص معين، غير المقصود: أي شخص من النوع", "correct": true },
+            { "id": 3, "text": "المقصود: نكرة، غير المقصود: معرف", "correct": false },
+            { "id": 4, "text": "المقصود: جمع، غير المقصود: مفرد", "correct": false }
+        ],
+        "explanation": "الفرق في القصد، وليس في الشكل."
+    },
+    {
+        "id": 60,
+        "type": "multiple-choice",
+        "text": "ما الرسالة الأخلاقية لـ\"عباد الرحمن\"؟",
+        "options": [
+            { "id": 1, "text": "التكبر والبخل", "correct": false },
+            { "id": 2, "text": "التواضع، الاعتدال، تجنب الكبائر، التوبة", "correct": true },
+            { "id": 3, "text": "الجبن والخوف", "correct": false },
+            { "id": 4, "text": "التباهي بالعبادة", "correct": false }
+        ],
+        "explanation": "الآيات تدعو إلى الأخلاق العالية والاعتدال."
+    }
+        ]
+    };
+
+   // متغيرات
+    let currentQuestionIndex = 0;
+    let userAnswers = {};
+    let answered = {};
+
+    // تحميل البيانات المحفوظة
+    function loadSavedData() {
+        const saved = localStorage.getItem(`exam_${examId}`);
+        if (saved) {
+            const data = JSON.parse(saved);
+            userAnswers = data.answers || {};
+            currentQuestionIndex = data.currentQuestionIndex || 0;
+            return true;
+        }
+        return false;
+    }
+
+    // حفظ البيانات
+    function saveData() {
+        const data = {
+            answers: userAnswers,
+            currentQuestionIndex: currentQuestionIndex,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem(`exam_${examId}`, JSON.stringify(data));
+    }
+
+    // الحصول على رقم السؤال الحقيقي (باستثناء النصوص والشعر)
+    function getQuestionNumber(index) {
+        let realCount = 0;
+        for (let i = 0; i <= index; i++) {
+            if (examData.questions[i].type !== "passage" && examData.questions[i].type !== "poem") {
+                realCount++;
+            }
+        }
+        return realCount;
+    }
+
+    // تحديث زر التالي
+    function updateNextButton() {
+        const nextBtn = document.getElementById('next-btn');
+        const currentQuestion = examData.questions[currentQuestionIndex];
+        
+        // إذا كان السؤال الحالي نصًا أو شعرًا، فعّل الزر مباشرة
+        if (currentQuestion.type === "passage" || currentQuestion.type === "poem") {
+            nextBtn.disabled = false;
+            return;
+        }
+        
+        // تحقق مما إذا كان السؤال الحالي قد تمت الإجابة عليه
+        nextBtn.disabled = !answered[currentQuestionIndex];
+    }
+
+    // تحديد خيار في سؤال متعدد الخيارات
+    function selectOption(element, questionId, optionId, isCorrect) {
+        // منع التحديد إذا كانت الإجابة معروضة بالفعل
+        if (userAnswers[questionId]) return;
+        
+        // إلغاء تحديد جميع الخيارات الأخرى
+        const options = document.querySelectorAll(`.option[data-question="${questionId}"]`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        
+        // تحديد الخيار الحالي
+        element.classList.add('selected');
+        
+        // حفظ الإجابة
+        userAnswers[questionId] = {
+            selected: optionId,
+            correct: isCorrect
+        };
+        
+        // تشغيل الصوت المناسب
+        if (isCorrect) {
+            correctSound.play();
+        } else {
+            incorrectSound.play();
+        }
+        
+        // عرض التفسير
+        const explanationEl = document.getElementById(`explanation-${questionId}`);
+        if (explanationEl) {
+            explanationEl.style.display = 'block';
+        }
+        
+        // تمييز الإجابة الصحيحة والخاطئة
+        options.forEach(opt => {
+            const optCorrect = opt.getAttribute('data-correct') === 'true';
+            if (optCorrect) {
+                opt.classList.add('correct');
+            } else if (parseInt(opt.getAttribute('data-option')) === optionId && !isCorrect) {
+                opt.classList.add('incorrect');
+            }
+        });
+        
+        // تمكين زر التالي
+        answered[currentQuestionIndex] = true;
+        updateNextButton();
+        saveData();
+    }
+
+    // معالجة إدخال الإجابة في الأسئلة المقالية
+    function onFillInput(questionId) {
+        const input = document.getElementById(`fill-${questionId}`);
+        userAnswers[questionId] = {
+            answer: input.value
+        };
+        
+        // تمكين زر التالي إذا كان هناك إدخال
+        if (input.value.trim() !== '') {
+            answered[currentQuestionIndex] = true;
+        } else {
+            answered[currentQuestionIndex] = false;
+        }
+        
+        updateNextButton();
+        saveData();
+    }
+
+    // الانتقال إلى السؤال التالي
+    function nextQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex < examData.questions.length - 1) {
+            currentQuestionIndex++;
+            const nextId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${nextId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            
+            // إذا كان السؤال تاليًا نصًا أو شعرًا، فعّل الزر مباشرة
+            const nextQ = examData.questions[currentQuestionIndex];
+            if (nextQ.type === "passage" || nextQ.type === "poem") {
+                answered[currentQuestionIndex] = true;
+                document.getElementById('next-btn').disabled = false;
+            } else {
+                updateNextButton();
+            }
+            
+            saveData();
+        } else {
+            showResults();
+        }
+    }
+
+    // الانتقال إلى السؤال السابق
+    function prevQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            const prevId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${prevId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            updateNextButton();
+            
+            saveData();
+        }
+    }
+
+    // عرض النتائج
+// عرض النتائج - بدون حساب الأسئلة المقالية في الدرجة
+function showResults() {
+    // حساب النتيجة: فقط الأسئلة متعددة الخيارات
+    let correctCount = 0;
+    let totalQuestions = 0;
+
+    examData.questions.forEach(q => {
+        if (q.type === "multiple-choice") {
+            totalQuestions++;
+            if (userAnswers[q.id] && userAnswers[q.id].correct) {
+                correctCount++;
+            }
+        }
+    });
+
+    // حساب النسبة المئوية بناءً على الأسئلة متعددة الخيارات فقط
+    const score = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+
+    // كلمات تشجيعية
+    let feedback = "";
+    if (score >= 90) feedback = "ممتاز! أحسنت، استمر على هذا النحو 🌟";
+    else if (score >= 75) feedback = "جيد جدًا! أداء رائع 👏";
+    else if (score >= 60) feedback = "جيد، يمكنك التحسن أكثر 💪";
+    else feedback = "لا بأس، راجع الدروس وحاول مرة أخرى ❤️";
+
+    // توصيات
+    let recommendations = "";
+    if (score < 60) {
+        recommendations = "ننصحك بمراجعة القواعد النحوية والبلاغية، وحل المزيد من الأسئلة.";
+    } else if (score < 80) {
+        recommendations = "أداء جيد، ركّز على أنواع الأسئلة التي أخطأت فيها.";
+    } else {
+        recommendations = "أداء ممتاز! استمر في التقدم وجرّب امتحانات أصعب.";
+    }
+
+    // بناء النتائج التفصيلية
+    let detailedResults = '';
+    let questionNumber = 0; // رقم السؤال الحقيقي (للأسئلة القابلة للتصحيح فقط)
+
+    examData.questions.forEach(q => {
+        const userAnswer = userAnswers[q.id];
+        let answerText = 'لم تُجب';
+        let statusText = 'لم تُجب ❌';
+
+        // عرض الفقرات والشعر
+        if (q.type === "passage") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📖 فقرة نصية</h4>
+                    <div class="passage">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        if (q.type === "poem") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📜 نص شعري</h4>
+                    <div class="poem">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        // زيادة رقم السؤال فقط للأسئلة القابلة للتصحيح (اختيار من متعدد)
+        if (q.type === "multiple-choice") {
+            questionNumber++;
+        }
+
+        // معالجة الإجابة
+        if (q.type === "multiple-choice") {
+            const selectedOption = q.options.find(opt => opt.id == userAnswer?.selected);
+            answerText = selectedOption ? selectedOption.text : 'لم تُجب';
+            
+            if (userAnswer && selectedOption?.correct) {
+                statusText = 'إجابة صحيحة ✅';
+            } else if (userAnswer && !selectedOption?.correct) {
+                statusText = 'إجابة خاطئة ❌';
+            } else {
+                statusText = 'لم تُجب ❌';
+            }
+        } 
+        else if (q.type === "fill-in-blank") {
+            // السؤال المقالي: يظهر لكن بدون تأثير على العد
+            answerText = userAnswer?.answer?.trim() || 'لم تُجب';
+            statusText = (userAnswer && answerText !== 'لم تُجب') ? 'تمت الإجابة (تحت المراجعة)' : 'لم تُجب ❌';
+        }
+
+        // عرض السؤال بالشكل المطلوب
+        detailedResults += `
+            <div class="result-item">
+                ${q.type === "multiple-choice" ? `<p><strong>السؤال ${questionNumber}: ${q.text}</strong></p>` : `<p><strong>${q.text}</strong></p>`}
+                <p><strong>إجابتك:</strong> ${answerText}</p>
+                <p><strong>الحالة:</strong> ${statusText}</p>
+                <p><strong>📌 التفسير الكامل:</strong> ${q.explanation}</p>
+            </div>
+        `;
+    });
+
+    // عرض النتيجة النهائية
+    document.getElementById('score').innerHTML = `
+        <div class="stats">الإجابات الصحيحة: ${correctCount} من ${totalQuestions}</div>
+        <div class="stats">النسبة المئوية: ${score}%</div>
+        <div class="feedback">${feedback}</div>
+        <div class="recommendations"><strong>توصية:</strong> ${recommendations}</div>
+    `;
+
+    document.getElementById('detailed-results').innerHTML = detailedResults;
+
+    // إخفاء الأسئلة وإظهار النتائج
+    document.getElementById('questions-container').style.display = 'none';
+    document.querySelector('.navigation').style.display = 'none';
+    document.querySelector('.controls').style.display = 'flex';
+    document.getElementById('results-container').style.display = 'block';
+}
+    // طباعة النتائج
+    function printResults() {
+        window.print();
+    }
+
+    // مشاركة النتائج
+    function shareResults() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'نتيجة الامتحان',
+                text: `حصلت على ${document.getElementById('score').textContent} في امتحان اللغة العربية`,
+                url: window.location.href
+            })
+            .catch(error => {
+                console.log('Error sharing:', error);
+                alert('لم يتمكن المتصفح من مشاركة النتائج. يرجى المحاولة لاحقًا.');
+            });
+        } else {
+            alert('مشاركة النتائج غير مدعومة في هذا المتصفح. يمكنك استخدام زر الطباعة بدلاً من ذلك.');
+        }
+    }
+
+    // إعادة بدء الامتحان
+    function restartExam() {
+        if (confirm('هل تريد إعادة بدء الامتحان؟ سيتم حذف جميع إجاباتك الحالية.')) {
+            userAnswers = {};
+            answered = {};
+            currentQuestionIndex = 0;
+            localStorage.removeItem(`exam_${examId}`);
+            location.reload();
+        }
+    }
+
+    // العودة إلى قائمة الامتحانات
+    function backToExams() {
+        if (confirm('هل تريد العودة إلى قائمة الامتحانات؟ سيتم فقدان تقدمك الحالي إذا لم تحفظه.')) {
+            window.location.href = '/questions.html'; // تغيير هذا الرابط حسب الصفحة المناسبة
+        }
+    }
+
+    // تهيئة الامتحان
+    function initExam() {
+        const container = document.getElementById('questions-container');
+        const totalQuestions = examData.questions.filter(q => q.type !== "passage" && q.type !== "poem").length;
+        document.getElementById('total-questions').textContent = totalQuestions;
+        document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+
+        // تحميل الحالة
+        const wasResumed = loadSavedData();
+
+        // إنشاء الأسئلة
+        examData.questions.forEach((q, index) => {
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question';
+            questionEl.id = `question-${q.id}`;
+            questionEl.style.display = index === currentQuestionIndex ? 'block' : 'none';
+
+            if (q.type === "passage") {
+                questionEl.innerHTML = `<div class="passage">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة النص كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else if (q.type === "poem") {
+                questionEl.innerHTML = `<div class="poem">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة الشعر كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else {
+                let content = `<h3>السؤال ${getQuestionNumber(index)}: ${q.text}</h3>`;
+
+                if (q.type === "multiple-choice") {
+                    let optionsHtml = '<div class="options">';
+                    q.options.forEach(opt => {
+                        const selected = userAnswers[q.id]?.selected == opt.id;
+                        const isAnswered = userAnswers[q.id];
+                        const correct = opt.correct;
+                        optionsHtml += `
+                            <div class="option ${selected ? 'selected' : ''} ${isAnswered && correct ? 'correct' : ''} ${isAnswered && !correct && selected ? 'incorrect' : ''}"
+                                 data-question="${q.id}" data-option="${opt.id}" data-correct="${opt.correct}"
+                                 onclick="selectOption(this, ${q.id}, ${opt.id}, ${opt.correct})">
+                                ${opt.text}
+                            </div>
+                        `;
+                    });
+                    optionsHtml += '</div>';
+                    content += optionsHtml;
+                } else if (q.type === "fill-in-blank") {
+                    const value = userAnswers[q.id]?.answer || '';
+                    content += `
+                        <div class="fill-in-blank">
+                            <input type="text" id="fill-${q.id}" value="${value}" placeholder="أدخل إجابتك هنا" oninput="onFillInput(${q.id})">
+                        </div>
+                    `;
+                }
+
+                content += `<div class="explanation" id="explanation-${q.id}" style="${userAnswers[q.id] ? 'display:block' : 'display:none'}">
+                    <strong>التفسير:</strong> ${q.explanation}
+                </div>`;
+                questionEl.innerHTML = content;
+                
+                // تحديد ما إذا كان السؤال قد تمت الإجابة عليه
+                answered[index] = !!userAnswers[q.id];
+            }
+
+            container.appendChild(questionEl);
+        });
+
+        // تحديث زر التالي بناءً على السؤال الحالي
+        updateNextButton();
+
+        // ربط الأحداث
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+        document.getElementById('print-btn').addEventListener('click', printResults);
+        document.getElementById('share-btn').addEventListener('click', shareResults);
+        document.getElementById('restart-btn').addEventListener('click', restartExam);
+        document.getElementById('back-btn').addEventListener('click', backToExams);
+
+        if (wasResumed) {
+            alert(`تم استئناف الامتحان من السؤال ${getQuestionNumber(currentQuestionIndex)}`);
+        }
+    }
+
+    // بدء الامتحان عند تحميل الصفحة
+    window.onload = initExam;
+</script>
+</body>
+</html>

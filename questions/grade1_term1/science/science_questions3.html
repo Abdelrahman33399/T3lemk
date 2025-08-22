@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار اللغة الإنجليزية - الصف الاول الإعدادي</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط عامة */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* الحاوية الرئيسية */
+        .exam-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        /* رأس الامتحان */
+        .exam-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+        }
+        
+        .exam-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        /* إحصائيات الأسئلة */
+        .stats {
+            background: #e9f5ff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            border-right: 4px solid #007bff;
+        }
+        
+        /* الأسئلة */
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .question h3 {
+            color: #007bff;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        /* النصوص والقصائد */
+        .passage, .poem {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.8;
+            font-style: italic;
+            border-right: 4px solid #6c757d;
+        }
+        
+        .poem {
+            text-align: center;
+            font-weight: bold;
+            background: #fff9e6;
+            border-right-color: #ffc107;
+        }
+        
+        /* خيارات الأسئلة */
+        .options {
+            margin: 20px 0;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            background: white;
+        }
+        
+        .option:hover {
+            background-color: #e9f5ff;
+            transform: translateX(-5px);
+        }
+        
+        .option.selected {
+            background-color: #d4edff;
+            border-left: 4px solid #007bff;
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        /* شرح الإجابة */
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-right: 3px solid #6c757d;
+        }
+        
+        /* حقول الإدخال */
+        .fill-in-blank input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .fill-in-blank input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+        
+        /* التنقل بين الأسئلة */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        /* الأزرار */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover:not(:disabled) {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover:not(:disabled) {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover:not(:disabled) {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+        
+        /* النتائج */
+        .results-container {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #007bff;
+        }
+        
+        .feedback {
+            text-align: center;
+            font-size: 18px;
+            margin: 15px 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .recommendations {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .correct-answer {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        /* عناصر التحكم */
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .exam-container {
+                padding: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .passage, .poem {
+                padding: 15px;
+            }
+        }
+    </style></head>
+<body>
+    <div class="exam-container">
+        <div class="exam-header">
+            <h1 id="exam-title">اختبار العلوم - الصف الاول الإعدادي ( الوحدة الثالثة ) - الترم الأول</h1>
+        </div>
+        
+        <div class="stats">السؤال <span id="current-question">1</span> من <span id="total-questions">62</span></div>
+        
+        <div id="questions-container"></div>
+        
+        <div class="navigation">
+            <button id="prev-btn" class="btn btn-secondary" disabled>السابق</button>
+            <button id="next-btn" class="btn btn-primary">التالي</button>
+        </div>
+        
+        <div class="controls">
+            <button id="restart-btn" class="btn btn-warning">إعادة البدء</button>
+            <button id="print-btn" class="btn btn-info">طباعة النتائج</button>
+            <button id="share-btn" class="btn btn-success">مشاركة النتائج</button>
+            <button id="back-btn" class="btn btn-danger">العودة للامتحانات</button>
+        </div>
+        
+        <div class="results-container" id="results-container">
+            <h2>النتيجة</h2>
+            <div id="score"></div>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+
+    <audio id="correctSound" src="../../../assets/audio/correct.mp3" preload="auto"></audio>
+    <audio id="incorrectSound" src="../../../assets/audio/incorrect.mp3" preload="auto"></audio>
+
+
+   <script>
+    // أصوات
+    const correctSound = document.getElementById('correctSound');
+    const incorrectSound = document.getElementById('incorrectSound');
+
+    // معرف الامتحان
+    const examId = "arabic-grade1-term1";
+
+    // بيانات الأسئلة (كما أرسلتها)
+    const examData = {
+        title: "اختبار العلوم - الصف الاول الإعدادي ( الوحدة الثالثة ) - الترم الأول",
+        questions: [
+           {
+        "id": 1,
+        "type": "multiple-choice",
+        "text": "الشكل المقابل يوضح تركيب الخلية النباتية. أي مما يلي يشترك في وجوده في الخلايا النباتية والحيوانية؟",
+        "options": [
+            { "id": 1, "text": "الجدار الخلوي", "correct": false },
+            { "id": 2, "text": "البلاستيدات الخضراء", "correct": false },
+            { "id": 3, "text": "النواة", "correct": true },
+            { "id": 4, "text": "الفجوة المركزية", "correct": false }
+        ],
+        "explanation": "النواة موجودة في كل من الخلايا النباتية والحيوانية، وتُعد مركز التحكم. أما الجدار، البلاستيدات، والفجوة فهي خاصة بالنبات."
+    },
+    {
+        "id": 2,
+        "type": "multiple-choice",
+        "text": "أي مما يلي يميز الخلية في أوليات النواة من الخلية في حقيقية النواة؟",
+        "options": [
+            { "id": 1, "text": "أصغر حجمًا وتحتوي على عضيات أكثر", "correct": false },
+            { "id": 2, "text": "أصغر حجمًا ولا تحتوي على عضيات مغلفة", "correct": true },
+            { "id": 3, "text": "أكبر حجمًا وتحتوي على عضيات أكثر", "correct": false },
+            { "id": 4, "text": "أكبر حجمًا ولا تحتوي على نواة", "correct": false }
+        ],
+        "explanation": "أوليات النواة (مثل البكتيريا) لا تمتلك نواة حقيقية أو عضيات مغلفة بغشاء (مثل الميتوكوندريا)."
+    },
+    {
+        "id": 3,
+        "type": "multiple-choice",
+        "text": "أي مما يلي يعبر عن نمط حياة الخميرة؟",
+        "options": [
+            { "id": 1, "text": "كائن وحيد الخلية، أولي النواة", "correct": false },
+            { "id": 2, "text": "كائن عديد الخلايا، أولي النواة", "correct": false },
+            { "id": 3, "text": "كائن وحيد الخلية، حقيقي النواة", "correct": true },
+            { "id": 4, "text": "كائن عديد الخلايا، حقيقي النواة", "correct": false }
+        ],
+        "explanation": "الخميرة فطر وحيد الخلية، وله نواة حقيقية → من حقيقيات النواة."
+    },
+    {
+        "id": 4,
+        "type": "multiple-choice",
+        "text": "ما وحدة بناء الكائن الحي؟",
+        "options": [
+            { "id": 1, "text": "المادة", "correct": false },
+            { "id": 2, "text": "الخلية", "correct": true },
+            { "id": 3, "text": "الذرة", "correct": false },
+            { "id": 4, "text": "النسيج", "correct": false }
+        ],
+        "explanation": "الخلية هي أصغر وحدة حية قادرة على أداء العمليات الحيوية."
+    },
+    {
+        "id": 5,
+        "type": "multiple-choice",
+        "text": "مجموعة من الأنسجة المتشابهة في الشكل والوظيفة تشكل:",
+        "options": [
+            { "id": 1, "text": "العضو", "correct": true },
+            { "id": 2, "text": "الجهاز", "correct": false },
+            { "id": 3, "text": "الكائن الحي", "correct": false },
+            { "id": 4, "text": "النسيج", "correct": false }
+        ],
+        "explanation": "الأنسجة → العضو (مثل العضلة)، العضو → الجهاز (مثل الهضمي)."
+    },
+    {
+        "id": 6,
+        "type": "multiple-choice",
+        "text": "مجموعة من الأعضاء تعمل معًا لأداء وظيفة معينة تشكل:",
+        "options": [
+            { "id": 1, "text": "العضو", "correct": false },
+            { "id": 2, "text": "الجهاز", "correct": true },
+            { "id": 3, "text": "النسيج", "correct": false },
+            { "id": 4, "text": "الكائن الحي", "correct": false }
+        ],
+        "explanation": "مثل الجهاز الهضمي (الفم، المعدة، الأمعاء...)."
+    },
+    {
+        "id": 7,
+        "type": "multiple-choice",
+        "text": "من الكائنات وحيدة الخلية:",
+        "options": [
+            { "id": 1, "text": "البكتيريا", "correct": true },
+            { "id": 2, "text": "البراميسيوم", "correct": true },
+            { "id": 3, "text": "الأميبا", "correct": true },
+            { "id": 4, "text": "عيش الغراب", "correct": false }
+        ],
+        "explanation": "عيش الغراب فطر عديّد الخلايا، أما الباقي فكائنات وحيدة الخلية."
+    },
+    {
+        "id": 8,
+        "type": "multiple-choice",
+        "text": "البراميسيوم يُصنف ضمن:",
+        "options": [
+            { "id": 1, "text": "البروتوزا", "correct": true },
+            { "id": 2, "text": "أوليات النواة", "correct": true },
+            { "id": 3, "text": "وحيدة الخلية", "correct": true },
+            { "id": 4, "text": "عدة الخلايا", "correct": false }
+        ],
+        "explanation": "البراميسيوم وحيد الخلية، من البروتوزوا، وأولي النواة."
+    },
+    {
+        "id": 9,
+        "type": "multiple-choice",
+        "text": "عيش الغراب من الكائنات:",
+        "options": [
+            { "id": 1, "text": "البروتوزا", "correct": false },
+            { "id": 2, "text": "أوليات النواة", "correct": false },
+            { "id": 3, "text": "وحيدة الخلية", "correct": false },
+            { "id": 4, "text": "عدة الخلايا", "correct": true }
+        ],
+        "explanation": "عيش الغراب فطر يتكون من خيوط عديدة الخلايا."
+    },
+    {
+        "id": 10,
+        "type": "multiple-choice",
+        "text": "الكائنات وحيدة الخلية هي:",
+        "options": [
+            { "id": 1, "text": "يكون جسمها من العديد من الخلايا", "correct": false },
+            { "id": 2, "text": "كائنات مجهرية لا ترى بالعين المجردة", "correct": true },
+            { "id": 3, "text": "خلاياها متخصصة في عملها", "correct": false },
+            { "id": 4, "text": "كائنات كبيرة الحجم ترى بالعين", "correct": false }
+        ],
+        "explanation": "معظم الكائنات وحيدة الخلية مجهرية، ولا تُرى بدون عدسة."
+    },
+    {
+        "id": 11,
+        "type": "multiple-choice",
+        "text": "كل مما يلي من صفات الكائنات عديدة الخلايا ما عدا:",
+        "options": [
+            { "id": 1, "text": "يتكون جسمها من العديد من الخلايا", "correct": true },
+            { "id": 2, "text": "خلاياها متخصصة في عملها", "correct": true },
+            { "id": 3, "text": "كائنات مجهرية لا ترى بالعين", "correct": false },
+            { "id": 4, "text": "كائنات كبيرة الحجم ترى بالعين", "correct": true }
+        ],
+        "explanation": "لأن الكائنات عديدة الخلايا كبير الحجم وترى بالعين، فهذه الصفة لا تنطبق."
+    },
+    {
+        "id": 12,
+        "type": "multiple-choice",
+        "text": "كل مما يلي يوجد في خلية جسم الإنسان ما عدا:",
+        "options": [
+            { "id": 1, "text": "الجدار الخلوي", "correct": true },
+            { "id": 2, "text": "النواة", "correct": false },
+            { "id": 3, "text": "السنتروزوم", "correct": false },
+            { "id": 4, "text": "جهاز جولجي", "correct": false }
+        ],
+        "explanation": "الجدار الخلوي خاص بالنبات، ولا يوجد في الخلايا الحيوانية."
+    },
+    {
+        "id": 13,
+        "type": "multiple-choice",
+        "text": "كل مما يلي يوجد في خلية نبات القمح ما عدا:",
+        "options": [
+            { "id": 1, "text": "الجدار الخلوي", "correct": false },
+            { "id": 2, "text": "النواة", "correct": false },
+            { "id": 3, "text": "جهاز جولجي", "correct": false },
+            { "id": 4, "text": "السنتروزوم", "correct": true }
+        ],
+        "explanation": "السنتروزوم يوجد في الخلايا الحيوانية، لكنه نادر أو مفقود في النباتات العليا."
+    },
+    {
+        "id": 14,
+        "type": "multiple-choice",
+        "text": "كل مما يلي يوجد في خلية البكتيريا ما عدا:",
+        "options": [
+            { "id": 1, "text": "الجدار الخلوي", "correct": false },
+            { "id": 2, "text": "السيتوبلازم", "correct": false },
+            { "id": 3, "text": "جهاز جولجي", "correct": true },
+            { "id": 4, "text": "الغشاء البلازمي", "correct": false }
+        ],
+        "explanation": "البكتيريا من أوليات النواة، ولا تمتلك عضيات مغلفة مثل جهاز جولجي."
+    },
+    {
+        "id": 15,
+        "type": "multiple-choice",
+        "text": "من الصفات العامة المشتركة بين جميع الكائنات الحية:",
+        "options": [
+            { "id": 1, "text": "الهضم والإخراج", "correct": true },
+            { "id": 2, "text": "الهضم والتنفس", "correct": true },
+            { "id": 3, "text": "الإخراج والتنفس", "correct": true },
+            { "id": 4, "text": "التنفس والبناء الضوئي", "correct": false }
+        ],
+        "explanation": "جميع الكائنات تتنفس وتُخرج الفضلات، لكن البناء الضوئي فقط للذاتية التغذية."
+    },
+    {
+        "id": 16,
+        "type": "multiple-choice",
+        "text": "كل الكائنات الآتية مستهلكة ما عدا:",
+        "options": [
+            { "id": 1, "text": "الإنسان", "correct": false },
+            { "id": 2, "text": "الأسماك", "correct": false },
+            { "id": 3, "text": "الطيور", "correct": false },
+            { "id": 4, "text": "النباتات", "correct": true }
+        ],
+        "explanation": "النباتات ذاتية التغذية (تصنع غذاءها)، أما الباقي فهي مستهلكة."
+    },
+    {
+        "id": 17,
+        "type": "multiple-choice",
+        "text": "ما المعادلة المعبرة عن عملية البناء الضوئي؟",
+        "options": [
+            { "id": 1, "text": "جلوكوز + أكسجين ← ثاني أكسيد الكربون + ماء", "correct": false },
+            { "id": 2, "text": "جلوكوز + ماء ← ثاني أكسيد الكربون + أكسجين", "correct": false },
+            { "id": 3, "text": "ثاني أكسيد الكربون + ماء ← جلوكوز + أكسجين", "correct": true },
+            { "id": 4, "text": "ثاني أكسيد الكربون + أكسجين ← جلوكوز + ماء", "correct": false }
+        ],
+        "explanation": "هذه معادلة البناء الضوئي، بوجود الضوء والكلوروفيل."
+    },
+    {
+        "id": 18,
+        "type": "multiple-choice",
+        "text": "تتخلص الكائنات الحية من غاز ثاني أكسيد الكربون في عملية:",
+        "options": [
+            { "id": 1, "text": "الحركة", "correct": false },
+            { "id": 2, "text": "التنفس", "correct": true },
+            { "id": 3, "text": "التغذية", "correct": false },
+            { "id": 4, "text": "الإحساس", "correct": false }
+        ],
+        "explanation": "ثاني أكسيد الكربون منتج ثانوي للتنفس الخلوي."
+    },
+    {
+        "id": 19,
+        "type": "multiple-choice",
+        "text": "كل الكائنات الآتية تتنفس إلا:",
+        "options": [
+            { "id": 1, "text": "القمح", "correct": true },
+            { "id": 2, "text": "القط", "correct": false },
+            { "id": 3, "text": "الطحالب الحمراء", "correct": false },
+            { "id": 4, "text": "البكتيريا", "correct": false }
+        ],
+        "explanation": "جميع الكائنات تتنفس، لكن القمح لا يتنفس بالرئتين مثل الحيوانات."
+    },
+    {
+        "id": 20,
+        "type": "multiple-choice",
+        "text": "تحتوي البلاستيدات الخضراء على:",
+        "options": [
+            { "id": 1, "text": "الكلوروفيل", "correct": true },
+            { "id": 2, "text": "التيوال", "correct": false },
+            { "id": 3, "text": "البكتيريا", "correct": false },
+            { "id": 4, "text": "الميتوكوندريا", "correct": false }
+        ],
+        "explanation": "الكلوروفيل هو الصبغة المسؤولة عن امتصاص ضوء الشمس."
+    },
+    {
+        "id": 21,
+        "type": "multiple-choice",
+        "text": "يتنفس الإنسان البالغ بواسطة:",
+        "options": [
+            { "id": 1, "text": "الرئتين", "correct": true },
+            { "id": 2, "text": "الجلد", "correct": false },
+            { "id": 3, "text": "الجلد والرئتين", "correct": false },
+            { "id": 4, "text": "القصبات الهوائية", "correct": false }
+        ],
+        "explanation": "الإنسان يتنفس عبر الرئتين، أما الجلد فليس له دور كبير."
+    },
+    {
+        "id": 22,
+        "type": "multiple-choice",
+        "text": "تنفس الحشرات بواسطة:",
+        "options": [
+            { "id": 1, "text": "الرئتين", "correct": false },
+            { "id": 2, "text": "الجلد", "correct": false },
+            { "id": 3, "text": "الجلد والرئتين", "correct": false },
+            { "id": 4, "text": "القصبات الهوائية", "correct": true }
+        ],
+        "explanation": "الحشرات تتنفس عبر شبكة من القصبات الهوائية تصل إلى الخلايا."
+    },
+    {
+        "id": 23,
+        "type": "multiple-choice",
+        "text": "تتنفس الكلاب بواسطة:",
+        "options": [
+            { "id": 1, "text": "الرئتين", "correct": true },
+            { "id": 2, "text": "الجلد", "correct": false },
+            { "id": 3, "text": "الجلد والرئتين", "correct": false },
+            { "id": 4, "text": "القصيبات الهوائية", "correct": false }
+        ],
+        "explanation": "الكلاب كائنات فقارية، تتنفس بالرئتين."
+    },
+    {
+        "id": 24,
+        "type": "multiple-choice",
+        "text": "تحصل النباتات على الأكسجين من الهواء عن طريق:",
+        "options": [
+            { "id": 1, "text": "البلاستيدات", "correct": false },
+            { "id": 2, "text": "الثغور", "correct": true },
+            { "id": 3, "text": "الجلد", "correct": false },
+            { "id": 4, "text": "القصيبات الهوائية", "correct": false }
+        ],
+        "explanation": "الثغور في أوراق النبات تسمح بتبادل الغازات (أكسجين وثاني أكسيد الكربون)."
+    },
+    {
+        "id": 25,
+        "type": "multiple-choice",
+        "text": "تحدث عملية هضم الغذاء وإطلاق الطاقة في:",
+        "options": [
+            { "id": 1, "text": "البلاستيدات", "correct": false },
+            { "id": 2, "text": "الميتوكوندريا", "correct": true },
+            { "id": 3, "text": "جهاز جولجي", "correct": false },
+            { "id": 4, "text": "النواة", "correct": false }
+        ],
+        "explanation": "الميتوكوندريا \"مصنع الطاقة\"، حيث يحدث التنفس الخلوي."
+    },
+    {
+        "id": 26,
+        "type": "multiple-choice",
+        "text": "يُستخدم جهاز لتنقية الدم من السموم:",
+        "options": [
+            { "id": 1, "text": "حكومتنا", "correct": false },
+            { "id": 2, "text": "الإلكتروسكوب", "correct": false },
+            { "id": 3, "text": "الشمائل الكلوي", "correct": true },
+            { "id": 4, "text": "الكولومتر", "correct": false }
+        ],
+        "explanation": "يُستخدم لتنقية الدم عند فشل الكلى (جهاز غسيل الكلى)."
+    },
+    {
+        "id": 27,
+        "type": "multiple-choice",
+        "text": "ينتج نبات دوار الشمس غاز الأكسجين نهارًا ويطلقه ليلاً؟",
+        "options": [
+            { "id": 1, "text": "الجازانيا", "correct": false },
+            { "id": 2, "text": "المستحيلة", "correct": false },
+            { "id": 3, "text": "دوار الشمس", "correct": true },
+            { "id": 4, "text": "القطن", "correct": false }
+        ],
+        "explanation": "خلال النهار، يُنتج الأكسجين من البناء الضوئي. ليلاً، يتنفس فقط."
+    },
+    {
+        "id": 28,
+        "type": "fill-in-blank",
+        "text": "تغلق وتُفتح أوراق نبات دوار الشمس حسب ضوء الشمس:",
+        "correctAnswer": "دوار الشمس",
+        "explanation": "دوار الشمس يتبع الشمس (ظاهرة الهيليوتروبيزم)."
+    },
+    {
+        "id": 29,
+        "type": "multiple-choice",
+        "text": "تُفرز الغدد العرقية الفضلات عن طريق الجلد:",
+        "options": [
+            { "id": 1, "text": "البول", "correct": false },
+            { "id": 2, "text": "ثاني أكسيد الكربون", "correct": false },
+            { "id": 3, "text": "الفضلات", "correct": false },
+            { "id": 4, "text": "العرق", "correct": true }
+        ],
+        "explanation": "العرق يحتوي على ماء، أملاح، وكمية قليلة من اليوريا."
+    },
+    {
+        "id": 30,
+        "type": "multiple-choice",
+        "text": "تتحرك الأميبا بواسطة:",
+        "options": [
+            { "id": 1, "text": "الأهداب", "correct": false },
+            { "id": 2, "text": "السوط", "correct": false },
+            { "id": 3, "text": "الزوائد الكاذبة", "correct": true },
+            { "id": 4, "text": "الزعانف", "correct": false }
+        ],
+        "explanation": "الأميبا تتحرك وتُمسك الغذاء بامتداد السيتوبلازم."
+    },
+    {
+        "id": 31,
+        "type": "multiple-choice",
+        "text": "يتحرك البراميسيوم بواسطة:",
+        "options": [
+            { "id": 1, "text": "الأهداب", "correct": true },
+            { "id": 2, "text": "السوط", "correct": false },
+            { "id": 3, "text": "الزوائد الكاذبة", "correct": false },
+            { "id": 4, "text": "الزعانف", "correct": false }
+        ],
+        "explanation": "البراميسيوم يتحرك بحركة الأهداب."
+    },
+    {
+        "id": 32,
+        "type": "multiple-choice",
+        "text": "من المخطط المقابل: أي مما يلي يعبر عن العمليات الحيوية (X)؟ (الشكل يوضح: ضوء + CO₂ → نبات → أكسجين + جلوكوز)",
+        "options": [
+            { "id": 1, "text": "تنفس", "correct": false },
+            { "id": 2, "text": "بناء ضوئي", "correct": true },
+            { "id": 3, "text": "نقل", "correct": false },
+            { "id": 4, "text": "تغذية", "correct": false }
+        ],
+        "explanation": "استهلاك CO₂ وإنتاج أكسجين وجلوكوز = بناء ضوئي."
+    },
+    {
+        "id": 33,
+        "type": "multiple-choice",
+        "text": "تعتبر الإنتاموبيا مستولوتيكا من:",
+        "options": [
+            { "id": 1, "text": "الفطريات", "correct": false },
+            { "id": 2, "text": "البروتوزوا", "correct": true },
+            { "id": 3, "text": "البكتيريا", "correct": false },
+            { "id": 4, "text": "الطحالب", "correct": false }
+        ],
+        "explanation": "الإنتاموبيا طفيلي وحيد الخلية من نوع بروتوزوا."
+    },
+    {
+        "id": 34,
+        "type": "multiple-choice",
+        "text": "ما الميكروب المسؤول عن صناعة جبن الريكفورت؟",
+        "options": [
+            { "id": 1, "text": "فطريات", "correct": true },
+            { "id": 2, "text": "بكتيريا", "correct": false },
+            { "id": 3, "text": "طحالب", "correct": false },
+            { "id": 4, "text": "فيروسات", "correct": false }
+        ],
+        "explanation": "جبن الريكفورت يصنع باستخدام فطريات مثل Penicillium."
+    },
+    {
+        "id": 35,
+        "type": "multiple-choice",
+        "text": "ما الميكروب المستخدم في صناعة الكحول الإيثيلي؟",
+        "options": [
+            { "id": 1, "text": "بروتوزوا", "correct": false },
+            { "id": 2, "text": "بكتيريا", "correct": false },
+            { "id": 3, "text": "خميرة (فطر)", "correct": true },
+            { "id": 4, "text": "طحالب", "correct": false }
+        ],
+        "explanation": "الخميرة تتخمر السكر لإنتاج كحول وإطلاق CO₂."
+    },
+    {
+        "id": 36,
+        "type": "multiple-choice",
+        "text": "الكائن المسبب للمرض التيفوئيد هو:",
+        "options": [
+            { "id": 1, "text": "بروتوزوا وحيد الخلية", "correct": false },
+            { "id": 2, "text": "بكتيريا وحيدة الخلية", "correct": true },
+            { "id": 3, "text": "فيروس", "correct": false },
+            { "id": 4, "text": "فطر", "correct": false }
+        ],
+        "explanation": "Salmonella typhi هي بكتيريا تسبب التيفوئيد."
+    },
+    {
+        "id": 37,
+        "type": "multiple-choice",
+        "text": "يُنتج من تخمر اللبن:",
+        "options": [
+            { "id": 1, "text": "كحول وإيثانول فقط", "correct": false },
+            { "id": 2, "text": "حمض اللاكتيك فقط", "correct": true },
+            { "id": 3, "text": "إيثانول وحمض الخليك", "correct": false },
+            { "id": 4, "text": "جلوكوز وغاز", "correct": false }
+        ],
+        "explanation": "بكتيريا حمض اللاكتيك تحوّل سكر اللاكتوز إلى حمض اللاكتيك → يُخثر اللبن ويُنتج الزبادي."
+    },
+    {
+        "id": 38,
+        "type": "multiple-choice",
+        "text": "أصغر وحدة بنائية في جسم القطة هي:",
+        "options": [
+            { "id": 1, "text": "سيتوبلازم", "correct": false },
+            { "id": 2, "text": "نواة", "correct": false },
+            { "id": 3, "text": "جدار خلوي", "correct": false },
+            { "id": 4, "text": "خلية", "correct": true }
+        ],
+        "explanation": "الخلية هي الوحدة البنائية لأي كائن حي."
+    },
+    {
+        "id": 39,
+        "type": "fill-in-blank",
+        "text": "من الوظائف الحيوية اللازمة لاستمرار الحياة:",
+        "correctAnswer": "التغذية، التنفس، الإخراج، النمو، التكاثر، الإحساس، الحركة",
+        "explanation": "هذه الوظائف الأساسية لجميع الكائنات الحية."
+    },
+    {
+        "id": 40,
+        "type": "fill-in-blank",
+        "text": "يمكن تقسيم الكائنات الحية حسب عدد الخلايا إلى:",
+        "correctAnswer": "وحيدة الخلية وعديدة الخلايا",
+        "explanation": "التصنيف الأساسي حسب عدد الخلايا في الكائن."
+    },
+    {
+        "id": 41,
+        "type": "fill-in-blank",
+        "text": "يمكن تقسيم الكائنات الحية حسب تركيب النواة إلى:",
+        "correctAnswer": "أوليات النواة وحقيقيات النواة",
+        "explanation": "التصنيف حسب وجود نواة حقيقية أو عدمها."
+    },
+    {
+        "id": 42,
+        "type": "fill-in-blank",
+        "text": "من أمثلة الكائنات الحية المجهرية:",
+        "correctAnswer": "البكتيريا، الخميرة، البراميسيوم، الأميبا",
+        "explanation": "هذه كائنات صغيرة جدًا لا تُرى بالعين المجردة."
+    },
+    {
+        "id": 43,
+        "type": "fill-in-blank",
+        "text": "من أمثلة البروتوزوا وحيدة الخلية:",
+        "correctAnswer": "الإنتاموبيا، البراميسيوم، اليوجلينا",
+        "explanation": "بروتوزوا هي كائنات وحيدة الخلية من حقيقيات النواة."
+    },
+    {
+        "id": 44,
+        "type": "fill-in-blank",
+        "text": "تصنف اليوجلينا ضمن الكائنات:",
+        "correctAnswer": "بروتوزوا، وحيدة الخلية، ذاتية التغذية (لها كلوروفيل)",
+        "explanation": "اليوجلينا لها خصائص مزدوجة كونها بروتوزوا ذاتية التغذية."
+    },
+    {
+        "id": 45,
+        "type": "fill-in-blank",
+        "text": "من الفطريات التي تتميز بخلايا متخصصة:",
+        "correctAnswer": "عيش الغراب (له خيوط متخصصة: تغذية، تكاثر)",
+        "explanation": "عيش الغراب فطر عديد الخلايا بخيوط متخصصة."
+    },
+    {
+        "id": 46,
+        "type": "fill-in-blank",
+        "text": "توجد العضيات الوراثية في أوليات النواة في:",
+        "correctAnswer": "السيتوبلازم (لأنها لا تمتلك نواة)",
+        "explanation": "في أوليات النواة، المادة الوراثية حرة في السيتوبلازم."
+    },
+    {
+        "id": 47,
+        "type": "fill-in-blank",
+        "text": "من التراكيب الحية التي تتواجد في جميع الخلايا الحية:",
+        "correctAnswer": "الغشاء البلازمي، السيتوبلازم، المادة الوراثية، الريبوسومات",
+        "explanation": "هذه التراكيب أساسية في جميع الخلايا الحية."
+    },
+    {
+        "id": 48,
+        "type": "fill-in-blank",
+        "text": "الكائنات ذاتية التغذية هي كائنات:",
+        "correctAnswer": "تصنع غذاءها بنفسها (مثل النباتات، الطحالب، بعض البكتيريا)",
+        "explanation": "الذاتية التغذية تنتج غذاءها من مواد غير عضوية."
+    },
+    {
+        "id": 49,
+        "type": "fill-in-blank",
+        "text": "من الكائنات أولية النواة ذاتية التغذية:",
+        "correctAnswer": "البكتيريا الزرقاء (السيانوبكتيريا)",
+        "explanation": "السيانوبكتيريا تقوم بالبناء الضوئي رغم كونها أولية النواة."
+    },
+    {
+        "id": 50,
+        "type": "fill-in-blank",
+        "text": "تحتوي الأوراق الخضراء على مادة:",
+        "correctAnswer": "الكلوروفيل",
+        "explanation": "الكلوروفيل هو الصبغة المسؤولة عن اللون الأخضر والبناء الضوئي."
+    },
+    {
+        "id": 51,
+        "type": "fill-in-blank",
+        "text": "في عملية البناء الضوئي، تتحول الطاقة:",
+        "correctAnswer": "الضوئية → كيميائية (مخزنة في الجلوكوز)",
+        "explanation": "تحويل الطاقة الضوئية إلى طاقة كيميائية مخزنة."
+    },
+    {
+        "id": 52,
+        "type": "fill-in-blank",
+        "text": "المواد غير العضوية المستخدمة في البناء الضوئي:",
+        "correctAnswer": "ثاني أكسيد الكربون، الماء",
+        "explanation": "هذه المواد الخام اللازمة لعملية البناء الضوئي."
+    },
+    {
+        "id": 53,
+        "type": "fill-in-blank",
+        "text": "في تبادل الغازات، تحصل الكائنات على:",
+        "correctAnswer": "أكسجين",
+        "explanation": "الأكسجين ضروري للتنفس الخلوي."
+    },
+    {
+        "id": 54,
+        "type": "fill-in-blank",
+        "text": "الإنتاموبيا مستولوتيكا من:",
+        "correctAnswer": "البروتوزوا",
+        "explanation": "طفيلي وحيد الخلية يسبب الأميبا الزحارية."
+    },
+    {
+        "id": 55,
+        "type": "fill-in-blank",
+        "text": "الزبادي يُعد مصدرًا غنيًا بـ:",
+        "correctAnswer": "البروتين، الكالسيوم، بكتيريا مفيدة",
+        "explanation": "الزبادي غني بالعناصر الغذائية وبكتيريا البروبيوتيك."
+    },
+    {
+        "id": 56,
+        "type": "fill-in-blank",
+        "text": "العنصر اللازم لسلامة العظام والأسنان:",
+        "correctAnswer": "الكالسيوم",
+        "explanation": "الكالسيوم ضروري لتكوين العظام والأسنان القوية."
+    },
+    {
+        "id": 57,
+        "type": "fill-in-blank",
+        "text": "العنصر اللازم لبناء الجسم ونمو الأنسجة:",
+        "correctAnswer": "النيتروجين (في البروتين)",
+        "explanation": "النيتروجين عنصر أساسي في تركيب البروتينات."
+    },
+    {
+        "id": 58,
+        "type": "fill-in-blank",
+        "text": "من البكتيريا التي لا تحتوي على نواة حقيقية:",
+        "correctAnswer": "جميع البكتيريا (أوليّات النواة)",
+        "explanation": "البكتيريا من الكائنات الأولية النواة."
+    },
+    {
+        "id": 59,
+        "type": "fill-in-blank",
+        "text": "بكتيريا التحلل من أمثلة:",
+        "correctAnswer": "البكتيريا المحللة للمواد العضوية في التربة",
+        "explanation": "هذه البكتيريا تحلل المواد العضوية وتعيد تدوير العناصر."
+    },
+    {
+        "id": 60,
+        "type": "fill-in-blank",
+        "text": "النبات يحتاج عناصر من التربة، منها ما لا يستطيع الحصول عليه من الهواء:",
+        "correctAnswer": "النيتروجين، الفوسفور، البوتاسيوم",
+        "explanation": "هذه العناصر الأساسية للنمو النباتي."
+    },
+    {
+        "id": 61,
+        "type": "fill-in-blank",
+        "text": "في صناعة الزبادي، يتحول سكر اللاكتوز إلى:",
+        "correctAnswer": "حمض اللاكتيك بواسطة بكتيريا Lactobacillus",
+        "explanation": "عملية التخمر التي تنتج الزبادي."
+    },
+    {
+        "id": 62,
+        "type": "fill-in-blank",
+        "text": "أمراض ناتجة عن تلوث الماء:",
+        "correctAnswer": "الدوسنتاريا، التيفوئيد، الزحار الأميبي",
+        "explanation": "أمراض تنتقل عبر المياه الملوثة."
+    }
+        ]
+    };
+
+   // متغيرات
+    let currentQuestionIndex = 0;
+    let userAnswers = {};
+    let answered = {};
+
+    // تحميل البيانات المحفوظة
+    function loadSavedData() {
+        const saved = localStorage.getItem(`exam_${examId}`);
+        if (saved) {
+            const data = JSON.parse(saved);
+            userAnswers = data.answers || {};
+            currentQuestionIndex = data.currentQuestionIndex || 0;
+            return true;
+        }
+        return false;
+    }
+
+    // حفظ البيانات
+    function saveData() {
+        const data = {
+            answers: userAnswers,
+            currentQuestionIndex: currentQuestionIndex,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem(`exam_${examId}`, JSON.stringify(data));
+    }
+
+    // الحصول على رقم السؤال الحقيقي (باستثناء النصوص والشعر)
+    function getQuestionNumber(index) {
+        let realCount = 0;
+        for (let i = 0; i <= index; i++) {
+            if (examData.questions[i].type !== "passage" && examData.questions[i].type !== "poem") {
+                realCount++;
+            }
+        }
+        return realCount;
+    }
+
+    // تحديث زر التالي
+    function updateNextButton() {
+        const nextBtn = document.getElementById('next-btn');
+        const currentQuestion = examData.questions[currentQuestionIndex];
+        
+        // إذا كان السؤال الحالي نصًا أو شعرًا، فعّل الزر مباشرة
+        if (currentQuestion.type === "passage" || currentQuestion.type === "poem") {
+            nextBtn.disabled = false;
+            return;
+        }
+        
+        // تحقق مما إذا كان السؤال الحالي قد تمت الإجابة عليه
+        nextBtn.disabled = !answered[currentQuestionIndex];
+    }
+
+    // تحديد خيار في سؤال متعدد الخيارات
+    function selectOption(element, questionId, optionId, isCorrect) {
+        // منع التحديد إذا كانت الإجابة معروضة بالفعل
+        if (userAnswers[questionId]) return;
+        
+        // إلغاء تحديد جميع الخيارات الأخرى
+        const options = document.querySelectorAll(`.option[data-question="${questionId}"]`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        
+        // تحديد الخيار الحالي
+        element.classList.add('selected');
+        
+        // حفظ الإجابة
+        userAnswers[questionId] = {
+            selected: optionId,
+            correct: isCorrect
+        };
+        
+        // تشغيل الصوت المناسب
+        if (isCorrect) {
+            correctSound.play();
+        } else {
+            incorrectSound.play();
+        }
+        
+        // عرض التفسير
+        const explanationEl = document.getElementById(`explanation-${questionId}`);
+        if (explanationEl) {
+            explanationEl.style.display = 'block';
+        }
+        
+        // تمييز الإجابة الصحيحة والخاطئة
+        options.forEach(opt => {
+            const optCorrect = opt.getAttribute('data-correct') === 'true';
+            if (optCorrect) {
+                opt.classList.add('correct');
+            } else if (parseInt(opt.getAttribute('data-option')) === optionId && !isCorrect) {
+                opt.classList.add('incorrect');
+            }
+        });
+        
+        // تمكين زر التالي
+        answered[currentQuestionIndex] = true;
+        updateNextButton();
+        saveData();
+    }
+
+    // معالجة إدخال الإجابة في الأسئلة المقالية
+    function onFillInput(questionId) {
+        const input = document.getElementById(`fill-${questionId}`);
+        userAnswers[questionId] = {
+            answer: input.value
+        };
+        
+        // تمكين زر التالي إذا كان هناك إدخال
+        if (input.value.trim() !== '') {
+            answered[currentQuestionIndex] = true;
+        } else {
+            answered[currentQuestionIndex] = false;
+        }
+        
+        updateNextButton();
+        saveData();
+    }
+
+    // الانتقال إلى السؤال التالي
+    function nextQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex < examData.questions.length - 1) {
+            currentQuestionIndex++;
+            const nextId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${nextId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            
+            // إذا كان السؤال تاليًا نصًا أو شعرًا، فعّل الزر مباشرة
+            const nextQ = examData.questions[currentQuestionIndex];
+            if (nextQ.type === "passage" || nextQ.type === "poem") {
+                answered[currentQuestionIndex] = true;
+                document.getElementById('next-btn').disabled = false;
+            } else {
+                updateNextButton();
+            }
+            
+            saveData();
+        } else {
+            showResults();
+        }
+    }
+
+    // الانتقال إلى السؤال السابق
+    function prevQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            const prevId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${prevId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            updateNextButton();
+            
+            saveData();
+        }
+    }
+
+    // عرض النتائج
+// عرض النتائج - بدون حساب الأسئلة المقالية في الدرجة
+function showResults() {
+    // حساب النتيجة: فقط الأسئلة متعددة الخيارات
+    let correctCount = 0;
+    let totalQuestions = 0;
+
+    examData.questions.forEach(q => {
+        if (q.type === "multiple-choice") {
+            totalQuestions++;
+            if (userAnswers[q.id] && userAnswers[q.id].correct) {
+                correctCount++;
+            }
+        }
+    });
+
+    // حساب النسبة المئوية بناءً على الأسئلة متعددة الخيارات فقط
+    const score = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+
+    // كلمات تشجيعية
+    let feedback = "";
+    if (score >= 90) feedback = "ممتاز! أحسنت، استمر على هذا النحو 🌟";
+    else if (score >= 75) feedback = "جيد جدًا! أداء رائع 👏";
+    else if (score >= 60) feedback = "جيد، يمكنك التحسن أكثر 💪";
+    else feedback = "لا بأس، راجع الدروس وحاول مرة أخرى ❤️";
+
+    // توصيات
+    let recommendations = "";
+    if (score < 60) {
+        recommendations = "ننصحك بمراجعة القواعد النحوية والبلاغية، وحل المزيد من الأسئلة.";
+    } else if (score < 80) {
+        recommendations = "أداء جيد، ركّز على أنواع الأسئلة التي أخطأت فيها.";
+    } else {
+        recommendations = "أداء ممتاز! استمر في التقدم وجرّب امتحانات أصعب.";
+    }
+
+    // بناء النتائج التفصيلية
+    let detailedResults = '';
+    let questionNumber = 0; // رقم السؤال الحقيقي (للأسئلة القابلة للتصحيح فقط)
+
+    examData.questions.forEach(q => {
+        const userAnswer = userAnswers[q.id];
+        let answerText = 'لم تُجب';
+        let statusText = 'لم تُجب ❌';
+
+        // عرض الفقرات والشعر
+        if (q.type === "passage") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📖 فقرة نصية</h4>
+                    <div class="passage">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        if (q.type === "poem") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📜 نص شعري</h4>
+                    <div class="poem">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        // زيادة رقم السؤال فقط للأسئلة القابلة للتصحيح (اختيار من متعدد)
+        if (q.type === "multiple-choice") {
+            questionNumber++;
+        }
+
+        // معالجة الإجابة
+        if (q.type === "multiple-choice") {
+            const selectedOption = q.options.find(opt => opt.id == userAnswer?.selected);
+            answerText = selectedOption ? selectedOption.text : 'لم تُجب';
+            
+            if (userAnswer && selectedOption?.correct) {
+                statusText = 'إجابة صحيحة ✅';
+            } else if (userAnswer && !selectedOption?.correct) {
+                statusText = 'إجابة خاطئة ❌';
+            } else {
+                statusText = 'لم تُجب ❌';
+            }
+        } 
+        else if (q.type === "fill-in-blank") {
+            // السؤال المقالي: يظهر لكن بدون تأثير على العد
+            answerText = userAnswer?.answer?.trim() || 'لم تُجب';
+            statusText = (userAnswer && answerText !== 'لم تُجب') ? 'تمت الإجابة (تحت المراجعة)' : 'لم تُجب ❌';
+        }
+
+        // عرض السؤال بالشكل المطلوب
+        detailedResults += `
+            <div class="result-item">
+                ${q.type === "multiple-choice" ? `<p><strong>السؤال ${questionNumber}: ${q.text}</strong></p>` : `<p><strong>${q.text}</strong></p>`}
+                <p><strong>إجابتك:</strong> ${answerText}</p>
+                <p><strong>الحالة:</strong> ${statusText}</p>
+                <p><strong>📌 التفسير الكامل:</strong> ${q.explanation}</p>
+            </div>
+        `;
+    });
+
+    // عرض النتيجة النهائية
+    document.getElementById('score').innerHTML = `
+        <div class="stats">الإجابات الصحيحة: ${correctCount} من ${totalQuestions}</div>
+        <div class="stats">النسبة المئوية: ${score}%</div>
+        <div class="feedback">${feedback}</div>
+        <div class="recommendations"><strong>توصية:</strong> ${recommendations}</div>
+    `;
+
+    document.getElementById('detailed-results').innerHTML = detailedResults;
+
+    // إخفاء الأسئلة وإظهار النتائج
+    document.getElementById('questions-container').style.display = 'none';
+    document.querySelector('.navigation').style.display = 'none';
+    document.querySelector('.controls').style.display = 'flex';
+    document.getElementById('results-container').style.display = 'block';
+}
+    // طباعة النتائج
+    function printResults() {
+        window.print();
+    }
+
+    // مشاركة النتائج
+    function shareResults() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'نتيجة الامتحان',
+                text: `حصلت على ${document.getElementById('score').textContent} في امتحان اللغة العربية`,
+                url: window.location.href
+            })
+            .catch(error => {
+                console.log('Error sharing:', error);
+                alert('لم يتمكن المتصفح من مشاركة النتائج. يرجى المحاولة لاحقًا.');
+            });
+        } else {
+            alert('مشاركة النتائج غير مدعومة في هذا المتصفح. يمكنك استخدام زر الطباعة بدلاً من ذلك.');
+        }
+    }
+
+    // إعادة بدء الامتحان
+    function restartExam() {
+        if (confirm('هل تريد إعادة بدء الامتحان؟ سيتم حذف جميع إجاباتك الحالية.')) {
+            userAnswers = {};
+            answered = {};
+            currentQuestionIndex = 0;
+            localStorage.removeItem(`exam_${examId}`);
+            location.reload();
+        }
+    }
+
+    // العودة إلى قائمة الامتحانات
+    function backToExams() {
+        if (confirm('هل تريد العودة إلى قائمة الامتحانات؟ سيتم فقدان تقدمك الحالي إذا لم تحفظه.')) {
+            window.location.href = '/questions.html'; // تغيير هذا الرابط حسب الصفحة المناسبة
+        }
+    }
+
+    // تهيئة الامتحان
+    function initExam() {
+        const container = document.getElementById('questions-container');
+        const totalQuestions = examData.questions.filter(q => q.type !== "passage" && q.type !== "poem").length;
+        document.getElementById('total-questions').textContent = totalQuestions;
+        document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+
+        // تحميل الحالة
+        const wasResumed = loadSavedData();
+
+        // إنشاء الأسئلة
+        examData.questions.forEach((q, index) => {
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question';
+            questionEl.id = `question-${q.id}`;
+            questionEl.style.display = index === currentQuestionIndex ? 'block' : 'none';
+
+            if (q.type === "passage") {
+                questionEl.innerHTML = `<div class="passage">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة النص كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else if (q.type === "poem") {
+                questionEl.innerHTML = `<div class="poem">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة الشعر كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else {
+                let content = `<h3>السؤال ${getQuestionNumber(index)}: ${q.text}</h3>`;
+
+                if (q.type === "multiple-choice") {
+                    let optionsHtml = '<div class="options">';
+                    q.options.forEach(opt => {
+                        const selected = userAnswers[q.id]?.selected == opt.id;
+                        const isAnswered = userAnswers[q.id];
+                        const correct = opt.correct;
+                        optionsHtml += `
+                            <div class="option ${selected ? 'selected' : ''} ${isAnswered && correct ? 'correct' : ''} ${isAnswered && !correct && selected ? 'incorrect' : ''}"
+                                 data-question="${q.id}" data-option="${opt.id}" data-correct="${opt.correct}"
+                                 onclick="selectOption(this, ${q.id}, ${opt.id}, ${opt.correct})">
+                                ${opt.text}
+                            </div>
+                        `;
+                    });
+                    optionsHtml += '</div>';
+                    content += optionsHtml;
+                } else if (q.type === "fill-in-blank") {
+                    const value = userAnswers[q.id]?.answer || '';
+                    content += `
+                        <div class="fill-in-blank">
+                            <input type="text" id="fill-${q.id}" value="${value}" placeholder="أدخل إجابتك هنا" oninput="onFillInput(${q.id})">
+                        </div>
+                    `;
+                }
+
+                content += `<div class="explanation" id="explanation-${q.id}" style="${userAnswers[q.id] ? 'display:block' : 'display:none'}">
+                    <strong>التفسير:</strong> ${q.explanation}
+                </div>`;
+                questionEl.innerHTML = content;
+                
+                // تحديد ما إذا كان السؤال قد تمت الإجابة عليه
+                answered[index] = !!userAnswers[q.id];
+            }
+
+            container.appendChild(questionEl);
+        });
+
+        // تحديث زر التالي بناءً على السؤال الحالي
+        updateNextButton();
+
+        // ربط الأحداث
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+        document.getElementById('print-btn').addEventListener('click', printResults);
+        document.getElementById('share-btn').addEventListener('click', shareResults);
+        document.getElementById('restart-btn').addEventListener('click', restartExam);
+        document.getElementById('back-btn').addEventListener('click', backToExams);
+
+        if (wasResumed) {
+            alert(`تم استئناف الامتحان من السؤال ${getQuestionNumber(currentQuestionIndex)}`);
+        }
+    }
+
+    // بدء الامتحان عند تحميل الصفحة
+    window.onload = initExam;
+</script>
+</body>
+</html>

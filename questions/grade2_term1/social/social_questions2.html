@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الدراسات الإجتماعية - الصف الثاني الإعدادي</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط عامة */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* الحاوية الرئيسية */
+        .exam-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        /* رأس الامتحان */
+        .exam-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+        }
+        
+        .exam-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        /* إحصائيات الأسئلة */
+        .stats {
+            background: #e9f5ff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            border-right: 4px solid #007bff;
+        }
+        
+        /* الأسئلة */
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .question h3 {
+            color: #007bff;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        /* النصوص والقصائد */
+        .passage, .poem {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.8;
+            font-style: italic;
+            border-right: 4px solid #6c757d;
+        }
+        
+        .poem {
+            text-align: center;
+            font-weight: bold;
+            background: #fff9e6;
+            border-right-color: #ffc107;
+        }
+        
+        /* خيارات الأسئلة */
+        .options {
+            margin: 20px 0;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            background: white;
+        }
+        
+        .option:hover {
+            background-color: #e9f5ff;
+            transform: translateX(-5px);
+        }
+        
+        .option.selected {
+            background-color: #d4edff;
+            border-left: 4px solid #007bff;
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        /* شرح الإجابة */
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-right: 3px solid #6c757d;
+        }
+        
+        /* حقول الإدخال */
+        .fill-in-blank input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .fill-in-blank input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+        
+        /* التنقل بين الأسئلة */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        /* الأزرار */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover:not(:disabled) {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover:not(:disabled) {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover:not(:disabled) {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+        
+        /* النتائج */
+        .results-container {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #007bff;
+        }
+        
+        .feedback {
+            text-align: center;
+            font-size: 18px;
+            margin: 15px 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .recommendations {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .correct-answer {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        /* عناصر التحكم */
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .exam-container {
+                padding: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .passage, .poem {
+                padding: 15px;
+            }
+        }
+    </style></head>
+<body>
+    <div class="exam-container">
+        <div class="exam-header">
+            <h1 id="exam-title">اختبار الدراسات  - الصف الثاني الإعدادي ( الوحدة الثانية ) - الترم الأول</h1>
+        </div>
+        
+        <div class="stats">السؤال <span id="current-question">1</span> من <span id="total-questions">60</span></div>
+        
+        <div id="questions-container"></div>
+        
+        <div class="navigation">
+            <button id="prev-btn" class="btn btn-secondary" disabled>السابق</button>
+            <button id="next-btn" class="btn btn-primary">التالي</button>
+        </div>
+        
+        <div class="controls">
+            <button id="restart-btn" class="btn btn-warning">إعادة البدء</button>
+            <button id="print-btn" class="btn btn-info">طباعة النتائج</button>
+            <button id="share-btn" class="btn btn-success">مشاركة النتائج</button>
+            <button id="back-btn" class="btn btn-danger">العودة للامتحانات</button>
+        </div>
+        
+        <div class="results-container" id="results-container">
+            <h2>النتيجة</h2>
+            <div id="score"></div>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+
+    <audio id="correctSound" src="../../../assets/audio/correct.mp3" preload="auto"></audio>
+    <audio id="incorrectSound" src="../../../assets/audio/incorrect.mp3" preload="auto"></audio>
+
+
+   <script>
+    // أصوات
+    const correctSound = document.getElementById('correctSound');
+    const incorrectSound = document.getElementById('incorrectSound');
+
+    // معرف الامتحان
+    const examId = "arabic-grade1-term1";
+
+    // بيانات الأسئلة (كما أرسلتها)
+    const examData = {
+        title: "اختبار الدراسات  - الصف الثاني الإعدادي ( الوحدة الثانية ) - الترم الأول",
+        questions: [
+             {
+        "id": 1,
+        "type": "multiple-choice",
+        "text": "ما العامل الجغرافي الأهم في نشأة الحضارات القديمة في آسيا؟",
+        "options": [
+            { "id": 1, "text": "التضاريس الجبلية", "correct": false },
+            { "id": 2, "text": "توافر المياه والتربة الخصبة", "correct": true },
+            { "id": 3, "text": "قلة السكان", "correct": false },
+            { "id": 4, "text": "الرياح القوية", "correct": false }
+        ],
+        "explanation": "توفر المياه والتربة الخصبة ساعد في تطور الزراعة، وهو أساس الاستقرار ونشوء الحضارات."
+    },
+    {
+        "id": 2,
+        "type": "multiple-choice",
+        "text": "ما دور التنوع الجغرافي في نشأة الحضارات؟",
+        "options": [
+            { "id": 1, "text": "زيادة التجارة فقط", "correct": false },
+            { "id": 2, "text": "حماية من الغزاة", "correct": true },
+            { "id": 3, "text": "تقليل السكان", "correct": false },
+            { "id": 4, "text": "تقليل الموارد", "correct": false }
+        ],
+        "explanation": "الجبال والصحارى والأنهار شكلت حواجز طبيعية وقّت الحضارات من الغزوات."
+    },
+    {
+        "id": 3,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي اعتبرت أول حضارة في بلاد الرافدين؟",
+        "options": [
+            { "id": 1, "text": "البابلية", "correct": false },
+            { "id": 2, "text": "الآشورية", "correct": false },
+            { "id": 3, "text": "السومرية", "correct": true },
+            { "id": 4, "text": "الأكادية", "correct": false }
+        ],
+        "explanation": "الحضارة السومرية هي أول حضارة في بلاد الرافدين، أسست مدنًا مثل أور."
+    },
+    {
+        "id": 4,
+        "type": "multiple-choice",
+        "text": "من أول من وضع قانونًا مكتوبًا في التاريخ؟",
+        "options": [
+            { "id": 1, "text": "حمورابي", "correct": false },
+            { "id": 2, "text": "سرجون الأول", "correct": false },
+            { "id": 3, "text": "أور نمو", "correct": true },
+            { "id": 4, "text": "نبوخذ نصر", "correct": false }
+        ],
+        "explanation": "الملك السومري \"أور نمو\" وضع أول قانون مكتوب في التاريخ."
+    },
+    {
+        "id": 5,
+        "type": "multiple-choice",
+        "text": "ما نوع الكتابة التي استخدمها السومريون؟",
+        "options": [
+            { "id": 1, "text": "هيروغليفية", "correct": false },
+            { "id": 2, "text": "مسمارية", "correct": true },
+            { "id": 3, "text": "خط المسند", "correct": false },
+            { "id": 4, "text": "أبجدية", "correct": false }
+        ],
+        "explanation": "الكتابة المسمارية كُتبت على ألواح طينية باستخدام أداة مسنّنة."
+    },
+    {
+        "id": 6,
+        "type": "multiple-choice",
+        "text": "من أسس أول إمبراطورية في التاريخ؟",
+        "options": [
+            { "id": 1, "text": "حمورابي", "correct": false },
+            { "id": 2, "text": "سرجون الأول", "correct": true },
+            { "id": 3, "text": "نبوخذ نصر", "correct": false },
+            { "id": 4, "text": "أور نمو", "correct": false }
+        ],
+        "explanation": "سرجون الأول وحّد المدن السومرية وأنشأ أول إمبراطورية معروفة."
+    },
+    {
+        "id": 7,
+        "type": "multiple-choice",
+        "text": "ما عاصمة الحضارة البابلية؟",
+        "options": [
+            { "id": 1, "text": "أور", "correct": false },
+            { "id": 2, "text": "أشور", "correct": false },
+            { "id": 3, "text": "بابل", "correct": true },
+            { "id": 4, "text": "نينوى", "correct": false }
+        ],
+        "explanation": "بابل كانت عاصمة الحضارة البابلية، وازدهرت في عهد الملك حمورابي."
+    },
+    {
+        "id": 8,
+        "type": "multiple-choice",
+        "text": "ما أهم إنجاز للملك حمورابي؟",
+        "options": [
+            { "id": 1, "text": "بناء الأهرامات", "correct": false },
+            { "id": 2, "text": "إنشاء طريق الحرير", "correct": false },
+            { "id": 3, "text": "وضع قوانين حمورابي", "correct": true },
+            { "id": 4, "text": "اختراع البوصلة", "correct": false }
+        ],
+        "explanation": "قوانين حمورابي كانت أول مجموعة قوانين مدونة، وحققت العدالة."
+    },
+    {
+        "id": 9,
+        "type": "multiple-choice",
+        "text": "ما سمة الحضارة الآشورية؟",
+        "options": [
+            { "id": 1, "text": "السلم والتسامح", "correct": false },
+            { "id": 2, "text": "التقدم في الزراعة فقط", "correct": false },
+            { "id": 3, "text": "الحروب والعنف", "correct": true },
+            { "id": 4, "text": "التجارة البحرية", "correct": false }
+        ],
+        "explanation": "الآشوريون اشتهروا بالحروب والقسوة، مما أدى إلى ثورات ضعفت دولتهم."
+    },
+    {
+        "id": 10,
+        "type": "multiple-choice",
+        "text": "ما الشكل الهندسي للزقورة؟",
+        "options": [
+            { "id": 1, "text": "مكعب", "correct": false },
+            { "id": 2, "text": "هرم مدرج", "correct": true },
+            { "id": 3, "text": "دائرة", "correct": false },
+            { "id": 4, "text": "مخروط", "correct": false }
+        ],
+        "explanation": "الزقورة هرم مدرج من الطين، يُبنى عليه معبد، وتُستخدم في الشعائر."
+    },
+    {
+        "id": 11,
+        "type": "multiple-choice",
+        "text": "ما وظيفة الزقورة في الحضارات الرافدينية؟",
+        "options": [
+            { "id": 1, "text": "سكن الملك", "correct": false },
+            { "id": 2, "text": "مستودع للحبوب", "correct": false },
+            { "id": 3, "text": "معبد ديني", "correct": true },
+            { "id": 4, "text": "سوق تجاري", "correct": false }
+        ],
+        "explanation": "الزقورات كانت أماكن للعبادة، وترمز إلى اتصال الإنسان بالآلهة."
+    },
+    {
+        "id": 12,
+        "type": "multiple-choice",
+        "text": "ما الطبقات الاجتماعية في بلاد الرافدين؟",
+        "options": [
+            { "id": 1, "text": "متساوية تمامًا", "correct": false },
+            { "id": 2, "text": "ملك، كهنة، تجار، فلاحين", "correct": true },
+            { "id": 3, "text": "فقط فلاحين وتجار", "correct": false },
+            { "id": 4, "text": "لا توجد طبقات", "correct": false }
+        ],
+        "explanation": "المجتمع كان طبقيًا، يقوده الملك والكهنة، ثم التجار والفلاحين."
+    },
+    {
+        "id": 13,
+        "type": "multiple-choice",
+        "text": "ما أهم إنجاز فكري للحضارات الرافدينية؟",
+        "options": [
+            { "id": 1, "text": "اختراع العجلة", "correct": false },
+            { "id": 2, "text": "اختراع الكتابة", "correct": true },
+            { "id": 3, "text": "اختراع النار", "correct": false },
+            { "id": 4, "text": "اختراع الصيد", "correct": false }
+        ],
+        "explanation": "اختراع الكتابة المسمارية كان إنجازًا فكريًا كبيرًا."
+    },
+    {
+        "id": 14,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي تأثرت ببلاد الرافدين في الفلك والرياضيات؟",
+        "options": [
+            { "id": 1, "text": "الحضارة اليونانية", "correct": false },
+            { "id": 2, "text": "الحضارة المصرية", "correct": true },
+            { "id": 3, "text": "الحضارة الهندية", "correct": false },
+            { "id": 4, "text": "الحضارة الرومانية", "correct": false }
+        ],
+        "explanation": "المصريون تأثروا بالرافديين في الفلك، والحيوانات المجنحة، وعبادة عشتار."
+    },
+    {
+        "id": 15,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي اخترعت الأبجدية؟",
+        "options": [
+            { "id": 1, "text": "السومرية", "correct": false },
+            { "id": 2, "text": "البابلية", "correct": false },
+            { "id": 3, "text": "الفينيقية", "correct": true },
+            { "id": 4, "text": "اليونانية", "correct": false }
+        ],
+        "explanation": "الفينيقيون اخترعوا الأبجدية المكونة من 22 حرفًا، وأصبحت أساس الأبجدية الأوروبية."
+    },
+    {
+        "id": 16,
+        "type": "multiple-choice",
+        "text": "ما أهم صناعة فينيقية؟",
+        "options": [
+            { "id": 1, "text": "صناعة الأسلحة فقط", "correct": false },
+            { "id": 2, "text": "صناعة الزجاج الملون والأصباغ", "correct": true },
+            { "id": 3, "text": "صناعة الورق", "correct": false },
+            { "id": 4, "text": "صناعة السيارات", "correct": false }
+        ],
+        "explanation": "الفينيقيون اشتهروا بصناعة الزجاج الملون والأرجوان، وهو صبغة باهظة الثمن."
+    },
+    {
+        "id": 17,
+        "type": "multiple-choice",
+        "text": "ما أهم مدن فينيقيا؟",
+        "options": [
+            { "id": 1, "text": "بابل، أور", "correct": false },
+            { "id": 2, "text": "جبع، صور، صيدا", "correct": true },
+            { "id": 3, "text": "مأرب، ظفار", "correct": false },
+            { "id": 4, "text": "أثينا، روما", "correct": false }
+        ],
+        "explanation": "الفينيقيون عاشوا في مدن مستقلة مثل صور وصيدا على ساحل الشام."
+    },
+    {
+        "id": 18,
+        "type": "multiple-choice",
+        "text": "ما دور فينيقيا في التجارة؟",
+        "options": [
+            { "id": 1, "text": "سيطرت على التجارة البرية فقط", "correct": false },
+            { "id": 2, "text": "سيطرت على التجارة البحرية في المتوسط", "correct": true },
+            { "id": 3, "text": "لم تمارس التجارة", "correct": false },
+            { "id": 4, "text": "اعتمدت على الزراعة فقط", "correct": false }
+        ],
+        "explanation": "الفينيقيون بحّارة أشداء، وتحكموا في التجارة البحرية في البحر المتوسط."
+    },
+    {
+        "id": 19,
+        "type": "multiple-choice",
+        "text": "ما أهم خشب استخدمه الفينيقيون في بناء السفن؟",
+        "options": [
+            { "id": 1, "text": "خشب الزيتون", "correct": false },
+            { "id": 2, "text": "خشب الأرز", "correct": true },
+            { "id": 3, "text": "خشب النخيل", "correct": false },
+            { "id": 4, "text": "خشب البلوط", "correct": false }
+        ],
+        "explanation": "خشب الأرز من جبال لبنان كان مثاليًا لبناء السفن القوية."
+    },
+    {
+        "id": 20,
+        "type": "multiple-choice",
+        "text": "ما أهم ما استورده المصريون من فينيقيا؟",
+        "options": [
+            { "id": 1, "text": "الذهب", "correct": false },
+            { "id": 2, "text": "خشب الأرز", "correct": true },
+            { "id": 3, "text": "القمح", "correct": false },
+            { "id": 4, "text": "اللبان", "correct": false }
+        ],
+        "explanation": "المصريون استخدموا خشب الأرز في بناء السفن وصناعة توابيت الملوك."
+    },
+    {
+        "id": 21,
+        "type": "multiple-choice",
+        "text": "من استعان ببحارة فينيقيين للإبحار حول إفريقيا؟",
+        "options": [
+            { "id": 1, "text": "تحتمس الثالث", "correct": false },
+            { "id": 2, "text": "رمسيس الثاني", "correct": false },
+            { "id": 3, "text": "نخاو الثاني", "correct": true },
+            { "id": 4, "text": "أخناتون", "correct": false }
+        ],
+        "explanation": "الملك نخاو الثاني أرسل بحارة فينيقيين للإبحار حول إفريقيا في عهد الدولة الحديثة."
+    },
+    {
+        "id": 22,
+        "type": "multiple-choice",
+        "text": "ما العامل الجغرافي الذي جعل اليمن مركزًا تجاريًا؟",
+        "options": [
+            { "id": 1, "text": "الجبال العالية", "correct": false },
+            { "id": 2, "text": "السيطرة على مضيق باب المندب", "correct": true },
+            { "id": 3, "text": "قلة السكان", "correct": false },
+            { "id": 4, "text": "الصحراء الواسعة", "correct": false }
+        ],
+        "explanation": "موقع اليمن الاستراتيجي على البحر الأحمر والمحيط الهندي جعلها تتحكم في التجارة."
+    },
+    {
+        "id": 23,
+        "type": "multiple-choice",
+        "text": "ما عاصمة حضارة معين؟",
+        "options": [
+            { "id": 1, "text": "مأرب", "correct": false },
+            { "id": 2, "text": "ظفار", "correct": false },
+            { "id": 3, "text": "قرناو", "correct": true },
+            { "id": 4, "text": "صنعاء", "correct": false }
+        ],
+        "explanation": "قرناو كانت عاصمة حضارة معين في اليمن."
+    },
+    {
+        "id": 24,
+        "type": "multiple-choice",
+        "text": "ما عاصمة حضارة سبأ؟",
+        "options": [
+            { "id": 1, "text": "ظفار", "correct": false },
+            { "id": 2, "text": "مأرب", "correct": true },
+            { "id": 3, "text": "قرناو", "correct": false },
+            { "id": 4, "text": "صنعاء", "correct": false }
+        ],
+        "explanation": "مأرب كانت عاصمة مملكة سبأ، وذُكرت في القرآن."
+    },
+    {
+        "id": 25,
+        "type": "multiple-choice",
+        "text": "ما الإنجاز الهندسي لحضارة سبأ؟",
+        "options": [
+            { "id": 1, "text": "سور الصين العظيم", "correct": false },
+            { "id": 2, "text": "سد مأرب", "correct": true },
+            { "id": 3, "text": "الأهرامات", "correct": false },
+            { "id": 4, "text": "الزقورات", "correct": false }
+        ],
+        "explanation": "سد مأرب كان إنجازًا هندسيًا عظيمًا، وساهم في ري الأراضي الزراعية."
+    },
+    {
+        "id": 26,
+        "type": "multiple-choice",
+        "text": "ما السلع التي سيطرت عليها حضارة سبأ في التجارة؟",
+        "options": [
+            { "id": 1, "text": "القمح والشعير", "correct": false },
+            { "id": 2, "text": "البخور واللبان", "correct": true },
+            { "id": 3, "text": "الذهب فقط", "correct": false },
+            { "id": 4, "text": "الحديد", "correct": false }
+        ],
+        "explanation": "طريق البخور كان طريقًا تجاريًا مهمًا، وسبأ تسيطر عليه."
+    },
+    {
+        "id": 27,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي سيطرت على اليمن بعد سقوط سد مأرب؟",
+        "options": [
+            { "id": 1, "text": "معين", "correct": false },
+            { "id": 2, "text": "سبأ", "correct": false },
+            { "id": 3, "text": "حمير", "correct": true },
+            { "id": 4, "text": "الأنباط", "correct": false }
+        ],
+        "explanation": "حمير سيطرت على اليمن بعد تدهور سد مأرب وضعف مملكة سبأ."
+    },
+    {
+        "id": 28,
+        "type": "multiple-choice",
+        "text": "ما نوع الخط الذي استخدمه اليمنيون القدماء؟",
+        "options": [
+            { "id": 1, "text": "مسماري", "correct": false },
+            { "id": 2, "text": "هيروغليفي", "correct": false },
+            { "id": 3, "text": "المسند", "correct": true },
+            { "id": 4, "text": "أبجدي", "correct": false }
+        ],
+        "explanation": "الخط المسند يحتوي على 29 حرفًا، وُجد على نقوش يمنية قديمة."
+    },
+    {
+        "id": 29,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي عرفت نظام الطبقات الاجتماعية؟",
+        "options": [
+            { "id": 1, "text": "السومرية", "correct": false },
+            { "id": 2, "text": "الفينيقية", "correct": false },
+            { "id": 3, "text": "الهندية", "correct": true },
+            { "id": 4, "text": "البابلية", "correct": false }
+        ],
+        "explanation": "المجتمع الهندي قُسم إلى طوائف (طبقة الكهنة أعلى، الخدم أسفل)."
+    },
+    {
+        "id": 30,
+        "type": "multiple-choice",
+        "text": "ما الديانة التي نشأت في الهند القديمة؟",
+        "options": [
+            { "id": 1, "text": "الإسلام", "correct": false },
+            { "id": 2, "text": "اليهودية", "correct": false },
+            { "id": 3, "text": "الهندوسية", "correct": true },
+            { "id": 4, "text": "الزرادشتية", "correct": false }
+        ],
+        "explanation": "الهندوسية من أقدم الديانات في الهند، وتبجّل نهر السند."
+    },
+    {
+        "id": 31,
+        "type": "multiple-choice",
+        "text": "ما أهم نهر في الحضارة الهندية؟",
+        "options": [
+            { "id": 1, "text": "نهر النيل", "correct": false },
+            { "id": 2, "text": "نهر دجلة", "correct": false },
+            { "id": 3, "text": "نهر السند", "correct": true },
+            { "id": 4, "text": "نهر اليانغتسي", "correct": false }
+        ],
+        "explanation": "وادي نهر السند هو موطن الحضارة الهندية القديمة."
+    },
+    {
+        "id": 32,
+        "type": "multiple-choice",
+        "text": "ما أهم صناعة في الحضارة الهندية؟",
+        "options": [
+            { "id": 1, "text": "صناعة السفن", "correct": false },
+            { "id": 2, "text": "منسوجات قطنية", "correct": true },
+            { "id": 3, "text": "صناعة الزجاج", "correct": false },
+            { "id": 4, "text": "صناعة المعادن", "correct": false }
+        ],
+        "explanation": "الهنود القدماء كانوا مهرة في صناعة القماش القطني."
+    },
+    {
+        "id": 33,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي اخترعت الورق والطباعة؟",
+        "options": [
+            { "id": 1, "text": "الهندية", "correct": false },
+            { "id": 2, "text": "الصينية", "correct": true },
+            { "id": 3, "text": "الفينيقية", "correct": false },
+            { "id": 4, "text": "السومرية", "correct": false }
+        ],
+        "explanation": "الصين اخترعت الورق، الطباعة، البوصلة، والبارود."
+    },
+    {
+        "id": 34,
+        "type": "multiple-choice",
+        "text": "ما نهر الحضارة الصينية؟",
+        "options": [
+            { "id": 1, "text": "نهر السند", "correct": false },
+            { "id": 2, "text": "نهر الهوانغ هو", "correct": true },
+            { "id": 3, "text": "نهر النيل", "correct": false },
+            { "id": 4, "text": "نهر الفرات", "correct": false }
+        ],
+        "explanation": "نهر الهوانغ هو (النهر الأصفر) هو مهد الحضارة الصينية."
+    },
+    {
+        "id": 35,
+        "type": "multiple-choice",
+        "text": "ما أهم منتج صيني قديم؟",
+        "options": [
+            { "id": 1, "text": "الذهب", "correct": false },
+            { "id": 2, "text": "الحرير", "correct": true },
+            { "id": 3, "text": "البخور", "correct": false },
+            { "id": 4, "text": "الحديد", "correct": false }
+        ],
+        "explanation": "تربية دودة القز وإنتاج الحرير كانت من أهم الصناعات الصينية."
+    },
+    {
+        "id": 36,
+        "type": "multiple-choice",
+        "text": "ما طريق التجارة الذي ربط الصين بالعالم؟",
+        "options": [
+            { "id": 1, "text": "طريق البخور", "correct": false },
+            { "id": 2, "text": "طريق الحرير", "correct": true },
+            { "id": 3, "text": "طريق التوابل", "correct": false },
+            { "id": 4, "text": "طريق الذهب", "correct": false }
+        ],
+        "explanation": "طريق الحرير كان طريقًا تجاريًا مهمًا بين الصين والعالم القديم."
+    },
+    {
+        "id": 37,
+        "type": "multiple-choice",
+        "text": "ما البناء الدفاعي الشهير في الصين؟",
+        "options": [
+            { "id": 1, "text": "الزقورة", "correct": false },
+            { "id": 2, "text": "الهرم", "correct": false },
+            { "id": 3, "text": "سور الصين العظيم", "correct": true },
+            { "id": 4, "text": "القلعة", "correct": false }
+        ],
+        "explanation": "سور الصين بُني للدفاع ضد الغزاة من الشمال."
+    },
+    {
+        "id": 38,
+        "type": "multiple-choice",
+        "text": "ما الدين الذي انتشر في الصين القديمة؟",
+        "options": [
+            { "id": 1, "text": "الكونفوشيوسية والبوذية", "correct": true },
+            { "id": 2, "text": "الإسلام", "correct": false },
+            { "id": 3, "text": "المسيحية", "correct": false },
+            { "id": 4, "text": "اليهودية", "correct": false }
+        ],
+        "explanation": "الكونفوشيوسية والبوذية من أهم المذاهب الدينية والفلسفية في الصين."
+    },
+    {
+        "id": 39,
+        "type": "multiple-choice",
+        "text": "ما أهم مركز علمي في الحضارة الإسلامية؟",
+        "options": [
+            { "id": 1, "text": "الأزهر", "correct": false },
+            { "id": 2, "text": "بيت الحكمة", "correct": true },
+            { "id": 3, "text": "مكتبة الإسكندرية", "correct": false },
+            { "id": 4, "text": "أكاديمية أفلاطون", "correct": false }
+        ],
+        "explanation": "بيت الحكمة في بغداد كان مركزًا للترجمة والبحث العلمي في العصر العباسي."
+    },
+    {
+        "id": 40,
+        "type": "multiple-choice",
+        "text": "من أول خليفة راشد؟",
+        "options": [
+            { "id": 1, "text": "عمر", "correct": false },
+            { "id": 2, "text": "عثمان", "correct": false },
+            { "id": 3, "text": "علي", "correct": false },
+            { "id": 4, "text": "أبو بكر", "correct": true }
+        ],
+        "explanation": "أبو بكر الصديق أول الخلفاء الراشدين بعد وفاة النبي محمد."
+    },
+    {
+        "id": 41,
+        "type": "multiple-choice",
+        "text": "ما أهم إنجاز للخلفاء الراشدين؟",
+        "options": [
+            { "id": 1, "text": "تعريب الدواوين", "correct": false },
+            { "id": 2, "text": "جمع القرآن", "correct": true },
+            { "id": 3, "text": "سك العملة", "correct": false },
+            { "id": 4, "text": "بناء المساجد فقط", "correct": false }
+        ],
+        "explanation": "الخليفة أبو بكر بدأ جمع القرآن، وعثمان أنجز عملية الجمع والتوحيد."
+    },
+    {
+        "id": 42,
+        "type": "multiple-choice",
+        "text": "ما عاصمة الدولة الأموية؟",
+        "options": [
+            { "id": 1, "text": "بغداد", "correct": false },
+            { "id": 2, "text": "القاهرة", "correct": false },
+            { "id": 3, "text": "دمشق", "correct": true },
+            { "id": 4, "text": "مكة", "correct": false }
+        ],
+        "explanation": "دمشق كانت عاصمة الدولة الأموية، وشهدت تعريب الدواوين وسك العملة."
+    },
+    {
+        "id": 43,
+        "type": "multiple-choice",
+        "text": "ما إنجاز الدولة الأموية في الاقتصاد؟",
+        "options": [
+            { "id": 1, "text": "إغلاق الأسواق", "correct": false },
+            { "id": 2, "text": "سك العملة الإسلامية", "correct": true },
+            { "id": 3, "text": "منع التجارة", "correct": false },
+            { "id": 4, "text": "إلغاء الزكاة", "correct": false }
+        ],
+        "explanation": "الأمويون سكوا عملة عربية إسلامية، مما عزز الاقتصاد."
+    },
+    {
+        "id": 44,
+        "type": "multiple-choice",
+        "text": "ما عاصمة الدولة العباسية؟",
+        "options": [
+            { "id": 1, "text": "دمشق", "correct": false },
+            { "id": 2, "text": "مكة", "correct": false },
+            { "id": 3, "text": "بغداد", "correct": true },
+            { "id": 4, "text": "تونس", "correct": false }
+        ],
+        "explanation": "بغداد كانت عاصمة الخلافة العباسية، ومراكز العلم والثقافة."
+    },
+    {
+        "id": 45,
+        "type": "multiple-choice",
+        "text": "ما أسباب سقوط الدولة العباسية؟",
+        "options": [
+            { "id": 1, "text": "تقدم العلم", "correct": false },
+            { "id": 2, "text": "تراجع السلطة وضعف الحكم", "correct": true },
+            { "id": 3, "text": "ازدهار التجارة", "correct": false },
+            { "id": 4, "text": "قوة الجيش", "correct": false }
+        ],
+        "explanation": "تراجع السلطة المركزية وصعود أمراء الأقاليم أدى إلى ضعف الدولة، ثم سقوطها على يد المغول."
+    },
+    {
+        "id": 46,
+        "type": "multiple-choice",
+        "text": "ما أهم ميزة اجتماعية في الحضارة الإسلامية؟",
+        "options": [
+            { "id": 1, "text": "تهميش الفقراء", "correct": false },
+            { "id": 2, "text": "الزكاة لرعاية الفقراء", "correct": true },
+            { "id": 3, "text": "منع التعليم", "correct": false },
+            { "id": 4, "text": "تقليل التجارة", "correct": false }
+        ],
+        "explanation": "الزكاة رُكّزت كوسيلة لرعاية الفقراء وتحقيق العدالة الاجتماعية."
+    },
+    {
+        "id": 47,
+        "type": "multiple-choice",
+        "text": "من أمثلة المرأة البارزة في الحضارة الإسلامية؟",
+        "options": [
+            { "id": 1, "text": "كليوباترا", "correct": false },
+            { "id": 2, "text": "خديجة بنت خويلد", "correct": true },
+            { "id": 3, "text": "نفرتيتي", "correct": false },
+            { "id": 4, "text": "كريستينا", "correct": false }
+        ],
+        "explanation": "خديجة كانت أول زوجة للنبي محمد، ورائدة أعمال، ورفيدة كانت ممرضة."
+    },
+    {
+        "id": 48,
+        "type": "multiple-choice",
+        "text": "ما أهم إنجاز علمي في الحضارة الإسلامية؟",
+        "options": [
+            { "id": 1, "text": "اختراع الورق", "correct": false },
+            { "id": 2, "text": "تقدم في الطب (مثل الرازي)", "correct": true },
+            { "id": 3, "text": "اختراع النار", "correct": false },
+            { "id": 4, "text": "اكتشاف أمريكا", "correct": false }
+        ],
+        "explanation": "العلماء المسلمون مثل الرازي والكندي والخوارزمي قدموا إسهامات كبيرة في الطب والرياضيات."
+    },
+    {
+        "id": 49,
+        "type": "multiple-choice",
+        "text": "ما أثر الحضارة الإسلامية على أوروبا؟",
+        "options": [
+            { "id": 1, "text": "تراجع النهضة", "correct": false },
+            { "id": 2, "text": "نقل العلوم عبر الترجمة للاتينية", "correct": true },
+            { "id": 3, "text": "منع التعليم", "correct": false },
+            { "id": 4, "text": "تدمير المكتبات", "correct": false }
+        ],
+        "explanation": "كتب مترجمة من العربية إلى اللاتينية أثرت في النهضة الأوروبية."
+    },
+    {
+        "id": 50,
+        "type": "multiple-choice",
+        "text": "ما الشكل المعماري المميز في المساجد الإسلامية؟",
+        "options": [
+            { "id": 1, "text": "الزقورات", "correct": false },
+            { "id": 2, "text": "القباب والمآذن", "correct": true },
+            { "id": 3, "text": "الأهرامات", "correct": false },
+            { "id": 4, "text": "المعابد المربعة", "correct": false }
+        ],
+        "explanation": "القباب والمآذن وزخارف الجص والخشب من السمات المعمارية الإسلامية."
+    },
+    {
+        "id": 51,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي بنت الأهرامات المدرجة مشابهة للزقورات؟",
+        "options": [
+            { "id": 1, "text": "المصرية", "correct": true },
+            { "id": 2, "text": "الفينيقية", "correct": false },
+            { "id": 3, "text": "الهندية", "correct": false },
+            { "id": 4, "text": "الصينية", "correct": false }
+        ],
+        "explanation": "المصريون بنوا أهرامات مدرجة في البداية، تشبه الزقورات."
+    },
+    {
+        "id": 52,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي اخترعت البوصلة؟",
+        "options": [
+            { "id": 1, "text": "الهندية", "correct": false },
+            { "id": 2, "text": "الصينية", "correct": true },
+            { "id": 3, "text": "الفينيقية", "correct": false },
+            { "id": 4, "text": "السومرية", "correct": false }
+        ],
+        "explanation": "الصين اخترعت البوصلة، واستخدمتها في الملاحة."
+    },
+    {
+        "id": 53,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي استخدمت الأختام الحجرية في التجارة؟",
+        "options": [
+            { "id": 1, "text": "السومرية والهندية", "correct": true },
+            { "id": 2, "text": "الفينيقية", "correct": false },
+            { "id": 3, "text": "اليونانية", "correct": false },
+            { "id": 4, "text": "الرومانية", "correct": false }
+        ],
+        "explanation": "كل من السومريين والهنود استخدموا الأختام للتوقيع على الوثائق والبضائع."
+    },
+    {
+        "id": 54,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي عرفت تخطيط المدن بدقة؟",
+        "options": [
+            { "id": 1, "text": "الهندية (mohanjo-daro)", "correct": true },
+            { "id": 2, "text": "الفينيقية", "correct": false },
+            { "id": 3, "text": "البابلية", "correct": false },
+            { "id": 4, "text": "الآشورية", "correct": false }
+        ],
+        "explanation": "مدن الحضارة الهندية مثل موهنجو-دارو كانت مخططة بدقة شديدة."
+    },
+    {
+        "id": 55,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي اهتمت بالطب والجراحة؟",
+        "options": [
+            { "id": 1, "text": "الهندية والصينية", "correct": true },
+            { "id": 2, "text": "الفينيقية", "correct": false },
+            { "id": 3, "text": "الآشورية", "correct": false },
+            { "id": 4, "text": "السومرية", "correct": false }
+        ],
+        "explanation": "كلا الحضارتين عرفتا الطب المتقدم، مثل الجراحة والوخز بالإبر."
+    },
+    {
+        "id": 56,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي استخدمت وسائل الملاحة المتقدمة؟",
+        "options": [
+            { "id": 1, "text": "الفينيقية", "correct": true },
+            { "id": 2, "text": "السومرية", "correct": false },
+            { "id": 3, "text": "الآشورية", "correct": false },
+            { "id": 4, "text": "البابلية", "correct": false }
+        ],
+        "explanation": "الفينيقيون استخدموا الفلك والحساب في الملاحة البحرية."
+    },
+    {
+        "id": 57,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي عرفت نظام الشورى في الحكم؟",
+        "options": [
+            { "id": 1, "text": "الإسلامية", "correct": true },
+            { "id": 2, "text": "الفينيقية", "correct": false },
+            { "id": 3, "text": "الهندية", "correct": false },
+            { "id": 4, "text": "الصينية", "correct": false }
+        ],
+        "explanation": "الخلفاء الراشدون استخدموا الشورى في اختيار الحاكم."
+    },
+    {
+        "id": 58,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي دخلت في صراعات مع الحبشة والفرس؟",
+        "options": [
+            { "id": 1, "text": "سبأ", "correct": false },
+            { "id": 2, "text": "حمير", "correct": true },
+            { "id": 3, "text": "معين", "correct": false },
+            { "id": 4, "text": "الفينيقية", "correct": false }
+        ],
+        "explanation": "حمير دخلت في صراعات مع الأكسوم (الحبشة) والفرس."
+    },
+    {
+        "id": 59,
+        "type": "multiple-choice",
+        "text": "ما الحضارة التي أثرت في نهضة أوروبا من خلال الترجمة؟",
+        "options": [
+            { "id": 1, "text": "الهندية", "correct": false },
+            { "id": 2, "text": "الصينية", "correct": false },
+            { "id": 3, "text": "الإسلامية", "correct": true },
+            { "id": 4, "text": "الفينيقية", "correct": false }
+        ],
+        "explanation": "كتب مترجمة من العربية إلى اللاتينية نقلت العلوم إلى أوروبا، وأثرت في النهضة."
+    }
+        ]
+    };
+
+   // متغيرات
+    let currentQuestionIndex = 0;
+    let userAnswers = {};
+    let answered = {};
+
+    // تحميل البيانات المحفوظة
+    function loadSavedData() {
+        const saved = localStorage.getItem(`exam_${examId}`);
+        if (saved) {
+            const data = JSON.parse(saved);
+            userAnswers = data.answers || {};
+            currentQuestionIndex = data.currentQuestionIndex || 0;
+            return true;
+        }
+        return false;
+    }
+
+    // حفظ البيانات
+    function saveData() {
+        const data = {
+            answers: userAnswers,
+            currentQuestionIndex: currentQuestionIndex,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem(`exam_${examId}`, JSON.stringify(data));
+    }
+
+    // الحصول على رقم السؤال الحقيقي (باستثناء النصوص والشعر)
+    function getQuestionNumber(index) {
+        let realCount = 0;
+        for (let i = 0; i <= index; i++) {
+            if (examData.questions[i].type !== "passage" && examData.questions[i].type !== "poem") {
+                realCount++;
+            }
+        }
+        return realCount;
+    }
+
+    // تحديث زر التالي
+    function updateNextButton() {
+        const nextBtn = document.getElementById('next-btn');
+        const currentQuestion = examData.questions[currentQuestionIndex];
+        
+        // إذا كان السؤال الحالي نصًا أو شعرًا، فعّل الزر مباشرة
+        if (currentQuestion.type === "passage" || currentQuestion.type === "poem") {
+            nextBtn.disabled = false;
+            return;
+        }
+        
+        // تحقق مما إذا كان السؤال الحالي قد تمت الإجابة عليه
+        nextBtn.disabled = !answered[currentQuestionIndex];
+    }
+
+    // تحديد خيار في سؤال متعدد الخيارات
+    function selectOption(element, questionId, optionId, isCorrect) {
+        // منع التحديد إذا كانت الإجابة معروضة بالفعل
+        if (userAnswers[questionId]) return;
+        
+        // إلغاء تحديد جميع الخيارات الأخرى
+        const options = document.querySelectorAll(`.option[data-question="${questionId}"]`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        
+        // تحديد الخيار الحالي
+        element.classList.add('selected');
+        
+        // حفظ الإجابة
+        userAnswers[questionId] = {
+            selected: optionId,
+            correct: isCorrect
+        };
+        
+        // تشغيل الصوت المناسب
+        if (isCorrect) {
+            correctSound.play();
+        } else {
+            incorrectSound.play();
+        }
+        
+        // عرض التفسير
+        const explanationEl = document.getElementById(`explanation-${questionId}`);
+        if (explanationEl) {
+            explanationEl.style.display = 'block';
+        }
+        
+        // تمييز الإجابة الصحيحة والخاطئة
+        options.forEach(opt => {
+            const optCorrect = opt.getAttribute('data-correct') === 'true';
+            if (optCorrect) {
+                opt.classList.add('correct');
+            } else if (parseInt(opt.getAttribute('data-option')) === optionId && !isCorrect) {
+                opt.classList.add('incorrect');
+            }
+        });
+        
+        // تمكين زر التالي
+        answered[currentQuestionIndex] = true;
+        updateNextButton();
+        saveData();
+    }
+
+    // معالجة إدخال الإجابة في الأسئلة المقالية
+    function onFillInput(questionId) {
+        const input = document.getElementById(`fill-${questionId}`);
+        userAnswers[questionId] = {
+            answer: input.value
+        };
+        
+        // تمكين زر التالي إذا كان هناك إدخال
+        if (input.value.trim() !== '') {
+            answered[currentQuestionIndex] = true;
+        } else {
+            answered[currentQuestionIndex] = false;
+        }
+        
+        updateNextButton();
+        saveData();
+    }
+
+    // الانتقال إلى السؤال التالي
+    function nextQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex < examData.questions.length - 1) {
+            currentQuestionIndex++;
+            const nextId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${nextId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            
+            // إذا كان السؤال تاليًا نصًا أو شعرًا، فعّل الزر مباشرة
+            const nextQ = examData.questions[currentQuestionIndex];
+            if (nextQ.type === "passage" || nextQ.type === "poem") {
+                answered[currentQuestionIndex] = true;
+                document.getElementById('next-btn').disabled = false;
+            } else {
+                updateNextButton();
+            }
+            
+            saveData();
+        } else {
+            showResults();
+        }
+    }
+
+    // الانتقال إلى السؤال السابق
+    function prevQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            const prevId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${prevId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            updateNextButton();
+            
+            saveData();
+        }
+    }
+
+    // عرض النتائج
+// عرض النتائج - بدون حساب الأسئلة المقالية في الدرجة
+function showResults() {
+    // حساب النتيجة: فقط الأسئلة متعددة الخيارات
+    let correctCount = 0;
+    let totalQuestions = 0;
+
+    examData.questions.forEach(q => {
+        if (q.type === "multiple-choice") {
+            totalQuestions++;
+            if (userAnswers[q.id] && userAnswers[q.id].correct) {
+                correctCount++;
+            }
+        }
+    });
+
+    // حساب النسبة المئوية بناءً على الأسئلة متعددة الخيارات فقط
+    const score = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+
+    // كلمات تشجيعية
+    let feedback = "";
+    if (score >= 90) feedback = "ممتاز! أحسنت، استمر على هذا النحو 🌟";
+    else if (score >= 75) feedback = "جيد جدًا! أداء رائع 👏";
+    else if (score >= 60) feedback = "جيد، يمكنك التحسن أكثر 💪";
+    else feedback = "لا بأس، راجع الدروس وحاول مرة أخرى ❤️";
+
+    // توصيات
+    let recommendations = "";
+    if (score < 60) {
+        recommendations = "ننصحك بمراجعة القواعد النحوية والبلاغية، وحل المزيد من الأسئلة.";
+    } else if (score < 80) {
+        recommendations = "أداء جيد، ركّز على أنواع الأسئلة التي أخطأت فيها.";
+    } else {
+        recommendations = "أداء ممتاز! استمر في التقدم وجرّب امتحانات أصعب.";
+    }
+
+    // بناء النتائج التفصيلية
+    let detailedResults = '';
+    let questionNumber = 0; // رقم السؤال الحقيقي (للأسئلة القابلة للتصحيح فقط)
+
+    examData.questions.forEach(q => {
+        const userAnswer = userAnswers[q.id];
+        let answerText = 'لم تُجب';
+        let statusText = 'لم تُجب ❌';
+
+        // عرض الفقرات والشعر
+        if (q.type === "passage") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📖 فقرة نصية</h4>
+                    <div class="passage">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        if (q.type === "poem") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📜 نص شعري</h4>
+                    <div class="poem">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        // زيادة رقم السؤال فقط للأسئلة القابلة للتصحيح (اختيار من متعدد)
+        if (q.type === "multiple-choice") {
+            questionNumber++;
+        }
+
+        // معالجة الإجابة
+        if (q.type === "multiple-choice") {
+            const selectedOption = q.options.find(opt => opt.id == userAnswer?.selected);
+            answerText = selectedOption ? selectedOption.text : 'لم تُجب';
+            
+            if (userAnswer && selectedOption?.correct) {
+                statusText = 'إجابة صحيحة ✅';
+            } else if (userAnswer && !selectedOption?.correct) {
+                statusText = 'إجابة خاطئة ❌';
+            } else {
+                statusText = 'لم تُجب ❌';
+            }
+        } 
+        else if (q.type === "fill-in-blank") {
+            // السؤال المقالي: يظهر لكن بدون تأثير على العد
+            answerText = userAnswer?.answer?.trim() || 'لم تُجب';
+            statusText = (userAnswer && answerText !== 'لم تُجب') ? 'تمت الإجابة (تحت المراجعة)' : 'لم تُجب ❌';
+        }
+
+        // عرض السؤال بالشكل المطلوب
+        detailedResults += `
+            <div class="result-item">
+                ${q.type === "multiple-choice" ? `<p><strong>السؤال ${questionNumber}: ${q.text}</strong></p>` : `<p><strong>${q.text}</strong></p>`}
+                <p><strong>إجابتك:</strong> ${answerText}</p>
+                <p><strong>الحالة:</strong> ${statusText}</p>
+                <p><strong>📌 التفسير الكامل:</strong> ${q.explanation}</p>
+            </div>
+        `;
+    });
+
+    // عرض النتيجة النهائية
+    document.getElementById('score').innerHTML = `
+        <div class="stats">الإجابات الصحيحة: ${correctCount} من ${totalQuestions}</div>
+        <div class="stats">النسبة المئوية: ${score}%</div>
+        <div class="feedback">${feedback}</div>
+        <div class="recommendations"><strong>توصية:</strong> ${recommendations}</div>
+    `;
+
+    document.getElementById('detailed-results').innerHTML = detailedResults;
+
+    // إخفاء الأسئلة وإظهار النتائج
+    document.getElementById('questions-container').style.display = 'none';
+    document.querySelector('.navigation').style.display = 'none';
+    document.querySelector('.controls').style.display = 'flex';
+    document.getElementById('results-container').style.display = 'block';
+}
+    // طباعة النتائج
+    function printResults() {
+        window.print();
+    }
+
+    // مشاركة النتائج
+    function shareResults() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'نتيجة الامتحان',
+                text: `حصلت على ${document.getElementById('score').textContent} في امتحان اللغة العربية`,
+                url: window.location.href
+            })
+            .catch(error => {
+                console.log('Error sharing:', error);
+                alert('لم يتمكن المتصفح من مشاركة النتائج. يرجى المحاولة لاحقًا.');
+            });
+        } else {
+            alert('مشاركة النتائج غير مدعومة في هذا المتصفح. يمكنك استخدام زر الطباعة بدلاً من ذلك.');
+        }
+    }
+
+    // إعادة بدء الامتحان
+    function restartExam() {
+        if (confirm('هل تريد إعادة بدء الامتحان؟ سيتم حذف جميع إجاباتك الحالية.')) {
+            userAnswers = {};
+            answered = {};
+            currentQuestionIndex = 0;
+            localStorage.removeItem(`exam_${examId}`);
+            location.reload();
+        }
+    }
+
+    // العودة إلى قائمة الامتحانات
+    function backToExams() {
+        if (confirm('هل تريد العودة إلى قائمة الامتحانات؟ سيتم فقدان تقدمك الحالي إذا لم تحفظه.')) {
+            window.location.href = '/questions.html'; // تغيير هذا الرابط حسب الصفحة المناسبة
+        }
+    }
+
+    // تهيئة الامتحان
+    function initExam() {
+        const container = document.getElementById('questions-container');
+        const totalQuestions = examData.questions.filter(q => q.type !== "passage" && q.type !== "poem").length;
+        document.getElementById('total-questions').textContent = totalQuestions;
+        document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+
+        // تحميل الحالة
+        const wasResumed = loadSavedData();
+
+        // إنشاء الأسئلة
+        examData.questions.forEach((q, index) => {
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question';
+            questionEl.id = `question-${q.id}`;
+            questionEl.style.display = index === currentQuestionIndex ? 'block' : 'none';
+
+            if (q.type === "passage") {
+                questionEl.innerHTML = `<div class="passage">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة النص كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else if (q.type === "poem") {
+                questionEl.innerHTML = `<div class="poem">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة الشعر كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else {
+                let content = `<h3>السؤال ${getQuestionNumber(index)}: ${q.text}</h3>`;
+
+                if (q.type === "multiple-choice") {
+                    let optionsHtml = '<div class="options">';
+                    q.options.forEach(opt => {
+                        const selected = userAnswers[q.id]?.selected == opt.id;
+                        const isAnswered = userAnswers[q.id];
+                        const correct = opt.correct;
+                        optionsHtml += `
+                            <div class="option ${selected ? 'selected' : ''} ${isAnswered && correct ? 'correct' : ''} ${isAnswered && !correct && selected ? 'incorrect' : ''}"
+                                 data-question="${q.id}" data-option="${opt.id}" data-correct="${opt.correct}"
+                                 onclick="selectOption(this, ${q.id}, ${opt.id}, ${opt.correct})">
+                                ${opt.text}
+                            </div>
+                        `;
+                    });
+                    optionsHtml += '</div>';
+                    content += optionsHtml;
+                } else if (q.type === "fill-in-blank") {
+                    const value = userAnswers[q.id]?.answer || '';
+                    content += `
+                        <div class="fill-in-blank">
+                            <input type="text" id="fill-${q.id}" value="${value}" placeholder="أدخل إجابتك هنا" oninput="onFillInput(${q.id})">
+                        </div>
+                    `;
+                }
+
+                content += `<div class="explanation" id="explanation-${q.id}" style="${userAnswers[q.id] ? 'display:block' : 'display:none'}">
+                    <strong>التفسير:</strong> ${q.explanation}
+                </div>`;
+                questionEl.innerHTML = content;
+                
+                // تحديد ما إذا كان السؤال قد تمت الإجابة عليه
+                answered[index] = !!userAnswers[q.id];
+            }
+
+            container.appendChild(questionEl);
+        });
+
+        // تحديث زر التالي بناءً على السؤال الحالي
+        updateNextButton();
+
+        // ربط الأحداث
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+        document.getElementById('print-btn').addEventListener('click', printResults);
+        document.getElementById('share-btn').addEventListener('click', shareResults);
+        document.getElementById('restart-btn').addEventListener('click', restartExam);
+        document.getElementById('back-btn').addEventListener('click', backToExams);
+
+        if (wasResumed) {
+            alert(`تم استئناف الامتحان من السؤال ${getQuestionNumber(currentQuestionIndex)}`);
+        }
+    }
+
+    // بدء الامتحان عند تحميل الصفحة
+    window.onload = initExam;
+</script>
+</body>
+</html>

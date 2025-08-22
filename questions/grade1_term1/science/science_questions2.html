@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار اللغة الإنجليزية - الصف الاول الإعدادي</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط عامة */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* الحاوية الرئيسية */
+        .exam-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        /* رأس الامتحان */
+        .exam-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+        }
+        
+        .exam-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        /* إحصائيات الأسئلة */
+        .stats {
+            background: #e9f5ff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            border-right: 4px solid #007bff;
+        }
+        
+        /* الأسئلة */
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .question h3 {
+            color: #007bff;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        /* النصوص والقصائد */
+        .passage, .poem {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.8;
+            font-style: italic;
+            border-right: 4px solid #6c757d;
+        }
+        
+        .poem {
+            text-align: center;
+            font-weight: bold;
+            background: #fff9e6;
+            border-right-color: #ffc107;
+        }
+        
+        /* خيارات الأسئلة */
+        .options {
+            margin: 20px 0;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            background: white;
+        }
+        
+        .option:hover {
+            background-color: #e9f5ff;
+            transform: translateX(-5px);
+        }
+        
+        .option.selected {
+            background-color: #d4edff;
+            border-left: 4px solid #007bff;
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        /* شرح الإجابة */
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-right: 3px solid #6c757d;
+        }
+        
+        /* حقول الإدخال */
+        .fill-in-blank input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .fill-in-blank input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+        
+        /* التنقل بين الأسئلة */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        /* الأزرار */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover:not(:disabled) {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover:not(:disabled) {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover:not(:disabled) {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+        
+        /* النتائج */
+        .results-container {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #007bff;
+        }
+        
+        .feedback {
+            text-align: center;
+            font-size: 18px;
+            margin: 15px 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .recommendations {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .correct-answer {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        /* عناصر التحكم */
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .exam-container {
+                padding: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .passage, .poem {
+                padding: 15px;
+            }
+        }
+    </style></head>
+<body>
+    <div class="exam-container">
+        <div class="exam-header">
+            <h1 id="exam-title">اختبار العلوم - الصف الاول الإعدادي ( الوحدة الثانية ) - الترم الأول</h1>
+        </div>
+        
+        <div class="stats">السؤال <span id="current-question">1</span> من <span id="total-questions">50</span></div>
+        
+        <div id="questions-container"></div>
+        
+        <div class="navigation">
+            <button id="prev-btn" class="btn btn-secondary" disabled>السابق</button>
+            <button id="next-btn" class="btn btn-primary">التالي</button>
+        </div>
+        
+        <div class="controls">
+            <button id="restart-btn" class="btn btn-warning">إعادة البدء</button>
+            <button id="print-btn" class="btn btn-info">طباعة النتائج</button>
+            <button id="share-btn" class="btn btn-success">مشاركة النتائج</button>
+            <button id="back-btn" class="btn btn-danger">العودة للامتحانات</button>
+        </div>
+        
+        <div class="results-container" id="results-container">
+            <h2>النتيجة</h2>
+            <div id="score"></div>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+
+    <audio id="correctSound" src="../../../assets/audio/correct.mp3" preload="auto"></audio>
+    <audio id="incorrectSound" src="../../../assets/audio/incorrect.mp3" preload="auto"></audio>
+
+
+   <script>
+    // أصوات
+    const correctSound = document.getElementById('correctSound');
+    const incorrectSound = document.getElementById('incorrectSound');
+
+    // معرف الامتحان
+    const examId = "arabic-grade1-term1";
+
+    // بيانات الأسئلة (كما أرسلتها)
+    const examData = {
+        title: "اختبار العلوم - الصف الاول الإعدادي ( الوحدة الثانية ) - الترم الأول",
+        questions: [
+           {
+        "id": 1,
+        "type": "multiple-choice",
+        "text": "الشكل المقابل يوضح جسيم (X) حر الحركة مشحون بشحنة كهربية سالبة، موضوع بين نوعين مختلفين عن بعضهما في الشحنة. في أي اتجاه يتحرك الجسيم؟",
+        "options": [
+            { "id": 1, "text": "نحو اللوح السالب", "correct": false },
+            { "id": 2, "text": "نحو اللوح الموجب", "correct": true },
+            { "id": 3, "text": "لا يتحرك", "correct": false },
+            { "id": 4, "text": "يهرب بعيدًا", "correct": false }
+        ],
+        "explanation": "الشحنة السالبة تنجذب إلى الشحنة الموجبة، لذا يتحرك الجسيم نحو اللوح الموجب."
+    },
+    {
+        "id": 2,
+        "type": "multiple-choice",
+        "text": "أي مما يلي يعبر عن المجال الكهربي بين لوحين مشحونين؟",
+        "options": [
+            { "id": 1, "text": "خطوط منحنية", "correct": false },
+            { "id": 2, "text": "خطوط تخرج من السالب وتتجه إلى الموجب", "correct": false },
+            { "id": 3, "text": "خطوط مستقيمة من الموجب إلى السالب", "correct": true },
+            { "id": 4, "text": "خطوط دائرية", "correct": false }
+        ],
+        "explanation": "المجال الكهربي بين لوحين متوازيين يكون منتظمًا، وخطوطه تبدأ من الشحنة الموجبة وتنتهي عند السالبة."
+    },
+    {
+        "id": 3,
+        "type": "multiple-choice",
+        "text": "عند فرك مسطرة من البلاستيك بالقطن، تتولد قوة كهربية بينهما. ما نوع الشحنة على المسطرة، وما نوع القوة المتبادلة بينهما؟",
+        "options": [
+            { "id": 1, "text": "موجبة / تنافر", "correct": false },
+            { "id": 2, "text": "سالبة / تجاذب", "correct": true },
+            { "id": 3, "text": "موجبة / تجاذب", "correct": false },
+            { "id": 4, "text": "سالبة / تنافر", "correct": false }
+        ],
+        "explanation": "البلاستيك يكتسب إلكترونات من القطن → يصبح سالب الشحنة. إذا اقترب من جسم متعادل أو موجب، يحدث تجاذب."
+    },
+    {
+        "id": 4,
+        "type": "multiple-choice",
+        "text": "ساق من النيكل تنجذب إلى مغناطيس. أي مما يلي يصف طبيعة الساق؟",
+        "options": [
+            { "id": 1, "text": "مغناطيس دائم فقط", "correct": false },
+            { "id": 2, "text": "ساق من النيكل فقط", "correct": true },
+            { "id": 3, "text": "ساق من النحاس", "correct": false },
+            { "id": 4, "text": "ساق من النيكل أو النحاس", "correct": false }
+        ],
+        "explanation": "النيكل مادة مغناطيسية، لذا تنجرف إلى المغناطيس حتى لو لم تكن ممغنطة. النحاس غير مغناطيسي."
+    },
+    {
+        "id": 5,
+        "type": "multiple-choice",
+        "text": "الشكل يوضح ثلاثة مغناطيسات مرتبة. أي شكل يعبر عن الترتيب الصحيح؟",
+        "options": [
+            { "id": 1, "text": "N-S – N-S – N-S", "correct": true },
+            { "id": 2, "text": "N-N – S-S – N-N", "correct": false },
+            { "id": 3, "text": "S-S – S-S – S-S", "correct": false },
+            { "id": 4, "text": "N-S – S-N – N-S", "correct": false }
+        ],
+        "explanation": "الأقطاب المختلفة تتجاذب. الترتيب الصحيح يكون بين قطب شمالي (N) وقطب جنوبي (S) متجاورين."
+    },
+    {
+        "id": 6,
+        "type": "multiple-choice",
+        "text": "الشكل يوضح انجذاب مشبك ورقي إلى مغناطيس رغم وجود ورقة بينهما. ما الذي يمكن استنتاجه؟",
+        "options": [
+            { "id": 1, "text": "الأقطاب المغناطيسية متشابهة", "correct": false },
+            { "id": 2, "text": "القوة المغناطيسية قوة جاذبة فقط", "correct": false },
+            { "id": 3, "text": "المشبك ينجذب للقطب الشمالي فقط", "correct": false },
+            { "id": 4, "text": "القوة المغناطيسية تؤثر عن بعد", "correct": true }
+        ],
+        "explanation": "القوة المغناطيسية لا تحتاج تلامسًا مباشرًا، ويمكنها اختراق مواد رقيقة مثل الورق."
+    },
+    {
+        "id": 7,
+        "type": "multiple-choice",
+        "text": "من كل مما يأتي، ما هذا؟ (شكل يمثل مغناطيس صناعي)",
+        "options": [
+            { "id": 1, "text": "عصا مغناطيسية", "correct": false },
+            { "id": 2, "text": "إبرة مغناطيسية", "correct": false },
+            { "id": 3, "text": "حدوة حصان", "correct": false },
+            { "id": 4, "text": "قطعة الألومنيوم", "correct": true }
+        ],
+        "explanation": "لأن الألومنيوم غير مغناطيسي، ولا يمكن أن يكون مغناطيسًا صناعيًا، بينما باقي الخيارات أشكال شائعة للمغناطيس."
+    },
+    {
+        "id": 8,
+        "type": "multiple-choice",
+        "text": "أي مما يلي من المواد المغناطيسية؟",
+        "options": [
+            { "id": 1, "text": "الذهب", "correct": false },
+            { "id": 2, "text": "القصدير", "correct": false },
+            { "id": 3, "text": "النحاس", "correct": false },
+            { "id": 4, "text": "الكوبالت", "correct": true }
+        ],
+        "explanation": "الكوبالت من الفلزات المغناطيسية (إلى جانب الحديد والنيكل). الباقي غير مغناطيسي."
+    },
+    {
+        "id": 9,
+        "type": "multiple-choice",
+        "text": "أي مما يلي من المواد غير المغناطيسية؟",
+        "options": [
+            { "id": 1, "text": "الحديد", "correct": false },
+            { "id": 2, "text": "النيكل", "correct": false },
+            { "id": 3, "text": "الألومنيوم", "correct": true },
+            { "id": 4, "text": "الكوبالت", "correct": false }
+        ],
+        "explanation": "الألومنيوم لا ينجذب للمغناطيس، لذا يُعد غير مغناطيسي."
+    },
+    {
+        "id": 10,
+        "type": "multiple-choice",
+        "text": "ما الجهاز الذي استخدم قديمًا لتحديد الاتجاهات؟",
+        "options": [
+            { "id": 1, "text": "البوصلة", "correct": true },
+            { "id": 2, "text": "الساعة الرملية", "correct": false },
+            { "id": 3, "text": "الساعة الشمسية", "correct": false },
+            { "id": 4, "text": "الميزان", "correct": false }
+        ],
+        "explanation": "البوصلة تحتوي على مغناطيس صغير حر الحركة يشير نحو الشمال الجغرافي."
+    },
+    {
+        "id": 11,
+        "type": "multiple-choice",
+        "text": "تزيد قوة المغناطيس عند:",
+        "options": [
+            { "id": 1, "text": "منتصف المغناطيس", "correct": false },
+            { "id": 2, "text": "الطرف (القطب)", "correct": true },
+            { "id": 3, "text": "السطح", "correct": false },
+            { "id": 4, "text": "منصف", "correct": false }
+        ],
+        "explanation": "لأن خطوط المجال المغناطيسي تكون أكثر تكثفًا عند القطبين، مما يعني قوة أكبر."
+    },
+    {
+        "id": 12,
+        "type": "multiple-choice",
+        "text": "عندما تكون خطوط المجال المغناطيسي متزاحمة، فهذا يكون عند:",
+        "options": [
+            { "id": 1, "text": "القطب الشمالي فقط", "correct": false },
+            { "id": 2, "text": "القطب الجنوبي فقط", "correct": false },
+            { "id": 3, "text": "القطبان الشمالي والجنوبي", "correct": true },
+            { "id": 4, "text": "طرف المغناطيس", "correct": false }
+        ],
+        "explanation": "الكثافة العالية للخطوط تعني مجالًا أقوى، وتكون أعلى عند القطبين."
+    },
+    {
+        "id": 13,
+        "type": "multiple-choice",
+        "text": "خطوط المجال المغناطيسي تخرج من القطب ______ وتتجه إلى القطب ______ خارج المغناطيس.",
+        "options": [
+            { "id": 1, "text": "الشمالي – الجنوبي", "correct": true },
+            { "id": 2, "text": "الجنوبي – الشمالي", "correct": false },
+            { "id": 3, "text": "الشمالي – الشمالي", "correct": false },
+            { "id": 4, "text": "الجنوبي – الجنوبي", "correct": false }
+        ],
+        "explanation": "خطوط المجال تخرج من القطب الشمالي وتدخل في القطب الجنوبي خارج المغناطيس."
+    },
+    {
+        "id": 14,
+        "type": "multiple-choice",
+        "text": "...... تؤثر على بعد معين مثل قوى الجاذبية والكهربية.",
+        "options": [
+            { "id": 1, "text": "قوى التلامس", "correct": false },
+            { "id": 2, "text": "قوى المرونة", "correct": false },
+            { "id": 3, "text": "قوى المجال", "correct": true },
+            { "id": 4, "text": "قوى الاحتكاك", "correct": false }
+        ],
+        "explanation": "القوى التي تؤثر بدون تلامس (مثل الجاذبية، الكهربية، المغناطيسية) تُسمى \"قوى المجال\"."
+    },
+    {
+        "id": 15,
+        "type": "multiple-choice",
+        "text": "العالم الذي درس القوى الكهروستاتيكية بين الشحنات؟",
+        "options": [
+            { "id": 1, "text": "كولوم", "correct": true },
+            { "id": 2, "text": "عوّام", "correct": false },
+            { "id": 3, "text": "الاستاذ", "correct": false },
+            { "id": 4, "text": "المرونة", "correct": false }
+        ],
+        "explanation": "العالم شارلز كولوم وضع قانون كولوم لحساب القوة بين شحنتين كهربائيتين."
+    },
+    {
+        "id": 16,
+        "type": "multiple-choice",
+        "text": "من أمثلة قوى التلامس:",
+        "options": [
+            { "id": 1, "text": "الجاذبية", "correct": false },
+            { "id": 2, "text": "التماس", "correct": false },
+            { "id": 3, "text": "المرونة", "correct": true },
+            { "id": 4, "text": "الكهرومغناطيسية", "correct": false }
+        ],
+        "explanation": "المرونة تحدث عند تلامس مباشر (مثل نابض)، لذا تُعد من قوى التلامس."
+    },
+    {
+        "id": 17,
+        "type": "multiple-choice",
+        "text": "من أمثلة قوى المجال:",
+        "options": [
+            { "id": 1, "text": "الجاذبية", "correct": false },
+            { "id": 2, "text": "التماس", "correct": false },
+            { "id": 3, "text": "المرونة", "correct": false },
+            { "id": 4, "text": "الكهرومغناطيسية", "correct": true }
+        ],
+        "explanation": "تشمل القوى الكهربية والمغناطيسية، وهي تؤثر بدون تلامس → قوى مجال."
+    },
+    {
+        "id": 18,
+        "type": "multiple-choice",
+        "text": "خطوط قوة الجاذبية الأرضية تُمثل بخطوط:",
+        "options": [
+            { "id": 1, "text": "مجال الجانبية", "correct": false },
+            { "id": 2, "text": "خطوط الطول", "correct": false },
+            { "id": 3, "text": "المجال المغناطيسي", "correct": false },
+            { "id": 4, "text": "تتجه نحو مركز الأرض", "correct": true }
+        ],
+        "explanation": "الجاذبية تسحب الأجسام نحو مركز الأرض، لذا تكون خطوط المجال متجهة للأسفل."
+    },
+    {
+        "id": 19,
+        "type": "multiple-choice",
+        "text": "ما العوامل المؤثرة في قوة التجاذب بين جسمين؟",
+        "options": [
+            { "id": 1, "text": "كتلة الجسمين", "correct": true },
+            { "id": 2, "text": "نوع مادة الجسمين", "correct": false },
+            { "id": 3, "text": "حجم الجسمين", "correct": false },
+            { "id": 4, "text": "كثافة الجسمين", "correct": false }
+        ],
+        "explanation": "قوة الجاذبية تعتمد على كتلة الجسمين والمسافة بينهما، وليس على نوع المادة."
+    },
+    {
+        "id": 20,
+        "type": "multiple-choice",
+        "text": "كم مرة يحدث المد والجزر يوميًا؟",
+        "options": [
+            { "id": 1, "text": "مرة واحدة", "correct": false },
+            { "id": 2, "text": "ثلاث مرات", "correct": false },
+            { "id": 3, "text": "مرتين", "correct": true },
+            { "id": 4, "text": "أربع مرات", "correct": false }
+        ],
+        "explanation": "بسبب دوران الأرض، يتعرض كل مكان لـ مد وجزر كل 12 ساعة تقريبًا → مرتين يوميًا."
+    },
+    {
+        "id": 21,
+        "type": "multiple-choice",
+        "text": "متى يكون المد والجزر في أعلى نشاطه؟",
+        "options": [
+            { "id": 1, "text": "محاق أو بدر", "correct": true },
+            { "id": 2, "text": "هلال", "correct": false },
+            { "id": 3, "text": "ربع أول", "correct": false },
+            { "id": 4, "text": "ربع آخر", "correct": false }
+        ],
+        "explanation": "عندما تكون الشمس، الأرض، والقمر في خط واحد، تتعامد تأثيرات الجاذبية → مد عظيم."
+    },
+    {
+        "id": 22,
+        "type": "multiple-choice",
+        "text": "جسم كتلته 5 كجم، ما وزنه على سطح الأرض؟",
+        "options": [
+            { "id": 1, "text": "5 كجم", "correct": false },
+            { "id": 2, "text": "50 نيوتن", "correct": true },
+            { "id": 3, "text": "50 كجم", "correct": false },
+            { "id": 4, "text": "5 نيوتن", "correct": false }
+        ],
+        "explanation": "الوزن = الكتلة × عجلة الجاذبية = 5 × 10 = 50 نيوتن."
+    },
+    {
+        "id": 23,
+        "type": "multiple-choice",
+        "text": "جسم وزنه 60 نيوتن على سطح الأرض، ما كتلته؟",
+        "options": [
+            { "id": 1, "text": "10 كجم", "correct": false },
+            { "id": 2, "text": "6 كجم", "correct": true },
+            { "id": 3, "text": "60 كجم", "correct": false },
+            { "id": 4, "text": "600 كجم", "correct": false }
+        ],
+        "explanation": "الكتلة = الوزن ÷ 10 = 60 ÷ 10 = 6 كجم."
+    },
+    {
+        "id": 24,
+        "type": "multiple-choice",
+        "text": "شدة مجال الجاذبية على القمر تعادل:",
+        "options": [
+            { "id": 1, "text": "نصف", "correct": false },
+            { "id": 2, "text": "ربع", "correct": false },
+            { "id": 3, "text": "سدس", "correct": true },
+            { "id": 4, "text": "ثمن", "correct": false }
+        ],
+        "explanation": "جاذبية القمر أضعف من الأرض بحوالي 6 مرات."
+    },
+    {
+        "id": 25,
+        "type": "multiple-choice",
+        "text": "النسبة بين وزن جسم عند سفح الجبل ووزنه عند قمته:",
+        "options": [
+            { "id": 1, "text": "أكبر من", "correct": true },
+            { "id": 2, "text": "تساوي", "correct": false },
+            { "id": 3, "text": "أقل من", "correct": false },
+            { "id": 4, "text": "بسيط", "correct": false }
+        ],
+        "explanation": "الوزن يقل قليلًا عند القمة (بزيادة المسافة عن مركز الأرض)، لذا يكون وزنه عند السفح أكبر."
+    },
+    {
+        "id": 26,
+        "type": "multiple-choice",
+        "text": "قوة تجاذب بين جسمين: هل تكون متساوية؟",
+        "options": [
+            { "id": 1, "text": "الأولى أكبر", "correct": false },
+            { "id": 2, "text": "الثانية أكبر", "correct": false },
+            { "id": 3, "text": "كلا الجسمين يجذب الآخر بنفس القوة", "correct": true },
+            { "id": 4, "text": "لا توجد قوة", "correct": false }
+        ],
+        "explanation": "قوة الجاذبية متبادلة ومتساوية في المقدار (قانون نيوتن الثالث)."
+    },
+    {
+        "id": 27,
+        "type": "multiple-choice",
+        "text": "ما القوة التي تتسبب في سقوط كرة من مكان مرتفع إلى سطح الأرض؟",
+        "options": [
+            { "id": 1, "text": "الجاذبية", "correct": true },
+            { "id": 2, "text": "المغناطيسية", "correct": false },
+            { "id": 3, "text": "الاحتكاك", "correct": false },
+            { "id": 4, "text": "الصادمة", "correct": false }
+        ],
+        "explanation": "الجاذبية الأرضية تسحب الأجسام نحو مركز الأرض."
+    },
+    {
+        "id": 28,
+        "type": "multiple-choice",
+        "text": "جسم وزنه 600 نيوتن عند سفح جبل عالٍ. ما كتلته ووزنه عند القمة؟",
+        "options": [
+            { "id": 1, "text": "60 كجم – 600 نيوتن", "correct": false },
+            { "id": 2, "text": "6 كجم – 600 نيوتن", "correct": false },
+            { "id": 3, "text": "60 كجم – 598 نيوتن", "correct": true },
+            { "id": 4, "text": "6 كجم – 598 نيوتن", "correct": false }
+        ],
+        "explanation": "الكتلة لا تتغير، الوزن يقل قليلًا بسبب بعد المسافة عن مركز الأرض."
+    },
+    {
+        "id": 29,
+        "type": "multiple-choice",
+        "text": "أي مما يلي يعبر عن خطوط مجال الجاذبية الأرضية؟",
+        "options": [
+            { "id": 1, "text": "خطوط من الأعلى إلى الأسفل", "correct": true },
+            { "id": 2, "text": "خطوط دائرية", "correct": false },
+            { "id": 3, "text": "خطوط من الأسفل إلى الأعلى", "correct": false },
+            { "id": 4, "text": "لا شيء", "correct": false }
+        ],
+        "explanation": "تشير نحو مركز الأرض."
+    },
+    {
+        "id": 30,
+        "type": "multiple-choice",
+        "text": "قوة جاذبية القمر:",
+        "options": [
+            { "id": 1, "text": "أقوى من الأرض", "correct": false },
+            { "id": 2, "text": "تساوي الأرض", "correct": false },
+            { "id": 3, "text": "أضعف من الأرض", "correct": true },
+            { "id": 4, "text": "لا توجد", "correct": false }
+        ],
+        "explanation": "جاذبية القمر ≈ 1/6 جاذبية الأرض."
+    },
+    {
+        "id": 31,
+        "type": "multiple-choice",
+        "text": "جسم كتلته 50 كجم على سطح الأرض. ما كتلته على سطح القمر؟",
+        "options": [
+            { "id": 1, "text": "50 كجم", "correct": true },
+            { "id": 2, "text": "8.3 كجم", "correct": false },
+            { "id": 3, "text": "300 كجم", "correct": false },
+            { "id": 4, "text": "0 كجم", "correct": false }
+        ],
+        "explanation": "الكتلة لا تتغير بتغير المكان."
+    },
+    {
+        "id": 32,
+        "type": "multiple-choice",
+        "text": "وزن رائد الفضاء في الفضاء الخارجي يساوي:",
+        "options": [
+            { "id": 1, "text": "0 نيوتن", "correct": true },
+            { "id": 2, "text": "600 نيوتن", "correct": false },
+            { "id": 3, "text": "100 كجم", "correct": false },
+            { "id": 4, "text": "10 نيوتن", "correct": false }
+        ],
+        "explanation": "في الفضاء، يكون في حالة سقوط حر، فيشعر بانعدام الوزن."
+    },
+    {
+        "id": 33,
+        "type": "fill-in-blank",
+        "text": "أكمل: المواد الموصلة للكهرباء مثل ______، وغير الموصلة مثل ______.",
+        "correctAnswer": "النحاس – البلاستيك",
+        "explanation": "النحاس يوصل الكهرباء، والبلاستيك عازل."
+    },
+    {
+        "id": 34,
+        "type": "fill-in-blank",
+        "text": "أكمل: الجسم الذي يفقد إلكترونات يشحن بشحنة ______، والذي يكتسب يشحن بشحنة ______.",
+        "correctAnswer": "موجبة – سالبة",
+        "explanation": "فقدان إلكترونات → نقص سالب → شحنة موجبة. اكتساب → زيادة سالب → شحنة سالبة."
+    },
+    {
+        "id": 35,
+        "type": "fill-in-blank",
+        "text": "أكمل: الشحنات المختلفة ______، والشائبة ______.",
+        "correctAnswer": "تتجاذب – تنفر",
+        "explanation": "قانون الكهرباء: \"المتشابه يتنافر، المختلف يتجاذب\"."
+    },
+    {
+        "id": 36,
+        "type": "fill-in-blank",
+        "text": "أكمل: عند فرك ساق زجاجية بقطعة جلد، يصبح الزجاج ______، والجلد ______.",
+        "correctAnswer": "موجب الشحنة – سالب الشحنة",
+        "explanation": "الزجاج يفقد إلكترونات → موجب. الجلد يكتسبها → سالب."
+    },
+    {
+        "id": 37,
+        "type": "fill-in-blank",
+        "text": "ما وظيفة النيوترون في النواة؟",
+        "correctAnswer": "يساعد على استقرار النواة",
+        "explanation": "يقلل التنافر بين البروتونات ويساعد في تماسك النواة."
+    },
+    {
+        "id": 38,
+        "type": "fill-in-blank",
+        "text": "ما الجهاز الذي يزيل الشحنات الكهربائية من الأجسام؟",
+        "correctAnswer": "جهاز التأريض",
+        "explanation": "يوصل الجسم بالأرض، فينتقل الفائض من الشحنات إلى الأرض."
+    },
+    {
+        "id": 39,
+        "type": "fill-in-blank",
+        "text": "كيف يمكن شحن الأجسام بالكهرباء الساكنة؟",
+        "correctAnswer": "باللمس، بالتأثير، أو بالفرك",
+        "explanation": "هذه الطرق تؤدي إلى انتقال أو إعادة توزيع للإلكترونات."
+    },
+    {
+        "id": 40,
+        "type": "fill-in-blank",
+        "text": "خطوط القوى الكهربية تبدأ من الشحنة ______ وتنتهي عند الشحنة ______.",
+        "correctAnswer": "الموجبة – السالبة",
+        "explanation": "الاتجاه الاصطلاحي لخطوط المجال هو من الموجب إلى السالب."
+    },
+    {
+        "id": 41,
+        "type": "fill-in-blank",
+        "text": "ما أهمية خطوط المجال الكهربي؟",
+        "correctAnswer": "تُستخدم لتحديد اتجاه القوة وشدة المجال ونوع الشحنة",
+        "explanation": "كثافتها تدل على الشدة، واتجاهها يدل على نوع الشحنة."
+    },
+    {
+        "id": 42,
+        "type": "fill-in-blank",
+        "text": "من أشكال المغناطيس الصناعي: ______، ______، ______.",
+        "correctAnswer": "عصا مغناطيسية، حدوة حصان، إبرة مغناطيسية",
+        "explanation": "هذه أشكال شائعة للمغناطيسات الصناعية."
+    },
+    {
+        "id": 43,
+        "type": "fill-in-blank",
+        "text": "قوة جذب المغناطيس تكون أكبر ما يمكن عند:",
+        "correctAnswer": "القطبين (الشمالي والجنوبي)",
+        "explanation": "لأن خطوط المجال تكون أكثر تكثفًا عند القطبين."
+    },
+    {
+        "id": 44,
+        "type": "fill-in-blank",
+        "text": "مصنوع علبة البوصلة من ______، وعقربها من ______.",
+        "correctAnswer": "مادة غير مغناطيسية (مثل البلاستيك)، فولاذ ممغنط",
+        "explanation": "لمنع تأثير العلبة على العقرب، ويكون العقرب مغناطيسيًا حر الحركة."
+    },
+    {
+        "id": 45,
+        "type": "fill-in-blank",
+        "text": "البوصلة عبارة عن ______ مغناطيسية حرة الحركة مثبتة عند ______.",
+        "correctAnswer": "مغناطيس صغير – مركز الدوران",
+        "explanation": "يدور بحرية ليشير إلى الشمال."
+    },
+    {
+        "id": 46,
+        "type": "fill-in-blank",
+        "text": "عند تعليق مغناطيس حرًا، فإنه يأخذ اتجاه:",
+        "correctAnswer": "الشمال-الجنوب",
+        "explanation": "بسبب تأثره بالمجال المغناطيسي للأرض."
+    },
+    {
+        "id": 47,
+        "type": "fill-in-blank",
+        "text": "يرمز للقطب الشمالي للمغناطيس بالرمز ______، والجنوبي بالرمز ______.",
+        "correctAnswer": "N – S",
+        "explanation": "من الشمال (North) والجنوب (South)."
+    },
+    {
+        "id": 48,
+        "type": "fill-in-blank",
+        "text": "عند تقطيع مغناطيس إلى عدة أجزاء، فإن كل جزء يكون:",
+        "correctAnswer": "مغناطيسًا جديدًا به قطبان",
+        "explanation": "لا يمكن عزل قطب مغناطيسي وحيد."
+    },
+    {
+        "id": 49,
+        "type": "fill-in-blank",
+        "text": "القطب الشمالي للمغناطيس ينجذب إلى القطب ______ للأرض.",
+        "correctAnswer": "الجنوبي المغناطيسي",
+        "explanation": "الأقطاب المختلفة تتجاذب."
+    },
+    {
+        "id": 50,
+        "type": "fill-in-blank",
+        "text": "قوة الجاذبية هي قوة ______ بين جسمين.",
+        "correctAnswer": "تجاذب متبادلة",
+        "explanation": "تؤثر على كلا الجسمين بنفس القوة، وتكون دائمًا جاذبة."
+    }
+        ]
+    };
+
+   // متغيرات
+    let currentQuestionIndex = 0;
+    let userAnswers = {};
+    let answered = {};
+
+    // تحميل البيانات المحفوظة
+    function loadSavedData() {
+        const saved = localStorage.getItem(`exam_${examId}`);
+        if (saved) {
+            const data = JSON.parse(saved);
+            userAnswers = data.answers || {};
+            currentQuestionIndex = data.currentQuestionIndex || 0;
+            return true;
+        }
+        return false;
+    }
+
+    // حفظ البيانات
+    function saveData() {
+        const data = {
+            answers: userAnswers,
+            currentQuestionIndex: currentQuestionIndex,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem(`exam_${examId}`, JSON.stringify(data));
+    }
+
+    // الحصول على رقم السؤال الحقيقي (باستثناء النصوص والشعر)
+    function getQuestionNumber(index) {
+        let realCount = 0;
+        for (let i = 0; i <= index; i++) {
+            if (examData.questions[i].type !== "passage" && examData.questions[i].type !== "poem") {
+                realCount++;
+            }
+        }
+        return realCount;
+    }
+
+    // تحديث زر التالي
+    function updateNextButton() {
+        const nextBtn = document.getElementById('next-btn');
+        const currentQuestion = examData.questions[currentQuestionIndex];
+        
+        // إذا كان السؤال الحالي نصًا أو شعرًا، فعّل الزر مباشرة
+        if (currentQuestion.type === "passage" || currentQuestion.type === "poem") {
+            nextBtn.disabled = false;
+            return;
+        }
+        
+        // تحقق مما إذا كان السؤال الحالي قد تمت الإجابة عليه
+        nextBtn.disabled = !answered[currentQuestionIndex];
+    }
+
+    // تحديد خيار في سؤال متعدد الخيارات
+    function selectOption(element, questionId, optionId, isCorrect) {
+        // منع التحديد إذا كانت الإجابة معروضة بالفعل
+        if (userAnswers[questionId]) return;
+        
+        // إلغاء تحديد جميع الخيارات الأخرى
+        const options = document.querySelectorAll(`.option[data-question="${questionId}"]`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        
+        // تحديد الخيار الحالي
+        element.classList.add('selected');
+        
+        // حفظ الإجابة
+        userAnswers[questionId] = {
+            selected: optionId,
+            correct: isCorrect
+        };
+        
+        // تشغيل الصوت المناسب
+        if (isCorrect) {
+            correctSound.play();
+        } else {
+            incorrectSound.play();
+        }
+        
+        // عرض التفسير
+        const explanationEl = document.getElementById(`explanation-${questionId}`);
+        if (explanationEl) {
+            explanationEl.style.display = 'block';
+        }
+        
+        // تمييز الإجابة الصحيحة والخاطئة
+        options.forEach(opt => {
+            const optCorrect = opt.getAttribute('data-correct') === 'true';
+            if (optCorrect) {
+                opt.classList.add('correct');
+            } else if (parseInt(opt.getAttribute('data-option')) === optionId && !isCorrect) {
+                opt.classList.add('incorrect');
+            }
+        });
+        
+        // تمكين زر التالي
+        answered[currentQuestionIndex] = true;
+        updateNextButton();
+        saveData();
+    }
+
+    // معالجة إدخال الإجابة في الأسئلة المقالية
+    function onFillInput(questionId) {
+        const input = document.getElementById(`fill-${questionId}`);
+        userAnswers[questionId] = {
+            answer: input.value
+        };
+        
+        // تمكين زر التالي إذا كان هناك إدخال
+        if (input.value.trim() !== '') {
+            answered[currentQuestionIndex] = true;
+        } else {
+            answered[currentQuestionIndex] = false;
+        }
+        
+        updateNextButton();
+        saveData();
+    }
+
+    // الانتقال إلى السؤال التالي
+    function nextQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex < examData.questions.length - 1) {
+            currentQuestionIndex++;
+            const nextId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${nextId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            
+            // إذا كان السؤال تاليًا نصًا أو شعرًا، فعّل الزر مباشرة
+            const nextQ = examData.questions[currentQuestionIndex];
+            if (nextQ.type === "passage" || nextQ.type === "poem") {
+                answered[currentQuestionIndex] = true;
+                document.getElementById('next-btn').disabled = false;
+            } else {
+                updateNextButton();
+            }
+            
+            saveData();
+        } else {
+            showResults();
+        }
+    }
+
+    // الانتقال إلى السؤال السابق
+    function prevQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            const prevId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${prevId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            updateNextButton();
+            
+            saveData();
+        }
+    }
+
+    // عرض النتائج
+// عرض النتائج - بدون حساب الأسئلة المقالية في الدرجة
+function showResults() {
+    // حساب النتيجة: فقط الأسئلة متعددة الخيارات
+    let correctCount = 0;
+    let totalQuestions = 0;
+
+    examData.questions.forEach(q => {
+        if (q.type === "multiple-choice") {
+            totalQuestions++;
+            if (userAnswers[q.id] && userAnswers[q.id].correct) {
+                correctCount++;
+            }
+        }
+    });
+
+    // حساب النسبة المئوية بناءً على الأسئلة متعددة الخيارات فقط
+    const score = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+
+    // كلمات تشجيعية
+    let feedback = "";
+    if (score >= 90) feedback = "ممتاز! أحسنت، استمر على هذا النحو 🌟";
+    else if (score >= 75) feedback = "جيد جدًا! أداء رائع 👏";
+    else if (score >= 60) feedback = "جيد، يمكنك التحسن أكثر 💪";
+    else feedback = "لا بأس، راجع الدروس وحاول مرة أخرى ❤️";
+
+    // توصيات
+    let recommendations = "";
+    if (score < 60) {
+        recommendations = "ننصحك بمراجعة القواعد النحوية والبلاغية، وحل المزيد من الأسئلة.";
+    } else if (score < 80) {
+        recommendations = "أداء جيد، ركّز على أنواع الأسئلة التي أخطأت فيها.";
+    } else {
+        recommendations = "أداء ممتاز! استمر في التقدم وجرّب امتحانات أصعب.";
+    }
+
+    // بناء النتائج التفصيلية
+    let detailedResults = '';
+    let questionNumber = 0; // رقم السؤال الحقيقي (للأسئلة القابلة للتصحيح فقط)
+
+    examData.questions.forEach(q => {
+        const userAnswer = userAnswers[q.id];
+        let answerText = 'لم تُجب';
+        let statusText = 'لم تُجب ❌';
+
+        // عرض الفقرات والشعر
+        if (q.type === "passage") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📖 فقرة نصية</h4>
+                    <div class="passage">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        if (q.type === "poem") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📜 نص شعري</h4>
+                    <div class="poem">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        // زيادة رقم السؤال فقط للأسئلة القابلة للتصحيح (اختيار من متعدد)
+        if (q.type === "multiple-choice") {
+            questionNumber++;
+        }
+
+        // معالجة الإجابة
+        if (q.type === "multiple-choice") {
+            const selectedOption = q.options.find(opt => opt.id == userAnswer?.selected);
+            answerText = selectedOption ? selectedOption.text : 'لم تُجب';
+            
+            if (userAnswer && selectedOption?.correct) {
+                statusText = 'إجابة صحيحة ✅';
+            } else if (userAnswer && !selectedOption?.correct) {
+                statusText = 'إجابة خاطئة ❌';
+            } else {
+                statusText = 'لم تُجب ❌';
+            }
+        } 
+        else if (q.type === "fill-in-blank") {
+            // السؤال المقالي: يظهر لكن بدون تأثير على العد
+            answerText = userAnswer?.answer?.trim() || 'لم تُجب';
+            statusText = (userAnswer && answerText !== 'لم تُجب') ? 'تمت الإجابة (تحت المراجعة)' : 'لم تُجب ❌';
+        }
+
+        // عرض السؤال بالشكل المطلوب
+        detailedResults += `
+            <div class="result-item">
+                ${q.type === "multiple-choice" ? `<p><strong>السؤال ${questionNumber}: ${q.text}</strong></p>` : `<p><strong>${q.text}</strong></p>`}
+                <p><strong>إجابتك:</strong> ${answerText}</p>
+                <p><strong>الحالة:</strong> ${statusText}</p>
+                <p><strong>📌 التفسير الكامل:</strong> ${q.explanation}</p>
+            </div>
+        `;
+    });
+
+    // عرض النتيجة النهائية
+    document.getElementById('score').innerHTML = `
+        <div class="stats">الإجابات الصحيحة: ${correctCount} من ${totalQuestions}</div>
+        <div class="stats">النسبة المئوية: ${score}%</div>
+        <div class="feedback">${feedback}</div>
+        <div class="recommendations"><strong>توصية:</strong> ${recommendations}</div>
+    `;
+
+    document.getElementById('detailed-results').innerHTML = detailedResults;
+
+    // إخفاء الأسئلة وإظهار النتائج
+    document.getElementById('questions-container').style.display = 'none';
+    document.querySelector('.navigation').style.display = 'none';
+    document.querySelector('.controls').style.display = 'flex';
+    document.getElementById('results-container').style.display = 'block';
+}
+    // طباعة النتائج
+    function printResults() {
+        window.print();
+    }
+
+    // مشاركة النتائج
+    function shareResults() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'نتيجة الامتحان',
+                text: `حصلت على ${document.getElementById('score').textContent} في امتحان اللغة العربية`,
+                url: window.location.href
+            })
+            .catch(error => {
+                console.log('Error sharing:', error);
+                alert('لم يتمكن المتصفح من مشاركة النتائج. يرجى المحاولة لاحقًا.');
+            });
+        } else {
+            alert('مشاركة النتائج غير مدعومة في هذا المتصفح. يمكنك استخدام زر الطباعة بدلاً من ذلك.');
+        }
+    }
+
+    // إعادة بدء الامتحان
+    function restartExam() {
+        if (confirm('هل تريد إعادة بدء الامتحان؟ سيتم حذف جميع إجاباتك الحالية.')) {
+            userAnswers = {};
+            answered = {};
+            currentQuestionIndex = 0;
+            localStorage.removeItem(`exam_${examId}`);
+            location.reload();
+        }
+    }
+
+    // العودة إلى قائمة الامتحانات
+    function backToExams() {
+        if (confirm('هل تريد العودة إلى قائمة الامتحانات؟ سيتم فقدان تقدمك الحالي إذا لم تحفظه.')) {
+            window.location.href = '/questions.html'; // تغيير هذا الرابط حسب الصفحة المناسبة
+        }
+    }
+
+    // تهيئة الامتحان
+    function initExam() {
+        const container = document.getElementById('questions-container');
+        const totalQuestions = examData.questions.filter(q => q.type !== "passage" && q.type !== "poem").length;
+        document.getElementById('total-questions').textContent = totalQuestions;
+        document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+
+        // تحميل الحالة
+        const wasResumed = loadSavedData();
+
+        // إنشاء الأسئلة
+        examData.questions.forEach((q, index) => {
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question';
+            questionEl.id = `question-${q.id}`;
+            questionEl.style.display = index === currentQuestionIndex ? 'block' : 'none';
+
+            if (q.type === "passage") {
+                questionEl.innerHTML = `<div class="passage">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة النص كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else if (q.type === "poem") {
+                questionEl.innerHTML = `<div class="poem">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة الشعر كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else {
+                let content = `<h3>السؤال ${getQuestionNumber(index)}: ${q.text}</h3>`;
+
+                if (q.type === "multiple-choice") {
+                    let optionsHtml = '<div class="options">';
+                    q.options.forEach(opt => {
+                        const selected = userAnswers[q.id]?.selected == opt.id;
+                        const isAnswered = userAnswers[q.id];
+                        const correct = opt.correct;
+                        optionsHtml += `
+                            <div class="option ${selected ? 'selected' : ''} ${isAnswered && correct ? 'correct' : ''} ${isAnswered && !correct && selected ? 'incorrect' : ''}"
+                                 data-question="${q.id}" data-option="${opt.id}" data-correct="${opt.correct}"
+                                 onclick="selectOption(this, ${q.id}, ${opt.id}, ${opt.correct})">
+                                ${opt.text}
+                            </div>
+                        `;
+                    });
+                    optionsHtml += '</div>';
+                    content += optionsHtml;
+                } else if (q.type === "fill-in-blank") {
+                    const value = userAnswers[q.id]?.answer || '';
+                    content += `
+                        <div class="fill-in-blank">
+                            <input type="text" id="fill-${q.id}" value="${value}" placeholder="أدخل إجابتك هنا" oninput="onFillInput(${q.id})">
+                        </div>
+                    `;
+                }
+
+                content += `<div class="explanation" id="explanation-${q.id}" style="${userAnswers[q.id] ? 'display:block' : 'display:none'}">
+                    <strong>التفسير:</strong> ${q.explanation}
+                </div>`;
+                questionEl.innerHTML = content;
+                
+                // تحديد ما إذا كان السؤال قد تمت الإجابة عليه
+                answered[index] = !!userAnswers[q.id];
+            }
+
+            container.appendChild(questionEl);
+        });
+
+        // تحديث زر التالي بناءً على السؤال الحالي
+        updateNextButton();
+
+        // ربط الأحداث
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+        document.getElementById('print-btn').addEventListener('click', printResults);
+        document.getElementById('share-btn').addEventListener('click', shareResults);
+        document.getElementById('restart-btn').addEventListener('click', restartExam);
+        document.getElementById('back-btn').addEventListener('click', backToExams);
+
+        if (wasResumed) {
+            alert(`تم استئناف الامتحان من السؤال ${getQuestionNumber(currentQuestionIndex)}`);
+        }
+    }
+
+    // بدء الامتحان عند تحميل الصفحة
+    window.onload = initExam;
+</script>
+</body>
+</html>

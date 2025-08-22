@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعليمك -  اختبارات شاملة</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .grade-banners-container {
+            display: none;
+            transition: all 0.5s ease-in-out;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+        .grade-banners-container.open {
+            display: block;
+        }
+        .term-banners {
+            display: none;
+            margin-top: 10px;
+        }
+        .term-banners.open {
+            display: grid;
+        }
+        .main-subject-banner {
+            cursor: pointer;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        .main-subject-banner:hover {
+            background-color: #e0e0e0;
+        }
+        .main-subject-banner .section-title {
+            margin: 0;
+            font-size: 1.5em;
+            color: #333;
+        }
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s;
+        }
+        .main-subject-banner.open .toggle-icon {
+            transform: rotate(180deg);
+        }
+        .banners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .term-toggle-button {
+            display: inline-block;
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 10px;
+        }
+        .term-toggle-button.active {
+            background-color: #0056b3;
+        }
+        .exam-banner {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .exam-banner h3 {
+            color: #333;
+        }
+        .subject-link-container {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* نمط المودال */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-overlay.open {
+            display: flex;
+        }
+        .modal {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .modal h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .modal input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            direction: ltr;
+        }
+        .modal button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .modal button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- مودال إدخال الكود -->
+    <div id="phoneModal" class="modal-overlay">
+        <div class="modal">
+            <p>أدخل الكود السري للوصول إلى هذا الاختبار.</p>
+            <input type="text" id="phoneInput" placeholder="مثلاً: ABC123">
+            <div id="errorText" class="error"></div>
+            <button onclick="validatePassword()">دخول</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1 class="logo">T3lemk</h1>
+            <nav>
+                <a href="index.html" class="btn">الرئيسية</a>
+                <a href="questions.html" class="btn active">بنك الأسئلة</a>
+                <a href="exam.html" class="btn">اختبارات شاملة</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2>اختبارات شاملة </h2>
+
+        <!-- الصف الأول -->
+        <section class="main-subject-banner" onclick="toggleGradeBanners('grade1')">
+            <h2 class="section-title">الصف الأول الإعدادي</h2>
+            <span class="toggle-icon">▼</span>
+        </section>
+        <div id="grade1-subjects-container" class="grade-banners-container">
+            <a href="#" class="term-toggle-button" onclick="toggleTermBanners('grade1-term1', this)">الترم الأول</a>
+            <a href="#" class="term-toggle-button" onclick="toggleTermBanners('grade1-term2', this)">الترم الثاني</a>
+
+            <!-- ترم 1 - الصف الأول -->
+            <section class="term-banners" id="grade1-term1-subjects">
+                <div class="banners-grid">
+                    <!-- العربي - 5 اختبارات -->
+                   <h3>سيتم إضافة الاختبارات في ايام المراجعات منعا للتشتت</h3>
+                </div>
+        </div>
+
+        <!-- الصف الثاني (مثال مختصر) -->
+        <section class="main-subject-banner" onclick="toggleGradeBanners('grade2')">
+            <h2 class="section-title">الصف الثاني الإعدادي</h2>
+            <span class="toggle-icon">▼</span>
+        </section>
+        <div id="grade2-subjects-container" class="grade-banners-container">
+            <a href="#" class="term-toggle-button" onclick="toggleTermBanners('grade2-term1', this)">الترم الأول</a>
+            <a href="#" class="term-toggle-button" onclick="toggleTermBanners('grade2-term2', this)">الترم الثاني</a>
+
+            <section class="term-banners" id="grade2-term1-subjects">
+                <div class="banners-grid">
+                    <!--الصف الثاني-->
+                   <h3>سيتم إضافة الاختبارات في ايام المراجعات منعا للتشتت</h3>
+                </div>
+        </div>
+        <!-- الصف الثالث (مثال مختصر) -->
+        <section class="main-subject-banner" onclick="toggleGradeBanners('grade3')">
+            <h2 class="section-title">الصف الثالث الإعدادي</h2>
+            <span class="toggle-icon">▼</span>
+        </section>
+        <div id="grade3-subjects-container" class="grade-banners-container">
+            <a href="#" class="term-toggle-button" onclick="toggleTermBanners('grade3-term1', this)">الترم الأول</a>
+            <a href="#" class="term-toggle-button" onclick="toggleTermBanners('grade3-term2', this)">الترم الثاني</a>
+
+             <section class="term-banners" id="grade3-term1-subjects">
+                <div class="banners-grid">
+                    <!--الصف الثالث-->
+                   <h3>سيتم إضافة الاختبارات في ايام المراجعات منعا للتشتت</h3>
+                </div>
+        </div>
+    </main>
+
+    <script>
+        let targetUrl = '';
+        let allowedPasswords = [];
+
+        function openPasswordModal(event, element) {
+            event.preventDefault();
+            targetUrl = element.getAttribute('data-url');
+            const passwordsStr = element.getAttribute('data-passwords');
+            allowedPasswords = passwordsStr.split(',').map(p => p.trim().toUpperCase());
+            document.getElementById('phoneModal').classList.add('open');
+            document.getElementById('phoneInput').value = '';
+            document.getElementById('errorText').textContent = '';
+        }
+
+        function validatePassword() {
+            const input = document.getElementById('phoneInput').value.trim().toUpperCase();
+            const errorText = document.getElementById('errorText');
+
+            if (!input) {
+                errorText.textContent = 'أدخل الكود من فضلك.';
+                return;
+            }
+
+            if (allowedPasswords.includes(input)) {
+                document.getElementById('phoneModal').classList.remove('open');
+                window.location.href = targetUrl;
+            } else {
+                errorText.textContent = 'الكود غير صحيح.';
+            }
+        }
+
+        document.getElementById('phoneModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('open');
+            }
+        });
+
+        function toggleGradeBanners(grade) {
+            const allGradeContainers = document.querySelectorAll('.grade-banners-container');
+            const targetContainer = document.getElementById(grade + '-subjects-container');
+            const mainBanner = document.querySelector(`.main-subject-banner[onclick="toggleGradeBanners('${grade}')"]`);
+            const icon = mainBanner.querySelector('.toggle-icon');
+
+            allGradeContainers.forEach(container => {
+                container.classList.remove('open');
+            });
+
+            if (!targetContainer.classList.contains('open')) {
+                targetContainer.classList.add('open');
+                icon.textContent = '▲';
+            } else {
+                targetContainer.classList.remove('open');
+                icon.textContent = '▼';
+            }
+        }
+
+        function toggleTermBanners(term, button) {
+            const grade = term.split('-')[0];
+            const allTermBanners = document.querySelectorAll(`#${grade}-subjects-container .term-banners`);
+            const targetTermBanner = document.getElementById(term + '-subjects');
+            const allButtons = document.querySelectorAll(`#${grade}-subjects-container .term-toggle-button`);
+
+            allTermBanners.forEach(banner => banner.classList.remove('open'));
+            targetTermBanner.classList.add('open');
+
+            allButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        }
+    </script>
+</body>
+</html>

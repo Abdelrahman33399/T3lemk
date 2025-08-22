@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الرياضيات - الصف الثالث الإعدادي</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط عامة */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* الحاوية الرئيسية */
+        .exam-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        /* رأس الامتحان */
+        .exam-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+        }
+        
+        .exam-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        /* إحصائيات الأسئلة */
+        .stats {
+            background: #e9f5ff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            border-right: 4px solid #007bff;
+        }
+        
+        /* الأسئلة */
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .question h3 {
+            color: #007bff;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        /* النصوص والقصائد */
+        .passage, .poem {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.8;
+            font-style: italic;
+            border-right: 4px solid #6c757d;
+        }
+        
+        .poem {
+            text-align: center;
+            font-weight: bold;
+            background: #fff9e6;
+            border-right-color: #ffc107;
+        }
+        
+        /* خيارات الأسئلة */
+        .options {
+            margin: 20px 0;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            background: white;
+        }
+        
+        .option:hover {
+            background-color: #e9f5ff;
+            transform: translateX(-5px);
+        }
+        
+        .option.selected {
+            background-color: #d4edff;
+            border-left: 4px solid #007bff;
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        /* شرح الإجابة */
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-right: 3px solid #6c757d;
+        }
+        
+        /* حقول الإدخال */
+        .fill-in-blank input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .fill-in-blank input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+        
+        /* التنقل بين الأسئلة */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        /* الأزرار */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover:not(:disabled) {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover:not(:disabled) {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover:not(:disabled) {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+        
+        /* النتائج */
+        .results-container {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #007bff;
+        }
+        
+        .feedback {
+            text-align: center;
+            font-size: 18px;
+            margin: 15px 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .recommendations {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .correct-answer {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        /* عناصر التحكم */
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .exam-container {
+                padding: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .passage, .poem {
+                padding: 15px;
+            }
+        }
+    </style></head>
+<body>
+    <div class="exam-container">
+        <div class="exam-header">
+            <h1 id="exam-title">اختبار الرياضيات - الصف الثالث الإعدادي ( الوحدة الأولى ) - الترم الأول</h1>
+        </div>
+        
+        <div class="stats">السؤال <span id="current-question">1</span> من <span id="total-questions">60</span></div>
+        
+        <div id="questions-container"></div>
+        
+        <div class="navigation">
+            <button id="prev-btn" class="btn btn-secondary" disabled>السابق</button>
+            <button id="next-btn" class="btn btn-primary">التالي</button>
+        </div>
+        
+        <div class="controls">
+            <button id="restart-btn" class="btn btn-warning">إعادة البدء</button>
+            <button id="print-btn" class="btn btn-info">طباعة النتائج</button>
+            <button id="share-btn" class="btn btn-success">مشاركة النتائج</button>
+            <button id="back-btn" class="btn btn-danger">العودة للامتحانات</button>
+        </div>
+        
+        <div class="results-container" id="results-container">
+            <h2>النتيجة</h2>
+            <div id="score"></div>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+
+    <audio id="correctSound" src="../../../assets/audio/correct.mp3" preload="auto"></audio>
+    <audio id="incorrectSound" src="../../../assets/audio/incorrect.mp3" preload="auto"></audio>
+
+
+   <script>
+    // أصوات
+    const correctSound = document.getElementById('correctSound');
+    const incorrectSound = document.getElementById('incorrectSound');
+
+    // معرف الامتحان
+    const examId = "arabic-grade1-term1";
+
+    // بيانات الأسئلة (كما أرسلتها)
+    const examData = {
+        title: "اختبار الرياضيات - الصف الثالث الإعدادي ( الوحدة الأولى ) - الترم الأول",
+        questions: [
+            {
+        "id": 1,
+        "type": "multiple-choice",
+        "text": "ما تعريف الزوج المرتب؟",
+        "options": [
+            { "id": 1, "text": "زوج من عددين بدون ترتيب", "correct": false },
+            { "id": 2, "text": "زوج من عددين يُكتب (س، ص) والترتيب مهم", "correct": true },
+            { "id": 3, "text": "مجموعتان متساويتان", "correct": false },
+            { "id": 4, "text": "عدد واحد فقط", "correct": false }
+        ],
+        "explanation": "في الزوج المرتب، الترتيب مهم: (2،3) ≠ (3،2)."
+    },
+    {
+        "id": 2,
+        "type": "multiple-choice",
+        "text": "ما الفرق بين الزوج المرتب والمجموعة؟",
+        "options": [
+            { "id": 1, "text": "لا فرق", "correct": false },
+            { "id": 2, "text": "في الزوج المرتب الترتيب مهم، وفي المجموعة غير مهم", "correct": true },
+            { "id": 3, "text": "المجموعة تحتوي على أزواج", "correct": false },
+            { "id": 4, "text": "الزوج المرتب لا يحتوي على أرقام مكررة", "correct": false }
+        ],
+        "explanation": "في المجموعة {1،2} = {2،1}، أما في الزوج المرتب (1،2) ≠ (2،1)."
+    },
+    {
+        "id": 3,
+        "type": "multiple-choice",
+        "text": "ما ناتج الضرب الديكارتي أ × ب إذا كانت أ = {1، 2}، ب = {3، 4}؟",
+        "options": [
+            { "id": 1, "text": "{(1،3)، (2،4)}", "correct": false },
+            { "id": 2, "text": "{(1،3)، (1،4)، (2،3)، (2،4)}", "correct": true },
+            { "id": 3, "text": "{(3،1)، (4،1)، (3،2)، (4،2)}", "correct": false },
+            { "id": 4, "text": "{(1،1)، (2،2)}", "correct": false }
+        ],
+        "explanation": "أ × ب يحتوي جميع الأزواج حيث السين من أ، والصاد من ب."
+    },
+    {
+        "id": 4,
+        "type": "multiple-choice",
+        "text": "هل الضرب الديكارتي إبدالي؟",
+        "options": [
+            { "id": 1, "text": "نعم، دائمًا", "correct": false },
+            { "id": 2, "text": "نعم، فقط إذا كانت أ = ب", "correct": false },
+            { "id": 3, "text": "لا، أ × ب ≠ ب × أ عمومًا", "correct": true },
+            { "id": 4, "text": "نعم، إذا كانت المجموعتان فارغتين", "correct": false }
+        ],
+        "explanation": "أ × ب ≠ ب × أ إلا إذا كانت أ = ب أو إحداهما فارغة."
+    },
+    {
+        "id": 5,
+        "type": "multiple-choice",
+        "text": "إذا كانت ن(أ) = 3، ن(ب) = 4، فما عدد عناصر أ × ب؟",
+        "options": [
+            { "id": 1, "text": "7", "correct": false },
+            { "id": 2, "text": "12", "correct": true },
+            { "id": 3, "text": "3", "correct": false },
+            { "id": 4, "text": "4", "correct": false }
+        ],
+        "explanation": "عدد عناصر أ × ب = ن(أ) × ن(ب) = 3 × 4 = 12."
+    },
+    {
+        "id": 6,
+        "type": "multiple-choice",
+        "text": "متى يكون (س، ص) = (ع، ل)؟",
+        "options": [
+            { "id": 1, "text": "إذا كان س = ل و ص = ع", "correct": false },
+            { "id": 2, "text": "إذا كان س = ع أو ص = ل", "correct": false },
+            { "id": 3, "text": "إذا كان س = ع و ص = ل", "correct": true },
+            { "id": 4, "text": "إذا كان س + ص = ع + ل", "correct": false }
+        ],
+        "explanation": "زوجان مرتبان متساويان إذا وفقط إذا تساوت إحداثياتهما المتناظرة."
+    },
+    {
+        "id": 7,
+        "type": "multiple-choice",
+        "text": "إذا كان (س + 2، 4) = (5، ص – 1)، فما قيمة س و ص؟",
+        "options": [
+            { "id": 1, "text": "س = 3، ص = 5", "correct": true },
+            { "id": 2, "text": "س = 5، ص = 4", "correct": false },
+            { "id": 3, "text": "س = 7، ص = 3", "correct": false },
+            { "id": 4, "text": "س = 3، ص = 5", "correct": true }
+        ],
+        "explanation": "س + 2 = 5 → س = 3، 4 = ص – 1 → ص = 5."
+    },
+    {
+        "id": 8,
+        "type": "multiple-choice",
+        "text": "ما إحداثيات نقطة الأصل؟",
+        "options": [
+            { "id": 1, "text": "(1، 1)", "correct": false },
+            { "id": 2, "text": "(0، 0)", "correct": true },
+            { "id": 3, "text": "(1، 0)", "correct": false },
+            { "id": 4, "text": "(0، 1)", "correct": false }
+        ],
+        "explanation": "نقطة تقاطع المحورين هي (0، 0)."
+    },
+    {
+        "id": 9,
+        "type": "multiple-choice",
+        "text": "في أي ربع تقع النقطة (–2، 3)؟",
+        "options": [
+            { "id": 1, "text": "الربع الأول", "correct": false },
+            { "id": 2, "text": "الربع الثاني", "correct": true },
+            { "id": 3, "text": "الربع الثالث", "correct": false },
+            { "id": 4, "text": "الربع الرابع", "correct": false }
+        ],
+        "explanation": "سالب، موجب → الربع الثاني."
+    },
+    {
+        "id": 10,
+        "type": "multiple-choice",
+        "text": "أين تقع النقطة (5، 0)؟",
+        "options": [
+            { "id": 1, "text": "على محور الصادات", "correct": false },
+            { "id": 2, "text": "على محور السينات", "correct": true },
+            { "id": 3, "text": "في الربع الأول", "correct": false },
+            { "id": 4, "text": "في الربع الرابع", "correct": false }
+        ],
+        "explanation": "إذا كان الصادي = 0، فالنقطة على محور السينات."
+    },
+    {
+        "id": 11,
+        "type": "multiple-choice",
+        "text": "ما تعريف العلاقة من أ إلى ب؟",
+        "options": [
+            { "id": 1, "text": "أي مجموعة من الأعداد", "correct": false },
+            { "id": 2, "text": "أي جزء من أ × ب", "correct": true },
+            { "id": 3, "text": "أي دالة", "correct": false },
+            { "id": 4, "text": "أي نقطة على المستوى", "correct": false }
+        ],
+        "explanation": "العلاقة من أ إلى ب هي أي مجموعة جزئية من أ × ب."
+    },
+    {
+        "id": 12,
+        "type": "multiple-choice",
+        "text": "ما نوع العلاقة إذا كانت من أ إلى أ؟",
+        "options": [
+            { "id": 1, "text": "علاقة عكسية", "correct": false },
+            { "id": 2, "text": "علاقة على أ", "correct": true },
+            { "id": 3, "text": "علاقة فارغة", "correct": false },
+            { "id": 4, "text": "علاقة دالة فقط", "correct": false }
+        ],
+        "explanation": "العلاقة على أ هي علاقة من أ إلى أ (أي جزء من أ × أ)."
+    },
+    {
+        "id": 13,
+        "type": "multiple-choice",
+        "text": "ما العلاقة العكسية للعلاقة ع = {(1،2)، (3،4)}؟",
+        "options": [
+            { "id": 1, "text": "{(1،2)، (3،4)}", "correct": false },
+            { "id": 2, "text": "{(2،1)، (4،3)}", "correct": true },
+            { "id": 3, "text": "{(2،3)، (1،4)}", "correct": false },
+            { "id": 4, "text": "{(1،3)، (2،4)}", "correct": false }
+        ],
+        "explanation": "نقلب الأزواج: (س، ص) → (ص، س)."
+    },
+    {
+        "id": 14,
+        "type": "multiple-choice",
+        "text": "ما شرط أن تكون العلاقة دالة؟",
+        "options": [
+            { "id": 1, "text": "كل عنصر في المجال له صورتان", "correct": false },
+            { "id": 2, "text": "كل عنصر في المجال له صورة واحدة فقط", "correct": true },
+            { "id": 3, "text": "يمكن أن لا يرتبط عنصر", "correct": false },
+            { "id": 4, "text": "يمكن تكرار العنصر في المدى", "correct": false }
+        ],
+        "explanation": "الدالة تتطلب أن كل عنصر في المجال له صورة واحدة فقط."
+    },
+    {
+        "id": 15,
+        "type": "multiple-choice",
+        "text": "كيف نعرف أن العلاقة دالة بالتمثيل السهمي؟",
+        "options": [
+            { "id": 1, "text": "من كل عنصر في المجال يخرج سهمان", "correct": false },
+            { "id": 2, "text": "من كل عنصر في المجال يخرج سهم واحد فقط", "correct": true },
+            { "id": 3, "text": "بعض العناصر لا تخرج منها أسهم", "correct": false },
+            { "id": 4, "text": "السهم يعود إلى المجال", "correct": false }
+        ],
+        "explanation": "في الدالة، من كل عنصر في المجال يخرج سهم واحد فقط."
+    },
+    {
+        "id": 16,
+        "type": "multiple-choice",
+        "text": "كيف نعرف أن العلاقة دالة بيانيًا؟",
+        "options": [
+            { "id": 1, "text": "أي خط أفقي يقطع الرسم في نقطة واحدة", "correct": false },
+            { "id": 2, "text": "أي خط رأسي يقطع الرسم في نقطة واحدة فقط", "correct": true },
+            { "id": 3, "text": "الرسم يكون دائرة", "correct": false },
+            { "id": 4, "text": "الرسم يكون منحنى مغلق", "correct": false }
+        ],
+        "explanation": "اختبار الخط الرأسي: إذا قطع في أكثر من نقطة، فهي ليست دالة."
+    },
+    {
+        "id": 17,
+        "type": "multiple-choice",
+        "text": "ما المجال في الدالة د = {(1،2)، (2،3)، (3،4)}؟",
+        "options": [
+            { "id": 1, "text": "{2، 3، 4}", "correct": false },
+            { "id": 2, "text": "{1، 2، 3}", "correct": true },
+            { "id": 3, "text": "{1، 3}", "correct": false },
+            { "id": 4, "text": "{2، 4}", "correct": false }
+        ],
+        "explanation": "المجال هو مجموعة القيم السينية: {1، 2، 3}."
+    },
+    {
+        "id": 18,
+        "type": "multiple-choice",
+        "text": "ما المدى في الدالة د = {(1،2)، (2،3)، (3،4)}؟",
+        "options": [
+            { "id": 1, "text": "{1، 2، 3}", "correct": false },
+            { "id": 2, "text": "{2، 3، 4}", "correct": true },
+            { "id": 3, "text": "{1، 3}", "correct": false },
+            { "id": 4, "text": "{2، 4}", "correct": false }
+        ],
+        "explanation": "المدى هو مجموعة القيم الصادية: {2، 3، 4}."
+    },
+    {
+        "id": 19,
+        "type": "multiple-choice",
+        "text": "ما المجال المقابل في الدالة د = {(1،2)، (2،3)} إذا كانت ب = {2،3،4}؟",
+        "options": [
+            { "id": 1, "text": "{1، 2}", "correct": false },
+            { "id": 2, "text": "{2، 3}", "correct": false },
+            { "id": 3, "text": "{2، 3، 4}", "correct": true },
+            { "id": 4, "text": "{4}", "correct": false }
+        ],
+        "explanation": "المجال المقابل هو المجموعة ب، حتى لو لم تُستخدم جميع عناصرها."
+    },
+    {
+        "id": 20,
+        "type": "multiple-choice",
+        "text": "ما نوع الدالة د(س) = 2س + 1؟",
+        "options": [
+            { "id": 1, "text": "ثابتة", "correct": false },
+            { "id": 2, "text": "خطية", "correct": true },
+            { "id": 3, "text": "تربيعية", "correct": false },
+            { "id": 4, "text": "تكعيبية", "correct": false }
+        ],
+        "explanation": "دالة على الصورة أس + ب هي دالة خطية."
+    },
+    {
+        "id": 21,
+        "type": "multiple-choice",
+        "text": "ما تمثيل الدالة الخطية بيانيًا؟",
+        "options": [
+            { "id": 1, "text": "منحنى مفتوح لأعلى", "correct": false },
+            { "id": 2, "text": "خط أفقي", "correct": false },
+            { "id": 3, "text": "خط مستقيم", "correct": true },
+            { "id": 4, "text": "دائرة", "correct": false }
+        ],
+        "explanation": "الدالة الخطية تمثل بخط مستقيم."
+    },
+    {
+        "id": 22,
+        "type": "multiple-choice",
+        "text": "ما نوع الدالة د(س) = 5؟",
+        "options": [
+            { "id": 1, "text": "خطية", "correct": false },
+            { "id": 2, "text": "تربيعية", "correct": false },
+            { "id": 3, "text": "ثابتة", "correct": true },
+            { "id": 4, "text": "دالة وحدة", "correct": false }
+        ],
+        "explanation": "دالة ثابتة: د(س) = ب، وتمثّل بخط أفقي."
+    },
+    {
+        "id": 23,
+        "type": "multiple-choice",
+        "text": "ما تمثيل الدالة الثابتة بيانيًا؟",
+        "options": [
+            { "id": 1, "text": "خط مستقيم مائل", "correct": false },
+            { "id": 2, "text": "خط أفقي", "correct": true },
+            { "id": 3, "text": "خط عمودي", "correct": false },
+            { "id": 4, "text": "منحنى", "correct": false }
+        ],
+        "explanation": "الخط الأفقي يوازي محور السينات."
+    },
+    {
+        "id": 24,
+        "type": "multiple-choice",
+        "text": "ما درجة الدالة د(س) = 3س² – 4س + 1؟",
+        "options": [
+            { "id": 1, "text": "0", "correct": false },
+            { "id": 2, "text": "1", "correct": false },
+            { "id": 3, "text": "2", "correct": true },
+            { "id": 4, "text": "3", "correct": false }
+        ],
+        "explanation": "أكبر أس هو 2 → الدرجة الثانية."
+    },
+    {
+        "id": 25,
+        "type": "multiple-choice",
+        "text": "ما درجة الدالة د(س) = 7؟",
+        "options": [
+            { "id": 1, "text": "0", "correct": true },
+            { "id": 2, "text": "1", "correct": false },
+            { "id": 3, "text": "7", "correct": false },
+            { "id": 4, "text": "غير معرفة", "correct": false }
+        ],
+        "explanation": "الدالة الثابتة (عدا الصفر) درجتها 0."
+    },
+    {
+        "id": 26,
+        "type": "multiple-choice",
+        "text": "ما درجة الدالة د(س) = 4س؟",
+        "options": [
+            { "id": 1, "text": "0", "correct": false },
+            { "id": 2, "text": "1", "correct": true },
+            { "id": 3, "text": "4", "correct": false },
+            { "id": 4, "text": "غير معرفة", "correct": false }
+        ],
+        "explanation": "أس المتغير هو 1 → درجة أولى (خطية)."
+    },
+    {
+        "id": 27,
+        "type": "multiple-choice",
+        "text": "ما شكل تمثيل الدالة التربيعية؟",
+        "options": [
+            { "id": 1, "text": "خط مستقيم", "correct": false },
+            { "id": 2, "text": "خط أفقي", "correct": false },
+            { "id": 3, "text": "قطع مكافئ", "correct": true },
+            { "id": 4, "text": "دائرة", "correct": false }
+        ],
+        "explanation": "الدالة التربيعية تمثل بقطع مكافئ."
+    },
+    {
+        "id": 28,
+        "type": "multiple-choice",
+        "text": "إذا كانت د(س) = –2س² + 3س – 1، فما اتجاه فتح القطع المكافئ؟",
+        "options": [
+            { "id": 1, "text": "لأعلى", "correct": false },
+            { "id": 2, "text": "لأسفل", "correct": true },
+            { "id": 3, "text": "يمينًا", "correct": false },
+            { "id": 4, "text": "يسارًا", "correct": false }
+        ],
+        "explanation": "المعامل الرئيسي (أ = –2) سالب → القطع مفتوح لأسفل."
+    },
+    {
+        "id": 29,
+        "type": "multiple-choice",
+        "text": "ما إحداثي س لرأس القطع المكافئ للدالة د(س) = س² – 6س + 5؟",
+        "options": [
+            { "id": 1, "text": "2", "correct": false },
+            { "id": 2, "text": "3", "correct": true },
+            { "id": 3, "text": "4", "correct": false },
+            { "id": 4, "text": "5", "correct": false }
+        ],
+        "explanation": "س = –ب/(2أ) = –(–6)/(2×1) = 6/2 = 3."
+    },
+    {
+        "id": 30,
+        "type": "multiple-choice",
+        "text": "ما إحداثي ص لرأس المنحنى د(س) = س² – 4س + 3 إذا كان س = 2؟",
+        "options": [
+            { "id": 1, "text": "–2", "correct": false },
+            { "id": 2, "text": "–1", "correct": true },
+            { "id": 3, "text": "0", "correct": false },
+            { "id": 4, "text": "1", "correct": false }
+        ],
+        "explanation": "ص = (2)² – 4(2) + 3 = 4 – 8 + 3 = –1."
+    },
+    {
+        "id": 31,
+        "type": "multiple-choice",
+        "text": "ما محور تماثل الدالة د(س) = 2س² – 8س + 6؟",
+        "options": [
+            { "id": 1, "text": "س = 1", "correct": false },
+            { "id": 2, "text": "س = 2", "correct": true },
+            { "id": 3, "text": "س = 3", "correct": false },
+            { "id": 4, "text": "س = 4", "correct": false }
+        ],
+        "explanation": "س = –ب/(2أ) = –(–8)/(4) = 8/4 = 2."
+    },
+    {
+        "id": 32,
+        "type": "multiple-choice",
+        "text": "ما نقطة تقاطع الدالة د(س) = س² – 5س + 6 مع محور الصادات؟",
+        "options": [
+            { "id": 1, "text": "(0، 5)", "correct": false },
+            { "id": 2, "text": "(0، 6)", "correct": true },
+            { "id": 3, "text": "(6، 0)", "correct": false },
+            { "id": 4, "text": "(5، 0)", "correct": false }
+        ],
+        "explanation": "عند س = 0، ص = 6 → (0، 6)."
+    },
+    {
+        "id": 33,
+        "type": "multiple-choice",
+        "text": "ما نقاط تقاطع د(س) = س² – 4 مع محور السينات؟",
+        "options": [
+            { "id": 1, "text": "(2، 0)", "correct": false },
+            { "id": 2, "text": "(–2، 0)", "correct": false },
+            { "id": 3, "text": "(2، 0) و (–2، 0)", "correct": true },
+            { "id": 4, "text": "(4، 0)", "correct": false }
+        ],
+        "explanation": "س² – 4 = 0 → س = ±2 → (2،0)، (–2،0)."
+    },
+    {
+        "id": 34,
+        "type": "multiple-choice",
+        "text": "ما القيمة الصغرى للدالة د(س) = س² – 4س + 5؟",
+        "options": [
+            { "id": 1, "text": "1", "correct": true },
+            { "id": 2, "text": "2", "correct": false },
+            { "id": 3, "text": "3", "correct": false },
+            { "id": 4, "text": "4", "correct": false }
+        ],
+        "explanation": "أ > 0 → قيمتها الصغرى عند الرأس: س = 2، ص = 4 – 8 + 5 = 1."
+    },
+    {
+        "id": 35,
+        "type": "multiple-choice",
+        "text": "ما القيمة العظمى للدالة د(س) = –س² + 6س – 5؟",
+        "options": [
+            { "id": 1, "text": "3", "correct": false },
+            { "id": 2, "text": "4", "correct": true },
+            { "id": 3, "text": "5", "correct": false },
+            { "id": 4, "text": "6", "correct": false }
+        ],
+        "explanation": "أ < 0 → قيمتها العظمى عند س = 3، ص = –9 + 18 – 5 = 4."
+    },
+    {
+        "id": 36,
+        "type": "multiple-choice",
+        "text": "ما درجة الدالة د(س) = (س + 1)(س – 1)؟",
+        "options": [
+            { "id": 1, "text": "1", "correct": false },
+            { "id": 2, "text": "2", "correct": true },
+            { "id": 3, "text": "0", "correct": false },
+            { "id": 4, "text": "3", "correct": false }
+        ],
+        "explanation": "نبسط: س² – 1 → الدرجة 2."
+    },
+    {
+        "id": 37,
+        "type": "multiple-choice",
+        "text": "ما درجة الدالة د(س) = س(س² + 2س)؟",
+        "options": [
+            { "id": 1, "text": "1", "correct": false },
+            { "id": 2, "text": "2", "correct": false },
+            { "id": 3, "text": "3", "correct": true },
+            { "id": 4, "text": "4", "correct": false }
+        ],
+        "explanation": "نبسط: س³ + 2س² → الدرجة 3."
+    },
+    {
+        "id": 38,
+        "type": "multiple-choice",
+        "text": "هل العلاقة {(1،2)، (1،3)} دالة؟",
+        "options": [
+            { "id": 1, "text": "نعم", "correct": false },
+            { "id": 2, "text": "لا، لأن 1 له صورتان", "correct": true },
+            { "id": 3, "text": "نعم، لأن العناصر مختلفة", "correct": false },
+            { "id": 4, "text": "لا، لأنها ليست خطية", "correct": false }
+        ],
+        "explanation": "العنصر 1 في المجال له صورتان → ليست دالة."
+    },
+    {
+        "id": 39,
+        "type": "multiple-choice",
+        "text": "هل العلاقة {(2،3)، (4،5)} دالة؟",
+        "options": [
+            { "id": 1, "text": "لا", "correct": false },
+            { "id": 2, "text": "نعم", "correct": true },
+            { "id": 3, "text": "فقط إذا كانت خطية", "correct": false },
+            { "id": 4, "text": "لا، لأنها من الدرجة صفر", "correct": false }
+        ],
+        "explanation": "كل عنصر في المجال له صورة واحدة → دالة."
+    },
+    {
+        "id": 40,
+        "type": "multiple-choice",
+        "text": "ما نوع الدالة د(س) = 0؟",
+        "options": [
+            { "id": 1, "text": "خطية", "correct": false },
+            { "id": 2, "text": "ثابتة", "correct": false },
+            { "id": 3, "text": "تربيعية", "correct": false },
+            { "id": 4, "text": "(أ و ب) صحيحان", "correct": true }
+        ],
+        "explanation": "الدالة صفرية هي ثابتة (درجة 0)، وتعتبر أيضًا خطية (أ = 0، ب = 0)."
+    },
+    {
+        "id": 41,
+        "type": "multiple-choice",
+        "text": "ما شكل تمثيل الدالة د(س) = –3؟",
+        "options": [
+            { "id": 1, "text": "خط مائل", "correct": false },
+            { "id": 2, "text": "خط أفقي عند ص = –3", "correct": true },
+            { "id": 3, "text": "خط رأسي عند س = –3", "correct": false },
+            { "id": 4, "text": "منحنى مفتوح لأعلى", "correct": false }
+        ],
+        "explanation": "الدالة الثابتة تمثل بخط أفقي."
+    },
+    {
+        "id": 42,
+        "type": "multiple-choice",
+        "text": "ما إحداثيات رأس القطع المكافئ للدالة د(س) = –2س² + 8س – 5؟",
+        "options": [
+            { "id": 1, "text": "(2، 3)", "correct": true },
+            { "id": 2, "text": "(2، 5)", "correct": false },
+            { "id": 3, "text": "(4، 3)", "correct": false },
+            { "id": 4, "text": "(4، 5)", "correct": false }
+        ],
+        "explanation": "س = –8/(2×–2) = 2، ص = –8 + 16 – 5 = 3 → (2، 3)"
+    },
+    {
+        "id": 43,
+        "type": "multiple-choice",
+        "text": "ما محور تماثل د(س) = 3س² + 12س + 7؟",
+        "options": [
+            { "id": 1, "text": "س = –2", "correct": true },
+            { "id": 2, "text": "س = –3", "correct": false },
+            { "id": 3, "text": "س = 2", "correct": false },
+            { "id": 4, "text": "س = 3", "correct": false }
+        ],
+        "explanation": "س = –12/(2×3) = –12/6 = –2."
+    },
+    {
+        "id": 44,
+        "type": "multiple-choice",
+        "text": "ما نقطة تقاطع د(س) = 2س + 4 مع محور الصادات؟",
+        "options": [
+            { "id": 1, "text": "(0، 2)", "correct": false },
+            { "id": 2, "text": "(0، 4)", "correct": true },
+            { "id": 3, "text": "(4، 0)", "correct": false },
+            { "id": 4, "text": "(2، 0)", "correct": false }
+        ],
+        "explanation": "عند س = 0، ص = 4 → (0، 4)."
+    },
+    {
+        "id": 45,
+        "type": "multiple-choice",
+        "text": "ما ميل الدالة د(س) = 5س – 3؟",
+        "options": [
+            { "id": 1, "text": "–3", "correct": false },
+            { "id": 2, "text": "3", "correct": false },
+            { "id": 3, "text": "5", "correct": true },
+            { "id": 4, "text": "0", "correct": false }
+        ],
+        "explanation": "في د(س) = أس + ب، الميل هو أ = 5."
+    },
+    {
+        "id": 46,
+        "type": "multiple-choice",
+        "text": "ما درجة الدالة د(س) = √س؟",
+        "options": [
+            { "id": 1, "text": "1", "correct": false },
+            { "id": 2, "text": "½", "correct": false },
+            { "id": 3, "text": "لا يمكن تحديدها (ليست كثيرة حدود)", "correct": true },
+            { "id": 4, "text": "2", "correct": false }
+        ],
+        "explanation": "√س = س^½، ولا تُعد دالة كثيرة حدود."
+    },
+    {
+        "id": 47,
+        "type": "multiple-choice",
+        "text": "ما درجة الدالة د(س) = (س² + 1)²؟",
+        "options": [
+            { "id": 1, "text": "2", "correct": false },
+            { "id": 2, "text": "3", "correct": false },
+            { "id": 3, "text": "4", "correct": true },
+            { "id": 4, "text": "1", "correct": false }
+        ],
+        "explanation": "نبسط: س⁴ + 2س² + 1 → الدرجة 4."
+    },
+    {
+        "id": 48,
+        "type": "multiple-choice",
+        "text": "ما عدد عناصر أ × أ إذا كانت أ = {1، 2، 3}؟",
+        "options": [
+            { "id": 1, "text": "3", "correct": false },
+            { "id": 2, "text": "6", "correct": false },
+            { "id": 3, "text": "9", "correct": true },
+            { "id": 4, "text": "12", "correct": false }
+        ],
+        "explanation": "ن(أ) = 3 → ن(أ × أ) = 3 × 3 = 9."
+    },
+    {
+        "id": 49,
+        "type": "multiple-choice",
+        "text": "ما العلاقة العكسية للعلاقة ع = {(2،1)، (4،3)}؟",
+        "options": [
+            { "id": 1, "text": "{(1،2)، (3،4)}", "correct": true },
+            { "id": 2, "text": "{(2،1)، (4،3)}", "correct": false },
+            { "id": 3, "text": "{(1،3)، (2،4)}", "correct": false },
+            { "id": 4, "text": "{(3،1)، (4،2)}", "correct": false }
+        ],
+        "explanation": "نقلب الأزواج: (ص، س)."
+    },
+    {
+        "id": 50,
+        "type": "multiple-choice",
+        "text": "ما إحداثي س لرأس د(س) = 4س² – 16س + 10؟",
+        "options": [
+            { "id": 1, "text": "1", "correct": false },
+            { "id": 2, "text": "2", "correct": true },
+            { "id": 3, "text": "3", "correct": false },
+            { "id": 4, "text": "4", "correct": false }
+        ],
+        "explanation": "س = –(–16)/(2×4) = 16/8 = 2."
+    },
+    {
+        "id": 51,
+        "type": "multiple-choice",
+        "text": "ما نوع الدالة د(س) = |س|؟",
+        "options": [
+            { "id": 1, "text": "خطية", "correct": false },
+            { "id": 2, "text": "تربيعية", "correct": false },
+            { "id": 3, "text": "ليست كثيرة حدود", "correct": true },
+            { "id": 4, "text": "ثابتة", "correct": false }
+        ],
+        "explanation": "القيمة المطلقة ليست دالة كثيرة حدود."
+    },
+    {
+        "id": 52,
+        "type": "multiple-choice",
+        "text": "ما نقطة تقاطع د(س) = س² – 9 مع محور السينات؟",
+        "options": [
+            { "id": 1, "text": "(3، 0)", "correct": false },
+            { "id": 2, "text": "(–3، 0)", "correct": false },
+            { "id": 3, "text": "(3، 0) و (–3، 0)", "correct": true },
+            { "id": 4, "text": "(9، 0)", "correct": false }
+        ],
+        "explanation": "س² – 9 = 0 → س = ±3."
+    },
+    {
+        "id": 53,
+        "type": "multiple-choice",
+        "text": "ما المدى للدالة د(س) = –س² + 4س – 3؟",
+        "options": [
+            { "id": 1, "text": "ص ≤ 1", "correct": true },
+            { "id": 2, "text": "ص ≥ 1", "correct": false },
+            { "id": 3, "text": "ص ≤ –1", "correct": false },
+            { "id": 4, "text": "ص ≥ –1", "correct": false }
+        ],
+        "explanation": "أ < 0 → القطع مفتوح لأسفل، والقيمة العظمى = 1 → المدى: ص ≤ 1."
+    },
+    {
+        "id": 54,
+        "type": "multiple-choice",
+        "text": "ما إحداثيات رأس د(س) = –س² + 2س + 3؟",
+        "options": [
+            { "id": 1, "text": "(1، 4)", "correct": true },
+            { "id": 2, "text": "(1، 3)", "correct": false },
+            { "id": 3, "text": "(2، 3)", "correct": false },
+            { "id": 4, "text": "(2، 4)", "correct": false }
+        ],
+        "explanation": "س = –2/(–2) = 1، ص = –1 + 2 + 3 = 4 → (1، 4)"
+    },
+    {
+        "id": 55,
+        "type": "multiple-choice",
+        "text": "ما قيمة د(2) إذا كانت د(س) = 3س² – س + 1؟",
+        "options": [
+            { "id": 1, "text": "10", "correct": false },
+            { "id": 2, "text": "11", "correct": true },
+            { "id": 3, "text": "12", "correct": false },
+            { "id": 4, "text": "13", "correct": false }
+        ],
+        "explanation": "د(2) = 3(4) – 2 + 1 = 12 – 2 + 1 = 11."
+    },
+    {
+        "id": 56,
+        "type": "multiple-choice",
+        "text": "ما العلاقة بين أ × ب و ب × أ إذا كانت أ ≠ ب؟",
+        "options": [
+            { "id": 1, "text": "متساويان", "correct": false },
+            { "id": 2, "text": "مجموعتهما فارغة", "correct": false },
+            { "id": 3, "text": "مختلفان", "correct": true },
+            { "id": 4, "text": "جزء من بعضهما", "correct": false }
+        ],
+        "explanation": "أ × ب ≠ ب × أ إذا كانت أ ≠ ب."
+    },
+    {
+        "id": 57,
+        "type": "multiple-choice",
+        "text": "ما شرط أن يكون أ × ب = ب × أ؟",
+        "options": [
+            { "id": 1, "text": "أ و ب غير فارغتين", "correct": false },
+            { "id": 2, "text": "أ = ب", "correct": false },
+            { "id": 3, "text": "أ فارغة أو ب فارغة أو أ = ب", "correct": true },
+            { "id": 4, "text": "أ و ب متساويتان في العدد فقط", "correct": false }
+        ],
+        "explanation": "أ × ب = ب × أ فقط إذا كانت إحداهما فارغة أو أ = ب."
+    },
+    {
+        "id": 58,
+        "type": "multiple-choice",
+        "text": "ما عدد عناصر أ × ب إذا كانت أ فارغة؟",
+        "options": [
+            { "id": 1, "text": "0", "correct": true },
+            { "id": 2, "text": "1", "correct": false },
+            { "id": 3, "text": "عدد عناصر ب", "correct": false },
+            { "id": 4, "text": "غير معرف", "correct": false }
+        ],
+        "explanation": "أي مجموعة × مجموعة فارغة = مجموعة فارغة."
+    },
+    {
+        "id": 59,
+        "type": "multiple-choice",
+        "text": "ما إحداثي ص لرأس د(س) = 2س² – 8س + 5؟",
+        "options": [
+            { "id": 1, "text": "–1", "correct": false },
+            { "id": 2, "text": "–2", "correct": false },
+            { "id": 3, "text": "–3", "correct": true },
+            { "id": 4, "text": "–4", "correct": false }
+        ],
+        "explanation": "س = 8/4 = 2، ص = 8 – 16 + 5 = –3."
+    },
+    {
+        "id": 60,
+        "type": "multiple-choice",
+        "text": "ما محور تماثل د(س) = –3س² + 6س + 1؟",
+        "options": [
+            { "id": 1, "text": "س = 1", "correct": true },
+            { "id": 2, "text": "س = 2", "correct": false },
+            { "id": 3, "text": "س = –1", "correct": false },
+            { "id": 4, "text": "س = –2", "correct": false }
+        ],
+        "explanation": "س = –6/(2×–3) = –6/–6 = 1."
+    }
+        ]
+    };
+
+   // متغيرات
+    let currentQuestionIndex = 0;
+    let userAnswers = {};
+    let answered = {};
+
+    // تحميل البيانات المحفوظة
+    function loadSavedData() {
+        const saved = localStorage.getItem(`exam_${examId}`);
+        if (saved) {
+            const data = JSON.parse(saved);
+            userAnswers = data.answers || {};
+            currentQuestionIndex = data.currentQuestionIndex || 0;
+            return true;
+        }
+        return false;
+    }
+
+    // حفظ البيانات
+    function saveData() {
+        const data = {
+            answers: userAnswers,
+            currentQuestionIndex: currentQuestionIndex,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem(`exam_${examId}`, JSON.stringify(data));
+    }
+
+    // الحصول على رقم السؤال الحقيقي (باستثناء النصوص والشعر)
+    function getQuestionNumber(index) {
+        let realCount = 0;
+        for (let i = 0; i <= index; i++) {
+            if (examData.questions[i].type !== "passage" && examData.questions[i].type !== "poem") {
+                realCount++;
+            }
+        }
+        return realCount;
+    }
+
+    // تحديث زر التالي
+    function updateNextButton() {
+        const nextBtn = document.getElementById('next-btn');
+        const currentQuestion = examData.questions[currentQuestionIndex];
+        
+        // إذا كان السؤال الحالي نصًا أو شعرًا، فعّل الزر مباشرة
+        if (currentQuestion.type === "passage" || currentQuestion.type === "poem") {
+            nextBtn.disabled = false;
+            return;
+        }
+        
+        // تحقق مما إذا كان السؤال الحالي قد تمت الإجابة عليه
+        nextBtn.disabled = !answered[currentQuestionIndex];
+    }
+
+    // تحديد خيار في سؤال متعدد الخيارات
+    function selectOption(element, questionId, optionId, isCorrect) {
+        // منع التحديد إذا كانت الإجابة معروضة بالفعل
+        if (userAnswers[questionId]) return;
+        
+        // إلغاء تحديد جميع الخيارات الأخرى
+        const options = document.querySelectorAll(`.option[data-question="${questionId}"]`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        
+        // تحديد الخيار الحالي
+        element.classList.add('selected');
+        
+        // حفظ الإجابة
+        userAnswers[questionId] = {
+            selected: optionId,
+            correct: isCorrect
+        };
+        
+        // تشغيل الصوت المناسب
+        if (isCorrect) {
+            correctSound.play();
+        } else {
+            incorrectSound.play();
+        }
+        
+        // عرض التفسير
+        const explanationEl = document.getElementById(`explanation-${questionId}`);
+        if (explanationEl) {
+            explanationEl.style.display = 'block';
+        }
+        
+        // تمييز الإجابة الصحيحة والخاطئة
+        options.forEach(opt => {
+            const optCorrect = opt.getAttribute('data-correct') === 'true';
+            if (optCorrect) {
+                opt.classList.add('correct');
+            } else if (parseInt(opt.getAttribute('data-option')) === optionId && !isCorrect) {
+                opt.classList.add('incorrect');
+            }
+        });
+        
+        // تمكين زر التالي
+        answered[currentQuestionIndex] = true;
+        updateNextButton();
+        saveData();
+    }
+
+    // معالجة إدخال الإجابة في الأسئلة المقالية
+    function onFillInput(questionId) {
+        const input = document.getElementById(`fill-${questionId}`);
+        userAnswers[questionId] = {
+            answer: input.value
+        };
+        
+        // تمكين زر التالي إذا كان هناك إدخال
+        if (input.value.trim() !== '') {
+            answered[currentQuestionIndex] = true;
+        } else {
+            answered[currentQuestionIndex] = false;
+        }
+        
+        updateNextButton();
+        saveData();
+    }
+
+    // الانتقال إلى السؤال التالي
+    function nextQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex < examData.questions.length - 1) {
+            currentQuestionIndex++;
+            const nextId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${nextId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            
+            // إذا كان السؤال تاليًا نصًا أو شعرًا، فعّل الزر مباشرة
+            const nextQ = examData.questions[currentQuestionIndex];
+            if (nextQ.type === "passage" || nextQ.type === "poem") {
+                answered[currentQuestionIndex] = true;
+                document.getElementById('next-btn').disabled = false;
+            } else {
+                updateNextButton();
+            }
+            
+            saveData();
+        } else {
+            showResults();
+        }
+    }
+
+    // الانتقال إلى السؤال السابق
+    function prevQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            const prevId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${prevId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            updateNextButton();
+            
+            saveData();
+        }
+    }
+
+    // عرض النتائج
+// عرض النتائج - بدون حساب الأسئلة المقالية في الدرجة
+function showResults() {
+    // حساب النتيجة: فقط الأسئلة متعددة الخيارات
+    let correctCount = 0;
+    let totalQuestions = 0;
+
+    examData.questions.forEach(q => {
+        if (q.type === "multiple-choice") {
+            totalQuestions++;
+            if (userAnswers[q.id] && userAnswers[q.id].correct) {
+                correctCount++;
+            }
+        }
+    });
+
+    // حساب النسبة المئوية بناءً على الأسئلة متعددة الخيارات فقط
+    const score = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+
+    // كلمات تشجيعية
+    let feedback = "";
+    if (score >= 90) feedback = "ممتاز! أحسنت، استمر على هذا النحو 🌟";
+    else if (score >= 75) feedback = "جيد جدًا! أداء رائع 👏";
+    else if (score >= 60) feedback = "جيد، يمكنك التحسن أكثر 💪";
+    else feedback = "لا بأس، راجع الدروس وحاول مرة أخرى ❤️";
+
+    // توصيات
+    let recommendations = "";
+    if (score < 60) {
+        recommendations = "ننصحك بمراجعة القواعد النحوية والبلاغية، وحل المزيد من الأسئلة.";
+    } else if (score < 80) {
+        recommendations = "أداء جيد، ركّز على أنواع الأسئلة التي أخطأت فيها.";
+    } else {
+        recommendations = "أداء ممتاز! استمر في التقدم وجرّب امتحانات أصعب.";
+    }
+
+    // بناء النتائج التفصيلية
+    let detailedResults = '';
+    let questionNumber = 0; // رقم السؤال الحقيقي (للأسئلة القابلة للتصحيح فقط)
+
+    examData.questions.forEach(q => {
+        const userAnswer = userAnswers[q.id];
+        let answerText = 'لم تُجب';
+        let statusText = 'لم تُجب ❌';
+
+        // عرض الفقرات والشعر
+        if (q.type === "passage") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📖 فقرة نصية</h4>
+                    <div class="passage">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        if (q.type === "poem") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📜 نص شعري</h4>
+                    <div class="poem">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        // زيادة رقم السؤال فقط للأسئلة القابلة للتصحيح (اختيار من متعدد)
+        if (q.type === "multiple-choice") {
+            questionNumber++;
+        }
+
+        // معالجة الإجابة
+        if (q.type === "multiple-choice") {
+            const selectedOption = q.options.find(opt => opt.id == userAnswer?.selected);
+            answerText = selectedOption ? selectedOption.text : 'لم تُجب';
+            
+            if (userAnswer && selectedOption?.correct) {
+                statusText = 'إجابة صحيحة ✅';
+            } else if (userAnswer && !selectedOption?.correct) {
+                statusText = 'إجابة خاطئة ❌';
+            } else {
+                statusText = 'لم تُجب ❌';
+            }
+        } 
+        else if (q.type === "fill-in-blank") {
+            // السؤال المقالي: يظهر لكن بدون تأثير على العد
+            answerText = userAnswer?.answer?.trim() || 'لم تُجب';
+            statusText = (userAnswer && answerText !== 'لم تُجب') ? 'تمت الإجابة (تحت المراجعة)' : 'لم تُجب ❌';
+        }
+
+        // عرض السؤال بالشكل المطلوب
+        detailedResults += `
+            <div class="result-item">
+                ${q.type === "multiple-choice" ? `<p><strong>السؤال ${questionNumber}: ${q.text}</strong></p>` : `<p><strong>${q.text}</strong></p>`}
+                <p><strong>إجابتك:</strong> ${answerText}</p>
+                <p><strong>الحالة:</strong> ${statusText}</p>
+                <p><strong>📌 التفسير الكامل:</strong> ${q.explanation}</p>
+            </div>
+        `;
+    });
+
+    // عرض النتيجة النهائية
+    document.getElementById('score').innerHTML = `
+        <div class="stats">الإجابات الصحيحة: ${correctCount} من ${totalQuestions}</div>
+        <div class="stats">النسبة المئوية: ${score}%</div>
+        <div class="feedback">${feedback}</div>
+        <div class="recommendations"><strong>توصية:</strong> ${recommendations}</div>
+    `;
+
+    document.getElementById('detailed-results').innerHTML = detailedResults;
+
+    // إخفاء الأسئلة وإظهار النتائج
+    document.getElementById('questions-container').style.display = 'none';
+    document.querySelector('.navigation').style.display = 'none';
+    document.querySelector('.controls').style.display = 'flex';
+    document.getElementById('results-container').style.display = 'block';
+}
+    // طباعة النتائج
+    function printResults() {
+        window.print();
+    }
+
+    // مشاركة النتائج
+    function shareResults() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'نتيجة الامتحان',
+                text: `حصلت على ${document.getElementById('score').textContent} في امتحان اللغة العربية`,
+                url: window.location.href
+            })
+            .catch(error => {
+                console.log('Error sharing:', error);
+                alert('لم يتمكن المتصفح من مشاركة النتائج. يرجى المحاولة لاحقًا.');
+            });
+        } else {
+            alert('مشاركة النتائج غير مدعومة في هذا المتصفح. يمكنك استخدام زر الطباعة بدلاً من ذلك.');
+        }
+    }
+
+    // إعادة بدء الامتحان
+    function restartExam() {
+        if (confirm('هل تريد إعادة بدء الامتحان؟ سيتم حذف جميع إجاباتك الحالية.')) {
+            userAnswers = {};
+            answered = {};
+            currentQuestionIndex = 0;
+            localStorage.removeItem(`exam_${examId}`);
+            location.reload();
+        }
+    }
+
+    // العودة إلى قائمة الامتحانات
+    function backToExams() {
+        if (confirm('هل تريد العودة إلى قائمة الامتحانات؟ سيتم فقدان تقدمك الحالي إذا لم تحفظه.')) {
+            window.location.href = '/questions.html'; // تغيير هذا الرابط حسب الصفحة المناسبة
+        }
+    }
+
+    // تهيئة الامتحان
+    function initExam() {
+        const container = document.getElementById('questions-container');
+        const totalQuestions = examData.questions.filter(q => q.type !== "passage" && q.type !== "poem").length;
+        document.getElementById('total-questions').textContent = totalQuestions;
+        document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+
+        // تحميل الحالة
+        const wasResumed = loadSavedData();
+
+        // إنشاء الأسئلة
+        examData.questions.forEach((q, index) => {
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question';
+            questionEl.id = `question-${q.id}`;
+            questionEl.style.display = index === currentQuestionIndex ? 'block' : 'none';
+
+            if (q.type === "passage") {
+                questionEl.innerHTML = `<div class="passage">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة النص كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else if (q.type === "poem") {
+                questionEl.innerHTML = `<div class="poem">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة الشعر كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else {
+                let content = `<h3>السؤال ${getQuestionNumber(index)}: ${q.text}</h3>`;
+
+                if (q.type === "multiple-choice") {
+                    let optionsHtml = '<div class="options">';
+                    q.options.forEach(opt => {
+                        const selected = userAnswers[q.id]?.selected == opt.id;
+                        const isAnswered = userAnswers[q.id];
+                        const correct = opt.correct;
+                        optionsHtml += `
+                            <div class="option ${selected ? 'selected' : ''} ${isAnswered && correct ? 'correct' : ''} ${isAnswered && !correct && selected ? 'incorrect' : ''}"
+                                 data-question="${q.id}" data-option="${opt.id}" data-correct="${opt.correct}"
+                                 onclick="selectOption(this, ${q.id}, ${opt.id}, ${opt.correct})">
+                                ${opt.text}
+                            </div>
+                        `;
+                    });
+                    optionsHtml += '</div>';
+                    content += optionsHtml;
+                } else if (q.type === "fill-in-blank") {
+                    const value = userAnswers[q.id]?.answer || '';
+                    content += `
+                        <div class="fill-in-blank">
+                            <input type="text" id="fill-${q.id}" value="${value}" placeholder="أدخل إجابتك هنا" oninput="onFillInput(${q.id})">
+                        </div>
+                    `;
+                }
+
+                content += `<div class="explanation" id="explanation-${q.id}" style="${userAnswers[q.id] ? 'display:block' : 'display:none'}">
+                    <strong>التفسير:</strong> ${q.explanation}
+                </div>`;
+                questionEl.innerHTML = content;
+                
+                // تحديد ما إذا كان السؤال قد تمت الإجابة عليه
+                answered[index] = !!userAnswers[q.id];
+            }
+
+            container.appendChild(questionEl);
+        });
+
+        // تحديث زر التالي بناءً على السؤال الحالي
+        updateNextButton();
+
+        // ربط الأحداث
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+        document.getElementById('print-btn').addEventListener('click', printResults);
+        document.getElementById('share-btn').addEventListener('click', shareResults);
+        document.getElementById('restart-btn').addEventListener('click', restartExam);
+        document.getElementById('back-btn').addEventListener('click', backToExams);
+
+        if (wasResumed) {
+            alert(`تم استئناف الامتحان من السؤال ${getQuestionNumber(currentQuestionIndex)}`);
+        }
+    }
+
+    // بدء الامتحان عند تحميل الصفحة
+    window.onload = initExam;
+</script>
+</body>
+</html>

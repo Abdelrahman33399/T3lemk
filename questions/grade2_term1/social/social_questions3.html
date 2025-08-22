@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الدراسات الإجتماعية - الصف الثاني الإعدادي</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط عامة */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* الحاوية الرئيسية */
+        .exam-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        /* رأس الامتحان */
+        .exam-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+        }
+        
+        .exam-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        /* إحصائيات الأسئلة */
+        .stats {
+            background: #e9f5ff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            border-right: 4px solid #007bff;
+        }
+        
+        /* الأسئلة */
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .question h3 {
+            color: #007bff;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        /* النصوص والقصائد */
+        .passage, .poem {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.8;
+            font-style: italic;
+            border-right: 4px solid #6c757d;
+        }
+        
+        .poem {
+            text-align: center;
+            font-weight: bold;
+            background: #fff9e6;
+            border-right-color: #ffc107;
+        }
+        
+        /* خيارات الأسئلة */
+        .options {
+            margin: 20px 0;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            background: white;
+        }
+        
+        .option:hover {
+            background-color: #e9f5ff;
+            transform: translateX(-5px);
+        }
+        
+        .option.selected {
+            background-color: #d4edff;
+            border-left: 4px solid #007bff;
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        /* شرح الإجابة */
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-right: 3px solid #6c757d;
+        }
+        
+        /* حقول الإدخال */
+        .fill-in-blank input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .fill-in-blank input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+        
+        /* التنقل بين الأسئلة */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        /* الأزرار */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover:not(:disabled) {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover:not(:disabled) {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover:not(:disabled) {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+        
+        /* النتائج */
+        .results-container {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #007bff;
+        }
+        
+        .feedback {
+            text-align: center;
+            font-size: 18px;
+            margin: 15px 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .recommendations {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .correct-answer {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        /* عناصر التحكم */
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .exam-container {
+                padding: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .passage, .poem {
+                padding: 15px;
+            }
+        }
+    </style></head>
+<body>
+    <div class="exam-container">
+        <div class="exam-header">
+            <h1 id="exam-title">اختبار الدراسات  - الصف الثاني الإعدادي ( الوحدة الثالثة) - الترم الأول</h1>
+        </div>
+        
+        <div class="stats">السؤال <span id="current-question">1</span> من <span id="total-questions">50</span></div>
+        
+        <div id="questions-container"></div>
+        
+        <div class="navigation">
+            <button id="prev-btn" class="btn btn-secondary" disabled>السابق</button>
+            <button id="next-btn" class="btn btn-primary">التالي</button>
+        </div>
+        
+        <div class="controls">
+            <button id="restart-btn" class="btn btn-warning">إعادة البدء</button>
+            <button id="print-btn" class="btn btn-info">طباعة النتائج</button>
+            <button id="share-btn" class="btn btn-success">مشاركة النتائج</button>
+            <button id="back-btn" class="btn btn-danger">العودة للامتحانات</button>
+        </div>
+        
+        <div class="results-container" id="results-container">
+            <h2>النتيجة</h2>
+            <div id="score"></div>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+
+    <audio id="correctSound" src="../../../assets/audio/correct.mp3" preload="auto"></audio>
+    <audio id="incorrectSound" src="../../../assets/audio/incorrect.mp3" preload="auto"></audio>
+
+
+   <script>
+    // أصوات
+    const correctSound = document.getElementById('correctSound');
+    const incorrectSound = document.getElementById('incorrectSound');
+
+    // معرف الامتحان
+    const examId = "arabic-grade1-term1";
+
+    // بيانات الأسئلة (كما أرسلتها)
+    const examData = {
+        title: "اختبار الدراسات  - الصف الثاني الإعدادي ( الوحدة الثالثة ) - الترم الأول",
+        questions: [
+               {
+        "id": 1,
+        "type": "multiple-choice",
+        "text": "ما العامل الرئيسي في توزيع أنواع الغابات؟",
+        "options": [
+            { "id": 1, "text": "عدد السكان", "correct": false },
+            { "id": 2, "text": "المناخ ودرجة الحرارة", "correct": true },
+            { "id": 3, "text": "النشاط الصناعي", "correct": false },
+            { "id": 4, "text": "نوع التربة فقط", "correct": false }
+        ],
+        "explanation": "توزيع الغابات يعتمد على المناخ، درجة الحرارة، والهطول."
+    },
+    {
+        "id": 2,
+        "type": "multiple-choice",
+        "text": "لماذا لا تمتلك أوروبا غابات مدارية؟",
+        "options": [
+            { "id": 1, "text": "لأنها قريبة من القطب", "correct": false },
+            { "id": 2, "text": "لأن معظمها في المنطقة المعتدلة", "correct": true },
+            { "id": 3, "text": "لأنها لا تملك أنهارًا", "correct": false },
+            { "id": 4, "text": "لأن التربة فقيرة", "correct": false }
+        ],
+        "explanation": "أوروبا تقع في المنطقة المعتدلة، وليست في المنطقة المدارية، لذا لا توجد غابات مدارية."
+    },
+    {
+        "id": 3,
+        "type": "multiple-choice",
+        "text": "أين تنتشر الغابات المدارية المطيرة؟",
+        "options": [
+            { "id": 1, "text": "شمال أوروبا", "correct": false },
+            { "id": 2, "text": "جنوب شرق آسيا", "correct": true },
+            { "id": 3, "text": "الصحراء الكبرى", "correct": false },
+            { "id": 4, "text": "التندرا", "correct": false }
+        ],
+        "explanation": "تنتشر في جنوب شرق آسيا (مثل إندونيسيا والهند) بسبب الأمطار الغزيرة."
+    },
+    {
+        "id": 4,
+        "type": "multiple-choice",
+        "text": "ما السمة الرئيسية للغابات المدارية؟",
+        "options": [
+            { "id": 1, "text": "أشجار نفضية", "correct": false },
+            { "id": 2, "text": "أشجار كثيفة وطبقة نباتية متعددة", "correct": true },
+            { "id": 3, "text": "غياب التنوع البيولوجي", "correct": false },
+            { "id": 4, "text": "صيف جاف وشتاء بارد", "correct": false }
+        ],
+        "explanation": "الغابات المدارية تتميز بكثافة الأشجار وتنوع الطبقات النباتية."
+    },
+    {
+        "id": 5,
+        "type": "multiple-choice",
+        "text": "ما أهمية الغابات المدارية؟",
+        "options": [
+            { "id": 1, "text": "تقلل من الاحترار العالمي بامتصاص CO₂", "correct": true },
+            { "id": 2, "text": "تزيد من الصحراء", "correct": false },
+            { "id": 3, "text": "تقلل من هطول الأمطار", "correct": false },
+            { "id": 4, "text": "تمنع التنوع البيولوجي", "correct": false }
+        ],
+        "explanation": "تمتص كميات كبيرة من ثاني أكسيد الكربون، مما يساعد في تقليل الاحترار."
+    },
+    {
+        "id": 6,
+        "type": "multiple-choice",
+        "text": "ما الخطر الرئيسي الذي تواجهه الغابات المدارية؟",
+        "options": [
+            { "id": 1, "text": "تجمد الشجر", "correct": false },
+            { "id": 2, "text": "إزالة الغابات للزراعة والصناعة", "correct": true },
+            { "id": 3, "text": "نقص الحيوانات", "correct": false },
+            { "id": 4, "text": "قلة الأمطار", "correct": false }
+        ],
+        "explanation": "القطع الجائر للأشجار يهدد بقاء هذه الغابات."
+    },
+    {
+        "id": 7,
+        "type": "multiple-choice",
+        "text": "أين تنتشر غابات البحر المتوسط؟",
+        "options": [
+            { "id": 1, "text": "شمال أوروبا", "correct": false },
+            { "id": 2, "text": "حول البحر المتوسط", "correct": true },
+            { "id": 3, "text": "في القطب الشمالي", "correct": false },
+            { "id": 4, "text": "في الصحراء الكبرى", "correct": false }
+        ],
+        "explanation": "تنتشر في جنوب أوروبا وغرب آسيا حول البحر المتوسط."
+    },
+    {
+        "id": 8,
+        "type": "multiple-choice",
+        "text": "ما مناخ غابات البحر المتوسط؟",
+        "options": [
+            { "id": 1, "text": "صيف بارد وشتاء دافئ", "correct": false },
+            { "id": 2, "text": "صيف حار وجاف، شتاء معتدل وممطر", "correct": true },
+            { "id": 3, "text": "أمطار غزيرة طوال العام", "correct": false },
+            { "id": 4, "text": "شتاء طويل وصيف حار", "correct": false }
+        ],
+        "explanation": "هذا المناخ يسمح بنمو نباتات مثل الزيتون والشوك."
+    },
+    {
+        "id": 9,
+        "type": "multiple-choice",
+        "text": "ما نوع النباتات في غابات البحر المتوسط؟",
+        "options": [
+            { "id": 1, "text": "أشجار دائمة الخضرة بسيقان طويلة", "correct": false },
+            { "id": 2, "text": "شجيرات صلبة وأوراق سميكة", "correct": true },
+            { "id": 3, "text": "أعشاب قصيرة فقط", "correct": false },
+            { "id": 4, "text": "أشجار نفضية كبيرة", "correct": false }
+        ],
+        "explanation": "النباتات تكيفت مع الجفاف بتطوير أوراق سميكة وغطاء شمعي."
+    },
+    {
+        "id": 10,
+        "type": "multiple-choice",
+        "text": "ما المحصول الشهير في غابات البحر المتوسط؟",
+        "options": [
+            { "id": 1, "text": "القمح", "correct": false },
+            { "id": 2, "text": "الأرز", "correct": false },
+            { "id": 3, "text": "الزيتون", "correct": true },
+            { "id": 4, "text": "الساج", "correct": false }
+        ],
+        "explanation": "الزيتون من المحاصيل الأساسية في هذه المنطقة."
+    },
+    {
+        "id": 11,
+        "type": "multiple-choice",
+        "text": "أين تنتشر الغابات الموسمية؟",
+        "options": [
+            { "id": 1, "text": "شمال أوروبا", "correct": false },
+            { "id": 2, "text": "جنوب وجنوب شرق آسيا", "correct": true },
+            { "id": 3, "text": "القطب الجنوبي", "correct": false },
+            { "id": 4, "text": "الصحراء العربية", "correct": false }
+        ],
+        "explanation": "تنتشر في الهند، باكستان، وجنوب الصين بسبب الرياح الموسمية."
+    },
+    {
+        "id": 12,
+        "type": "multiple-choice",
+        "text": "ما سبب الأمطار في الغابات الموسمية؟",
+        "options": [
+            { "id": 1, "text": "الرياح القطبية", "correct": false },
+            { "id": 2, "text": "الرياح الموسمية", "correct": true },
+            { "id": 3, "text": "التيارات البحرية الباردة", "correct": false },
+            { "id": 4, "text": "التبخر من الجليد", "correct": false }
+        ],
+        "explanation": "الرياح الموسمية تجلب أمطارًا غزيرة في الصيف."
+    },
+    {
+        "id": 13,
+        "type": "multiple-choice",
+        "text": "ما نوع الأشجار في الغابات الموسمية؟",
+        "options": [
+            { "id": 1, "text": "دائمة الخضرة", "correct": false },
+            { "id": 2, "text": "نفضية (تسقط أوراقها في الشتاء)", "correct": true },
+            { "id": 3, "text": "صنوبرية", "correct": false },
+            { "id": 4, "text": "صحراوية", "correct": false }
+        ],
+        "explanation": "مثل خشب الساج، تسقط أوراقها في الشتاء الجاف."
+    },
+    {
+        "id": 14,
+        "type": "multiple-choice",
+        "text": "ما أهمية الغابات الموسمية اقتصاديًا؟",
+        "options": [
+            { "id": 1, "text": "صناعة الورق فقط", "correct": false },
+            { "id": 2, "text": "زراعة الأرز، الشاي، القطن", "correct": true },
+            { "id": 3, "text": "استخراج الفحم", "correct": false },
+            { "id": 4, "text": "تربية الإبل", "correct": false }
+        ],
+        "explanation": "التربة خصبة، مناسبة للزراعة."
+    },
+    {
+        "id": 15,
+        "type": "multiple-choice",
+        "text": "أين تنتشر الغابات النفضية؟",
+        "options": [
+            { "id": 1, "text": "في القطب الجنوبي", "correct": false },
+            { "id": 2, "text": "شرق آسيا وأوروبا الوسطى", "correct": true },
+            { "id": 3, "text": "في الصحراء", "correct": false },
+            { "id": 4, "text": "في جنوب إفريقيا", "correct": false }
+        ],
+        "explanation": "تنتشر في اليابان، كوريا، وأوروبا الوسطى."
+    },
+    {
+        "id": 16,
+        "type": "multiple-choice",
+        "text": "ما سمة النباتات في الغابات النفضية؟",
+        "options": [
+            { "id": 1, "text": "تبقى أوراقها طوال العام", "correct": false },
+            { "id": 2, "text": "تسقط أوراقها في الخريف", "correct": true },
+            { "id": 3, "text": "لا تملك أوراقًا", "correct": false },
+            { "id": 4, "text": "أوراقها مدببة وشمعية", "correct": false }
+        ],
+        "explanation": "مثل الزان والبلوط، تسقط أوراقها في الخريف."
+    },
+    {
+        "id": 17,
+        "type": "multiple-choice",
+        "text": "ما سبب خصوبة تربة الغابات النفضية؟",
+        "options": [
+            { "id": 1, "text": "قلة الأمطار", "correct": false },
+            { "id": 2, "text": "تحلل الأوراق المتساقطة", "correct": true },
+            { "id": 3, "text": "وجود الحمم", "correct": false },
+            { "id": 4, "text": "نقص النشاط البيولوجي", "correct": false }
+        ],
+        "explanation": "تحلل الأوراق يضيف مواد عضوية ويخثر التربة."
+    },
+    {
+        "id": 18,
+        "type": "multiple-choice",
+        "text": "ما الخطر الرئيسي على الغابات النفضية؟",
+        "options": [
+            { "id": 1, "text": "الجليد الدائم", "correct": false },
+            { "id": 2, "text": "إزالتها للزراعة", "correct": true },
+            { "id": 3, "text": "الزلازل", "correct": false },
+            { "id": 4, "text": "البراكين", "correct": false }
+        ],
+        "explanation": "تُزال للزراعة (القمح، التفاح، الكتان)."
+    },
+    {
+        "id": 19,
+        "type": "multiple-choice",
+        "text": "أين تنتشر الغابات الصنوبرية؟",
+        "options": [
+            { "id": 1, "text": "جنوب شرق آسيا", "correct": false },
+            { "id": 2, "text": "شمال آسيا وشمال أوروبا", "correct": true },
+            { "id": 3, "text": "حول البحر المتوسط", "correct": false },
+            { "id": 4, "text": "في الصحراء", "correct": false }
+        ],
+        "explanation": "في سيبيريا وأوروبا الشمالية (داخل المناخ القطبي)."
+    },
+    {
+        "id": 20,
+        "type": "multiple-choice",
+        "text": "ما سمة أوراق أشجار الصنوبر؟",
+        "options": [
+            { "id": 1, "text": "عريضة ورقيقة", "correct": false },
+            { "id": 2, "text": "مدببة ومغطاة بشمع", "correct": true },
+            { "id": 3, "text": "تسقط في الصيف", "correct": false },
+            { "id": 4, "text": "لا تحتوي على كلوروفيل", "correct": false }
+        ],
+        "explanation": "الشمع يمنع تراكم الثلج، والشكل المدبب يقلل فقد الماء."
+    },
+    {
+        "id": 21,
+        "type": "multiple-choice",
+        "text": "ما الحيوانات الشهيرة في الغابات الصنوبرية؟",
+        "options": [
+            { "id": 1, "text": "النمر", "correct": false },
+            { "id": 2, "text": "الدب القطبي، الرنة، نقار الخشب", "correct": true },
+            { "id": 3, "text": "الفيل الآسيوي", "correct": false },
+            { "id": 4, "text": "الطاووس", "correct": false }
+        ],
+        "explanation": "هذه الحيوانات تتكيف مع البرد الشديد."
+    },
+    {
+        "id": 22,
+        "type": "multiple-choice",
+        "text": "ما نوع التربة في الغابات الصنوبرية؟",
+        "options": [
+            { "id": 1, "text": "خصبة جدًا", "correct": false },
+            { "id": 2, "text": "رمادية وقليلة الخصوبة", "correct": true },
+            { "id": 3, "text": "طينية سميكة", "correct": false },
+            { "id": 4, "text": "رملية جافة", "correct": false }
+        ],
+        "explanation": "البرودة تبطئ من تحلل المواد العضوية."
+    },
+    {
+        "id": 23,
+        "type": "multiple-choice",
+        "text": "ما أهمية الغابات الصنوبرية اقتصاديًا؟",
+        "options": [
+            { "id": 1, "text": "صناعة السفن", "correct": false },
+            { "id": 2, "text": "صناعة الورق، الخشب، الأثاث", "correct": true },
+            { "id": 3, "text": "زراعة الأرز", "correct": false },
+            { "id": 4, "text": "استخراج النفط", "correct": false }
+        ],
+        "explanation": "الخشب الصنوبري يستخدم في الصناعات الخشبية."
+    },
+    {
+        "id": 24,
+        "type": "multiple-choice",
+        "text": "أين تنتشر السافانا (الحشائش الحارة)؟",
+        "options": [
+            { "id": 1, "text": "شمال أوروبا", "correct": false },
+            { "id": 2, "text": "الهند وباكستان", "correct": true },
+            { "id": 3, "text": "القطب الشمالي", "correct": false },
+            { "id": 4, "text": "الصحراء الكبرى", "correct": false }
+        ],
+        "explanation": "في جنوب آسيا، حيث صيف حار وشتاء جاف."
+    },
+    {
+        "id": 25,
+        "type": "multiple-choice",
+        "text": "ما سمة النباتات في السافانا؟",
+        "options": [
+            { "id": 1, "text": "أشجار كثيفة", "correct": false },
+            { "id": 2, "text": "أعشاب طويلة وأشجار منفردة", "correct": true },
+            { "id": 3, "text": "غياب النباتات", "correct": false },
+            { "id": 4, "text": "نباتات مائية فقط", "correct": false }
+        ],
+        "explanation": "مثل أشجار السدر، تعيش بين الأعشاب."
+    },
+    {
+        "id": 26,
+        "type": "multiple-choice",
+        "text": "ما الحيوانات في السافانا؟",
+        "options": [
+            { "id": 1, "text": "الرنة والدب القطبي", "correct": false },
+            { "id": 2, "text": "الغزلان، النمور، الطاووس", "correct": true },
+            { "id": 3, "text": "الدلافين", "correct": false },
+            { "id": 4, "text": "البطاريق", "correct": false }
+        ],
+        "explanation": "هذه الحيوانات تعيش في البيئات الحارة والجافة نسبيًا."
+    },
+    {
+        "id": 27,
+        "type": "multiple-choice",
+        "text": "ما الخطر على السافانا؟",
+        "options": [
+            { "id": 1, "text": "الجليد", "correct": false },
+            { "id": 2, "text": "الرعي الجائر والحرائق", "correct": true },
+            { "id": 3, "text": "الزلازل", "correct": false },
+            { "id": 4, "text": "الأمطار الغزيرة", "correct": false }
+        ],
+        "explanation": "الرعي الجائر والحرائق البشرية تهدد النظام البيئي."
+    },
+    {
+        "id": 28,
+        "type": "multiple-choice",
+        "text": "ما أكبر نظام حشائش في العالم؟",
+        "options": [
+            { "id": 1, "text": "السافانا", "correct": false },
+            { "id": 2, "text": "الاستبس", "correct": true },
+            { "id": 3, "text": "التندرا", "correct": false },
+            { "id": 4, "text": "الصحراء", "correct": false }
+        ],
+        "explanation": "يمتد من غرب أوروبا إلى شمال شرق الصين."
+    },
+    {
+        "id": 29,
+        "type": "multiple-choice",
+        "text": "ما سمة الاستبس؟",
+        "options": [
+            { "id": 1, "text": "أشجار كثيفة", "correct": false },
+            { "id": 2, "text": "أعشاب قصيرة ولا توجد أشجار", "correct": true },
+            { "id": 3, "text": "نباتات مائية", "correct": false },
+            { "id": 4, "text": "صخور فقط", "correct": false }
+        ],
+        "explanation": "تربة خصبة، لكن المناخ لا يسمح بنمو الأشجار."
+    },
+    {
+        "id": 30,
+        "type": "multiple-choice",
+        "text": "ما الحيوانات في الاستبس؟",
+        "options": [
+            { "id": 1, "text": "الرنة والدب القطبي", "correct": false },
+            { "id": 2, "text": "الجاموس البري والجمل ذو السنامين", "correct": true },
+            { "id": 3, "text": "النمر", "correct": false },
+            { "id": 4, "text": "التمساح", "correct": false }
+        ],
+        "explanation": "تتكيف مع الحياة في السهول العشبية."
+    },
+    {
+        "id": 31,
+        "type": "multiple-choice",
+        "text": "أين تنتشر التندرا؟",
+        "options": [
+            { "id": 1, "text": "حول البحر المتوسط", "correct": false },
+            { "id": 2, "text": "أقصى شمال آسيا وأوروبا", "correct": true },
+            { "id": 3, "text": "في جنوب شرق آسيا", "correct": false },
+            { "id": 4, "text": "في الصحراء", "correct": false }
+        ],
+        "explanation": "داخل الدائرة القطبية، حيث الشتاء طويل والصيف قصير."
+    },
+    {
+        "id": 32,
+        "type": "multiple-choice",
+        "text": "ما سبب قلة نمو الأشجار في التندرا؟",
+        "options": [
+            { "id": 1, "text": "قلة الأمطار", "correct": false },
+            { "id": 2, "text": "وجود التربة المتجمدة (البيرما فروست)", "correct": true },
+            { "id": 3, "text": "الحرارة العالية", "correct": false },
+            { "id": 4, "text": "نقص الرياح", "correct": false }
+        ],
+        "explanation": "التربة المتجمدة تمنع الجذور من النمو عميقًا."
+    },
+    {
+        "id": 33,
+        "type": "multiple-choice",
+        "text": "ما سمة نباتات التندرا؟",
+        "options": [
+            { "id": 1, "text": "أشجار عالية", "correct": false },
+            { "id": 2, "text": "حشائش قصيرة وطحالب", "correct": true },
+            { "id": 3, "text": "نباتات مائية فقط", "correct": false },
+            { "id": 4, "text": "أشجار دائمة الخضرة", "correct": false }
+        ],
+        "explanation": "النباتات قصيرة لتجنب الرياح والبرد."
+    },
+    {
+        "id": 34,
+        "type": "multiple-choice",
+        "text": "ما الحيوانات في التندرا؟",
+        "options": [
+            { "id": 1, "text": "النمر", "correct": false },
+            { "id": 2, "text": "الرنة، الدب القطبي، طائر الترمجان", "correct": true },
+            { "id": 3, "text": "الفيل", "correct": false },
+            { "id": 4, "text": "السحلية", "correct": false }
+        ],
+        "explanation": "تتكيف مع البرد الشديد."
+    },
+    {
+        "id": 35,
+        "type": "multiple-choice",
+        "text": "ما الخطر على التندرا؟",
+        "options": [
+            { "id": 1, "text": "الرعي الجائر فقط", "correct": false },
+            { "id": 2, "text": "التلوث، الصيد، بناء منتجعات التزلج", "correct": true },
+            { "id": 3, "text": "الزلازل", "correct": false },
+            { "id": 4, "text": "البراكين", "correct": false }
+        ],
+        "explanation": "النشاط البشري يهدد هذه البيئة الهشة."
+    },
+    {
+        "id": 36,
+        "type": "multiple-choice",
+        "text": "أين تقع الصحراء الحارة؟",
+        "options": [
+            { "id": 1, "text": "شمال أوروبا", "correct": false },
+            { "id": 2, "text": "شبه الجزيرة العربية وإيران", "correct": true },
+            { "id": 3, "text": "جنوب شرق آسيا", "correct": false },
+            { "id": 4, "text": "التندرا", "correct": false }
+        ],
+        "explanation": "في المناطق الاستوائية والشبه استوائية."
+    },
+    {
+        "id": 37,
+        "type": "multiple-choice",
+        "text": "ما سمة نباتات الصحراء؟",
+        "options": [
+            { "id": 1, "text": "أوراق كبيرة", "correct": false },
+            { "id": 2, "text": "جذور طويلة وأوراق مغطاة بشمع", "correct": true },
+            { "id": 3, "text": "تتساقط أوراقها في الصيف", "correct": false },
+            { "id": 4, "text": "لا تملك جذورًا", "correct": false }
+        ],
+        "explanation": "التكيفات تقلل فقد الماء."
+    },
+    {
+        "id": 38,
+        "type": "multiple-choice",
+        "text": "هل توجد صحراء حارة في أوروبا؟",
+        "options": [
+            { "id": 1, "text": "نعم، في جنوب فرنسا", "correct": false },
+            { "id": 2, "text": "لا، لأن مناخها معتدل", "correct": true },
+            { "id": 3, "text": "نعم، في السويد", "correct": false },
+            { "id": 4, "text": "نعم، في روسيا", "correct": false }
+        ],
+        "explanation": "أوروبا لا تمتلك صحراء حارة بسبب مناخها المعتدل."
+    },
+    {
+        "id": 39,
+        "type": "multiple-choice",
+        "text": "ما سبب تشكل الصحراء المعتدلة؟",
+        "options": [
+            { "id": 1, "text": "قلة الأمطار بسبب سلاسل جبلية", "correct": true },
+            { "id": 2, "text": "الحرارة العالية", "correct": false },
+            { "id": 3, "text": "نقص الرياح", "correct": false },
+            { "id": 4, "text": "كثرة الأمطار", "correct": false }
+        ],
+        "explanation": "السلاسل الجبلية تمنع وصول الرياح الممطرة (أثر الظل المطري)."
+    },
+    {
+        "id": 40,
+        "type": "multiple-choice",
+        "text": "ما أهم نهر في التنوع البيولوجي في آسيا؟",
+        "options": [
+            { "id": 1, "text": "نهر النيل", "correct": false },
+            { "id": 2, "text": "نهر ميكونغ", "correct": true },
+            { "id": 3, "text": "نهر السين", "correct": false },
+            { "id": 4, "text": "نهر الدانوب", "correct": false }
+        ],
+        "explanation": "نهر ميكونغ ثالث أنهر العالم في التنوع البيولوجي."
+    },
+    {
+        "id": 41,
+        "type": "multiple-choice",
+        "text": "ما أهم بحيرة في سيبيريا؟",
+        "options": [
+            { "id": 1, "text": "بحيرة لادوجا", "correct": false },
+            { "id": 2, "text": "بحيرة بايكال", "correct": true },
+            { "id": 3, "text": "بحيرة طبريا", "correct": false },
+            { "id": 4, "text": "بحيرة فيكتوريا", "correct": false }
+        ],
+        "explanation": "بحيرة بايكال أعمق وأنقى بحيرة في العالم، وغنية بالتنوع."
+    },
+    {
+        "id": 42,
+        "type": "multiple-choice",
+        "text": "ما أكبر بحيرة عذبة في أوروبا؟",
+        "options": [
+            { "id": 1, "text": "بحيرة بايكال", "correct": false },
+            { "id": 2, "text": "بحيرة لادوجا", "correct": true },
+            { "id": 3, "text": "بحيرة جنيف", "correct": false },
+            { "id": 4, "text": "بحيرة كومو", "correct": false }
+        ],
+        "explanation": "توجد في روسيا، وتعتبر الأكبر في أوروبا."
+    },
+    {
+        "id": 43,
+        "type": "multiple-choice",
+        "text": "ما أهمية الأراضي الرطبة؟",
+        "options": [
+            { "id": 1, "text": "تجفيفها يقلل من الاحترار", "correct": false },
+            { "id": 2, "text": "تطلق غازات دفيئة عند تجفيفها", "correct": true },
+            { "id": 3, "text": "لا أهمية لها", "correct": false },
+            { "id": 4, "text": "تزيد من الجفاف", "correct": false }
+        ],
+        "explanation": "تجفيفها يطلق الكربون المخزن، فيسهم في الاحترار."
+    },
+    {
+        "id": 44,
+        "type": "multiple-choice",
+        "text": "ما النظام البيئي المالح الذي يحتوي على \"مثلث المرجان\"؟",
+        "options": [
+            { "id": 1, "text": "البحر الأحمر", "correct": false },
+            { "id": 2, "text": "بحر الصين الجنوبي", "correct": true },
+            { "id": 3, "text": "البحر المتوسط", "correct": false },
+            { "id": 4, "text": "خليج عدن", "correct": false }
+        ],
+        "explanation": "مثلث المرجان في جنوب شرق آسيا هو الأغنى بالتنوع البحري."
+    },
+    {
+        "id": 45,
+        "type": "multiple-choice",
+        "text": "لماذا لا توجد شعاب مرجانية في أوروبا؟",
+        "options": [
+            { "id": 1, "text": "لأنها باردة جدًا", "correct": false },
+            { "id": 2, "text": "لأنها تحتاج إلى مناخ مداري دافئ", "correct": true },
+            { "id": 3, "text": "لأن الماء مالح جدًا", "correct": false },
+            { "id": 4, "text": "لأن الأسماك تأكلها", "correct": false }
+        ],
+        "explanation": "الشعاب تحتاج إلى مياه دافئة وضوء كافٍ، لا تتوفر في أوروبا."
+    },
+    {
+        "id": 46,
+        "type": "multiple-choice",
+        "text": "ما أهمية نظام المانجروف؟",
+        "options": [
+            { "id": 1, "text": "يزيد من تآكل السواحل", "correct": false },
+            { "id": 2, "text": "يحمي السواحل من التآكل ويوفر موطنًا للأسماك", "correct": true },
+            { "id": 3, "text": "يقلل من الأمطار", "correct": false },
+            { "id": 4, "text": "يمنع النقل البحري", "correct": false }
+        ],
+        "explanation": "الجذور تثبت التربة وتوفر بيئة غنية للأسماك."
+    },
+    {
+        "id": 47,
+        "type": "multiple-choice",
+        "text": "ما الحيوانات التي تتأثر بالأعاصير المدارية؟",
+        "options": [
+            { "id": 1, "text": "الرنة فقط", "correct": false },
+            { "id": 2, "text": "الحيوانات في جنوب شرق آسيا (مثل النمر)", "correct": true },
+            { "id": 3, "text": "البطاريق", "correct": false },
+            { "id": 4, "text": "الدببة البنية فقط", "correct": false }
+        ],
+        "explanation": "الأعاصير (التيفون) تحدث في جنوب وشرق آسيا وتؤثر على التنوع."
+    },
+    {
+        "id": 48,
+        "type": "multiple-choice",
+        "text": "ما جهد أوروبا لحماية البيئة البحرية؟",
+        "options": [
+            { "id": 1, "text": "اتفاقية برشلونة", "correct": true },
+            { "id": 2, "text": "اتفاقية كيوتو", "correct": false },
+            { "id": 3, "text": "اتفاقية باريس", "correct": false },
+            { "id": 4, "text": "قانون النفط", "correct": false }
+        ],
+        "explanation": "اتفاقية برشلونة مخصصة لحماية البيئة البحرية والساحلية في البحر المتوسط."
+    },
+    {
+        "id": 49,
+        "type": "multiple-choice",
+        "text": "ما هدف \"الاتفاق الأخضر الأوروبي\"؟",
+        "options": [
+            { "id": 1, "text": "زيادة الانبعاثات", "correct": false },
+            { "id": 2, "text": "زراعة 3 مليارات شجرة بحلول 2030", "correct": true },
+            { "id": 3, "text": "زيادة الصيد الجائر", "correct": false },
+            { "id": 4, "text": "تقليل التنوع البيولوجي", "correct": false }
+        ],
+        "explanation": "من أهداف الاتفاق: استعادة النظم البيئية وخفض الكربون."
+    },
+    {
+        "id": 50,
+        "type": "multiple-choice",
+        "text": "ما مبادرة الصين لإصلاح النظم البيئية؟",
+        "options": [
+            { "id": 1, "text": "طريق الحرير", "correct": false },
+            { "id": 2, "text": "مبادرة \"شان شوي\"", "correct": true },
+            { "id": 3, "text": "مشروع الأنهار الجافة", "correct": false },
+            { "id": 4, "text": "مبادرة الطاقة النووية", "correct": false }
+        ],
+        "explanation": "مبادرة \"شان شوي\" تشمل 75 مشروعًا لإعادة تأهيل البيئة."
+    },
+        ]
+    };
+
+   // متغيرات
+    let currentQuestionIndex = 0;
+    let userAnswers = {};
+    let answered = {};
+
+    // تحميل البيانات المحفوظة
+    function loadSavedData() {
+        const saved = localStorage.getItem(`exam_${examId}`);
+        if (saved) {
+            const data = JSON.parse(saved);
+            userAnswers = data.answers || {};
+            currentQuestionIndex = data.currentQuestionIndex || 0;
+            return true;
+        }
+        return false;
+    }
+
+    // حفظ البيانات
+    function saveData() {
+        const data = {
+            answers: userAnswers,
+            currentQuestionIndex: currentQuestionIndex,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem(`exam_${examId}`, JSON.stringify(data));
+    }
+
+    // الحصول على رقم السؤال الحقيقي (باستثناء النصوص والشعر)
+    function getQuestionNumber(index) {
+        let realCount = 0;
+        for (let i = 0; i <= index; i++) {
+            if (examData.questions[i].type !== "passage" && examData.questions[i].type !== "poem") {
+                realCount++;
+            }
+        }
+        return realCount;
+    }
+
+    // تحديث زر التالي
+    function updateNextButton() {
+        const nextBtn = document.getElementById('next-btn');
+        const currentQuestion = examData.questions[currentQuestionIndex];
+        
+        // إذا كان السؤال الحالي نصًا أو شعرًا، فعّل الزر مباشرة
+        if (currentQuestion.type === "passage" || currentQuestion.type === "poem") {
+            nextBtn.disabled = false;
+            return;
+        }
+        
+        // تحقق مما إذا كان السؤال الحالي قد تمت الإجابة عليه
+        nextBtn.disabled = !answered[currentQuestionIndex];
+    }
+
+    // تحديد خيار في سؤال متعدد الخيارات
+    function selectOption(element, questionId, optionId, isCorrect) {
+        // منع التحديد إذا كانت الإجابة معروضة بالفعل
+        if (userAnswers[questionId]) return;
+        
+        // إلغاء تحديد جميع الخيارات الأخرى
+        const options = document.querySelectorAll(`.option[data-question="${questionId}"]`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        
+        // تحديد الخيار الحالي
+        element.classList.add('selected');
+        
+        // حفظ الإجابة
+        userAnswers[questionId] = {
+            selected: optionId,
+            correct: isCorrect
+        };
+        
+        // تشغيل الصوت المناسب
+        if (isCorrect) {
+            correctSound.play();
+        } else {
+            incorrectSound.play();
+        }
+        
+        // عرض التفسير
+        const explanationEl = document.getElementById(`explanation-${questionId}`);
+        if (explanationEl) {
+            explanationEl.style.display = 'block';
+        }
+        
+        // تمييز الإجابة الصحيحة والخاطئة
+        options.forEach(opt => {
+            const optCorrect = opt.getAttribute('data-correct') === 'true';
+            if (optCorrect) {
+                opt.classList.add('correct');
+            } else if (parseInt(opt.getAttribute('data-option')) === optionId && !isCorrect) {
+                opt.classList.add('incorrect');
+            }
+        });
+        
+        // تمكين زر التالي
+        answered[currentQuestionIndex] = true;
+        updateNextButton();
+        saveData();
+    }
+
+    // معالجة إدخال الإجابة في الأسئلة المقالية
+    function onFillInput(questionId) {
+        const input = document.getElementById(`fill-${questionId}`);
+        userAnswers[questionId] = {
+            answer: input.value
+        };
+        
+        // تمكين زر التالي إذا كان هناك إدخال
+        if (input.value.trim() !== '') {
+            answered[currentQuestionIndex] = true;
+        } else {
+            answered[currentQuestionIndex] = false;
+        }
+        
+        updateNextButton();
+        saveData();
+    }
+
+    // الانتقال إلى السؤال التالي
+    function nextQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex < examData.questions.length - 1) {
+            currentQuestionIndex++;
+            const nextId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${nextId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            
+            // إذا كان السؤال تاليًا نصًا أو شعرًا، فعّل الزر مباشرة
+            const nextQ = examData.questions[currentQuestionIndex];
+            if (nextQ.type === "passage" || nextQ.type === "poem") {
+                answered[currentQuestionIndex] = true;
+                document.getElementById('next-btn').disabled = false;
+            } else {
+                updateNextButton();
+            }
+            
+            saveData();
+        } else {
+            showResults();
+        }
+    }
+
+    // الانتقال إلى السؤال السابق
+    function prevQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            const prevId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${prevId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            updateNextButton();
+            
+            saveData();
+        }
+    }
+
+    // عرض النتائج
+// عرض النتائج - بدون حساب الأسئلة المقالية في الدرجة
+function showResults() {
+    // حساب النتيجة: فقط الأسئلة متعددة الخيارات
+    let correctCount = 0;
+    let totalQuestions = 0;
+
+    examData.questions.forEach(q => {
+        if (q.type === "multiple-choice") {
+            totalQuestions++;
+            if (userAnswers[q.id] && userAnswers[q.id].correct) {
+                correctCount++;
+            }
+        }
+    });
+
+    // حساب النسبة المئوية بناءً على الأسئلة متعددة الخيارات فقط
+    const score = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+
+    // كلمات تشجيعية
+    let feedback = "";
+    if (score >= 90) feedback = "ممتاز! أحسنت، استمر على هذا النحو 🌟";
+    else if (score >= 75) feedback = "جيد جدًا! أداء رائع 👏";
+    else if (score >= 60) feedback = "جيد، يمكنك التحسن أكثر 💪";
+    else feedback = "لا بأس، راجع الدروس وحاول مرة أخرى ❤️";
+
+    // توصيات
+    let recommendations = "";
+    if (score < 60) {
+        recommendations = "ننصحك بمراجعة القواعد النحوية والبلاغية، وحل المزيد من الأسئلة.";
+    } else if (score < 80) {
+        recommendations = "أداء جيد، ركّز على أنواع الأسئلة التي أخطأت فيها.";
+    } else {
+        recommendations = "أداء ممتاز! استمر في التقدم وجرّب امتحانات أصعب.";
+    }
+
+    // بناء النتائج التفصيلية
+    let detailedResults = '';
+    let questionNumber = 0; // رقم السؤال الحقيقي (للأسئلة القابلة للتصحيح فقط)
+
+    examData.questions.forEach(q => {
+        const userAnswer = userAnswers[q.id];
+        let answerText = 'لم تُجب';
+        let statusText = 'لم تُجب ❌';
+
+        // عرض الفقرات والشعر
+        if (q.type === "passage") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📖 فقرة نصية</h4>
+                    <div class="passage">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        if (q.type === "poem") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📜 نص شعري</h4>
+                    <div class="poem">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        // زيادة رقم السؤال فقط للأسئلة القابلة للتصحيح (اختيار من متعدد)
+        if (q.type === "multiple-choice") {
+            questionNumber++;
+        }
+
+        // معالجة الإجابة
+        if (q.type === "multiple-choice") {
+            const selectedOption = q.options.find(opt => opt.id == userAnswer?.selected);
+            answerText = selectedOption ? selectedOption.text : 'لم تُجب';
+            
+            if (userAnswer && selectedOption?.correct) {
+                statusText = 'إجابة صحيحة ✅';
+            } else if (userAnswer && !selectedOption?.correct) {
+                statusText = 'إجابة خاطئة ❌';
+            } else {
+                statusText = 'لم تُجب ❌';
+            }
+        } 
+        else if (q.type === "fill-in-blank") {
+            // السؤال المقالي: يظهر لكن بدون تأثير على العد
+            answerText = userAnswer?.answer?.trim() || 'لم تُجب';
+            statusText = (userAnswer && answerText !== 'لم تُجب') ? 'تمت الإجابة (تحت المراجعة)' : 'لم تُجب ❌';
+        }
+
+        // عرض السؤال بالشكل المطلوب
+        detailedResults += `
+            <div class="result-item">
+                ${q.type === "multiple-choice" ? `<p><strong>السؤال ${questionNumber}: ${q.text}</strong></p>` : `<p><strong>${q.text}</strong></p>`}
+                <p><strong>إجابتك:</strong> ${answerText}</p>
+                <p><strong>الحالة:</strong> ${statusText}</p>
+                <p><strong>📌 التفسير الكامل:</strong> ${q.explanation}</p>
+            </div>
+        `;
+    });
+
+    // عرض النتيجة النهائية
+    document.getElementById('score').innerHTML = `
+        <div class="stats">الإجابات الصحيحة: ${correctCount} من ${totalQuestions}</div>
+        <div class="stats">النسبة المئوية: ${score}%</div>
+        <div class="feedback">${feedback}</div>
+        <div class="recommendations"><strong>توصية:</strong> ${recommendations}</div>
+    `;
+
+    document.getElementById('detailed-results').innerHTML = detailedResults;
+
+    // إخفاء الأسئلة وإظهار النتائج
+    document.getElementById('questions-container').style.display = 'none';
+    document.querySelector('.navigation').style.display = 'none';
+    document.querySelector('.controls').style.display = 'flex';
+    document.getElementById('results-container').style.display = 'block';
+}
+    // طباعة النتائج
+    function printResults() {
+        window.print();
+    }
+
+    // مشاركة النتائج
+    function shareResults() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'نتيجة الامتحان',
+                text: `حصلت على ${document.getElementById('score').textContent} في امتحان اللغة العربية`,
+                url: window.location.href
+            })
+            .catch(error => {
+                console.log('Error sharing:', error);
+                alert('لم يتمكن المتصفح من مشاركة النتائج. يرجى المحاولة لاحقًا.');
+            });
+        } else {
+            alert('مشاركة النتائج غير مدعومة في هذا المتصفح. يمكنك استخدام زر الطباعة بدلاً من ذلك.');
+        }
+    }
+
+    // إعادة بدء الامتحان
+    function restartExam() {
+        if (confirm('هل تريد إعادة بدء الامتحان؟ سيتم حذف جميع إجاباتك الحالية.')) {
+            userAnswers = {};
+            answered = {};
+            currentQuestionIndex = 0;
+            localStorage.removeItem(`exam_${examId}`);
+            location.reload();
+        }
+    }
+
+    // العودة إلى قائمة الامتحانات
+    function backToExams() {
+        if (confirm('هل تريد العودة إلى قائمة الامتحانات؟ سيتم فقدان تقدمك الحالي إذا لم تحفظه.')) {
+            window.location.href = '/questions.html'; // تغيير هذا الرابط حسب الصفحة المناسبة
+        }
+    }
+
+    // تهيئة الامتحان
+    function initExam() {
+        const container = document.getElementById('questions-container');
+        const totalQuestions = examData.questions.filter(q => q.type !== "passage" && q.type !== "poem").length;
+        document.getElementById('total-questions').textContent = totalQuestions;
+        document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+
+        // تحميل الحالة
+        const wasResumed = loadSavedData();
+
+        // إنشاء الأسئلة
+        examData.questions.forEach((q, index) => {
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question';
+            questionEl.id = `question-${q.id}`;
+            questionEl.style.display = index === currentQuestionIndex ? 'block' : 'none';
+
+            if (q.type === "passage") {
+                questionEl.innerHTML = `<div class="passage">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة النص كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else if (q.type === "poem") {
+                questionEl.innerHTML = `<div class="poem">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة الشعر كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else {
+                let content = `<h3>السؤال ${getQuestionNumber(index)}: ${q.text}</h3>`;
+
+                if (q.type === "multiple-choice") {
+                    let optionsHtml = '<div class="options">';
+                    q.options.forEach(opt => {
+                        const selected = userAnswers[q.id]?.selected == opt.id;
+                        const isAnswered = userAnswers[q.id];
+                        const correct = opt.correct;
+                        optionsHtml += `
+                            <div class="option ${selected ? 'selected' : ''} ${isAnswered && correct ? 'correct' : ''} ${isAnswered && !correct && selected ? 'incorrect' : ''}"
+                                 data-question="${q.id}" data-option="${opt.id}" data-correct="${opt.correct}"
+                                 onclick="selectOption(this, ${q.id}, ${opt.id}, ${opt.correct})">
+                                ${opt.text}
+                            </div>
+                        `;
+                    });
+                    optionsHtml += '</div>';
+                    content += optionsHtml;
+                } else if (q.type === "fill-in-blank") {
+                    const value = userAnswers[q.id]?.answer || '';
+                    content += `
+                        <div class="fill-in-blank">
+                            <input type="text" id="fill-${q.id}" value="${value}" placeholder="أدخل إجابتك هنا" oninput="onFillInput(${q.id})">
+                        </div>
+                    `;
+                }
+
+                content += `<div class="explanation" id="explanation-${q.id}" style="${userAnswers[q.id] ? 'display:block' : 'display:none'}">
+                    <strong>التفسير:</strong> ${q.explanation}
+                </div>`;
+                questionEl.innerHTML = content;
+                
+                // تحديد ما إذا كان السؤال قد تمت الإجابة عليه
+                answered[index] = !!userAnswers[q.id];
+            }
+
+            container.appendChild(questionEl);
+        });
+
+        // تحديث زر التالي بناءً على السؤال الحالي
+        updateNextButton();
+
+        // ربط الأحداث
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+        document.getElementById('print-btn').addEventListener('click', printResults);
+        document.getElementById('share-btn').addEventListener('click', shareResults);
+        document.getElementById('restart-btn').addEventListener('click', restartExam);
+        document.getElementById('back-btn').addEventListener('click', backToExams);
+
+        if (wasResumed) {
+            alert(`تم استئناف الامتحان من السؤال ${getQuestionNumber(currentQuestionIndex)}`);
+        }
+    }
+
+    // بدء الامتحان عند تحميل الصفحة
+    window.onload = initExam;
+</script>
+</body>
+</html>

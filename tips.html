@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نصائح تعليمية - تعليمك</title>
+    <style>
+        :root {
+            --primary-color: #4facfe;
+            --secondary-color: #00f2fe;
+            --accent-color: #f5576c;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --arabic-color: #4facfe;
+            --math-color: #f093fb;
+            --science-color: #43e97b;
+            --social-color: #a18cd1;
+            --english-color: #667eea;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 15px;
+        }
+
+        .header {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .tip-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .tip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .tip-card.math {
+            border-top-color: var(--math-color);
+        }
+
+        .tip-card.science {
+            border-top-color: var(--science-color);
+        }
+
+        .tip-card.arabic {
+            border-top-color: var(--arabic-color);
+        }
+
+        .tip-card.social {
+            border-top-color: var(--social-color);
+        }
+
+        .tip-card.english {
+            border-top-color: var(--english-color);
+        }
+
+        .tip-card.general {
+            border-top-color: var(--primary-color);
+        }
+
+        .tip-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .math .tip-category { background: var(--math-color); }
+        .science .tip-category { background: var(--science-color); }
+        .arabic .tip-category { background: var(--arabic-color); }
+        .social .tip-category { background: var(--social-color); }
+        .english .tip-category { background: var(--english-color); }
+
+        .tip-content {
+            margin-top: 30px;
+        }
+
+        .tip-title {
+            font-size: 1.4rem;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .tip-text {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .tip-source {
+            font-size: 0.9rem;
+            color: #777;
+            font-style: italic;
+            margin-top: 15px;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin-top: 15px;
+            background: #f1f3f4;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .search-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            font-size: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .filter-btn.math:hover, .filter-btn.math.active { background: var(--math-color); border-color: var(--math-color); }
+        .filter-btn.science:hover, .filter-btn.science.active { background: var(--science-color); border-color: var(--science-color); }
+        .filter-btn.arabic:hover, .filter-btn.arabic.active { background: var(--arabic-color); border-color: var(--arabic-color); }
+        .filter-btn.social:hover, .filter-btn.social.active { background: var(--social-color); border-color: var(--social-color); }
+        .filter-btn.english:hover, .filter-btn.english.active { background: var(--english-color); border-color: var(--english-color); }
+
+        @media (max-width: 768px) {
+            .tips-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+          .home-btn-container {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            border-top: 1px solid #e1e1e1;
+        }
+        
+        .home-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>نصائح تعليمية</h1>
+            <p>مجموعة من النصائح والإرشادات لتحسين تجربتك التعليمية</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="ابحث عن نصائح...">
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterTips('all')">الكل</button>
+                <button class="filter-btn arabic" onclick="filterTips('arabic')">اللغة العربية</button>
+                <button class="filter-btn math" onclick="filterTips('math')">الرياضيات</button>
+                <button class="filter-btn science" onclick="filterTips('science')">العلوم</button>
+                <button class="filter-btn social" onclick="filterTips('social')">الدراسات</button>
+                <button class="filter-btn english" onclick="filterTips('english')">الإنجليزية</button>
+                <button class="filter-btn" onclick="filterTips('general')">عامة</button>
+            </div>
+        </div>
+
+        <div class="tips-container" id="tipsContainer">
+            <!-- النصيحة 1 -->
+            <div class="tip-card general">
+                <span class="tip-category">عام</span>
+                <div class="tip-content">
+                    <h3 class="tip-title">تنظيم الوقت</h3>
+                    <p class="tip-text">
+                        - قسم وقتك بين المواد الدراسية بشكل متوازن
+                        <br>- خصص فترات للراحة بين فترات الدراسة
+                        <br>- استخدم تقويمًا أو تطبيقًا لتنظيم وقتك
+                        <br>- ابدأ بالمواد الأصعب عندما يكون ذهنك منتعشًا
+                    </p>
+                    <p class="tip-source">نصيحة من د. أحمد محمود - أستاذ التربية</p>
+                </div>
+            </div>
+
+            <!-- النصيحة 2 -->
+            <div class="tip-card arabic">
+                <span class="tip-category">عربي</span>
+                <div class="tip-content">
+                    <h3 class="tip-title">تحسين القراءة العربية</h3>
+                    <p class="tip-text">
+                        - اقرأ يوميًا ولو صفحة واحدة من كتاب باللغة العربية
+                        <br>- استمع إلى البرامج الإذاعية بالعربية الفصحى
+                        <br>- احتفظ بمفكرة للكلمات الجديدة ومعانيها
+                        <br>- تدرب على كتابة فقرة يوميًا بالعربية
+                    </p>
+                </div>
+            </div>
+
+            <!-- النصيحة 3 -->
+            <div class="tip-card math">
+                <span class="tip-category">رياضيات</span>
+                <div class="tip-content">
+                    <h3 class="tip-title">حل مسائل الرياضيات</h3>
+                    <p class="tip-text">
+                        - اقرأ المسألة بعناية وحدد المعطيات والمطلوب
+                        <br>- ارسم شكلًا أو مخططًا إذا أمكن
+                        <br>- اكتب خطوات الحل بشكل منظم
+                        <br>- تحقق من النتيجة بتطبيقها على مثال بسيط
+                        <br>- تدرب على أنواع مختلفة من المسائل
+                    </p>
+                </div>
+            </div>
+
+            <!-- النصيحة 4 -->
+            <div class="tip-card science">
+                <span class="tip-category">علوم</span>
+                <div class="tip-content">
+                    <h3 class="tip-title">فهم التجارب العلمية</h3>
+                    <p class="tip-text">
+                        - اقرأ التجربة قبل معمل العلوم بيوم
+                        <br>- ضع فرضية قبل بدء التجربة
+                        <br>- سجل الملاحظات بدقة أثناء التجربة
+                        <br>- قارن النتائج مع فرضيتك الأولية
+                        <br>- اربط النتائج بالنظريات العلمية
+                    </p>
+                    <p class="tip-source">دليل معمل العلوم - الصف الثاني الإعدادي</p>
+                </div>
+            </div>
+
+            <!-- النصيحة 5 -->
+            <div class="tip-card social">
+                <span class="tip-category">دراسات</span>
+                <div class="tip-content">
+                    <h3 class="tip-title">حفظ التواريخ والأحداث</h3>
+                    <p class="tip-text">
+                        - أنشئ خطًا زمنيًا للأحداث التاريخية
+                        <br>- اربط الأحداث بقصص أو صور تساعد على التذكر
+                        <br>- استخدم خرائط ذهنية لتنظيم المعلومات
+                        <br>- قم بزيارات افتراضية للمواقع التاريخية
+                    </p>
+                </div>
+            </div>
+
+            <!-- النصيحة 6 -->
+            <div class="tip-card english">
+                <span class="tip-category">إنجليزي</span>
+                <div class="tip-content">
+                    <h3 class="tip-title">تحسين اللغة الإنجليزية</h3>
+                    <p class="tip-text">
+                        - شاهد أفلام أو مسلسلات باللغة الإنجليزية مع الترجمة
+                        <br>- استخدم تطبيقات تعلم اللغة يوميًا
+                        <br>- تحدث الإنجليزية مع زملائك حتى لو بأخطاء
+                        <br>- اقرأ قصصًا مبسطة باللغة الإنجليزية
+                    </p>
+                </div>
+            </div>
+
+            <!-- النصيحة 7 -->
+            <div class="tip-card general">
+                <span class="tip-category">عام</span>
+                <div class="tip-content">
+                    <h3 class="tip-title">الاستعداد للامتحانات</h3>
+                    <p class="tip-text">
+                        - ابدأ المذاكرة قبل الامتحان بوقت كاف
+                        <br>- راجع باستخدام الملخصات والخرائط الذهنية
+                        <br>- حل نماذج امتحانات السنوات السابقة
+                        <br>- احصل على قسط كاف من النوم قبل الامتحان
+                        <br>- تناول وجبة خفيفة وصحية قبل الامتحان
+                    </p>
+                </div>
+            </div>
+
+            <!-- النصيحة 8 -->
+            <div class="tip-card math">
+                <span class="tip-category">رياضيات</span>
+                <div class="tip-content">
+                    <h3 class="tip-title">تذكر القوانين الرياضية</h3>
+                    <p class="tip-text">
+                        - افهم أساسيات القانون قبل حفظه
+                        <br>- اشتق القانون بنفسك إذا أمكن
+                        <br>- استخدم القوانين في حل مسائل متنوعة
+                        <br>- أنشئ ملصقات للقوانين وضعها في مكان مرئي
+                        <br>- اخترع أغنية أو قافية لتذكر القانون
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+ <div class="home-btn-container">
+            <a href="index.html" class="home-btn">
+                <i class="fas fa-home"></i>
+                العودة إلى الصفحة الرئيسية
+            </a>
+        </div>
+    <script>
+        // فلترة النصائح حسب التصنيف
+        function filterTips(category) {
+            const tips = document.querySelectorAll('.tip-card');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            // تحديث الأزرار النشطة
+            filterBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes('الكل') && category === 'all') btn.classList.add('active');
+                if (btn.textContent.includes('عربي') && category === 'arabic') btn.classList.add('active');
+                if (btn.textContent.includes('رياضيات') && category === 'math') btn.classList.add('active');
+                if (btn.textContent.includes('علوم') && category === 'science') btn.classList.add('active');
+                if (btn.textContent.includes('دراسات') && category === 'social') btn.classList.add('active');
+                if (btn.textContent.includes('إنجليزي') && category === 'english') btn.classList.add('active');
+                if (btn.textContent.includes('عامة') && category === 'general') btn.classList.add('active');
+            });
+            
+            // عرض/إخفاء النصائح حسب التصنيف
+            tips.forEach(tip => {
+                if (category === 'all') {
+                    tip.style.display = 'block';
+                } else {
+                    if (tip.classList.contains(category)) {
+                        tip.style.display = 'block';
+                    } else {
+                        tip.style.display = 'none';
+                    }
+                }
+                
+                // تأثير عند التغيير
+                setTimeout(() => {
+                    tip.style.opacity = '1';
+                }, 50);
+            });
+        }
+
+        // بحث النصائح
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const tips = document.querySelectorAll('.tip-card');
+            
+            tips.forEach(tip => {
+                const title = tip.querySelector('.tip-title').textContent.toLowerCase();
+                const text = tip.querySelector('.tip-text').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || text.includes(searchTerm)) {
+                    tip.style.display = 'block';
+                } else {
+                    tip.style.display = 'none';
+                }
+            });
+        });
+
+        // فتح/إغلاق التفاصيل (يمكن إضافته لاحقًا)
+        function toggleTipDetails(tipId) {
+            // يمكن تطوير هذه الوظيفة لاحقًا
+        }
+    </script>
+</body>
+</html>

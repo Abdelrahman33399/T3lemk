@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار اللغة العربية - الصف الثالث الإعدادي</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط عامة */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* الحاوية الرئيسية */
+        .exam-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        /* رأس الامتحان */
+        .exam-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+        }
+        
+        .exam-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        /* إحصائيات الأسئلة */
+        .stats {
+            background: #e9f5ff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            border-right: 4px solid #007bff;
+        }
+        
+        /* الأسئلة */
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .question h3 {
+            color: #007bff;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        /* النصوص والقصائد */
+        .passage, .poem {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.8;
+            font-style: italic;
+            border-right: 4px solid #6c757d;
+        }
+        
+        .poem {
+            text-align: center;
+            font-weight: bold;
+            background: #fff9e6;
+            border-right-color: #ffc107;
+        }
+        
+        /* خيارات الأسئلة */
+        .options {
+            margin: 20px 0;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            background: white;
+        }
+        
+        .option:hover {
+            background-color: #e9f5ff;
+            transform: translateX(-5px);
+        }
+        
+        .option.selected {
+            background-color: #d4edff;
+            border-left: 4px solid #007bff;
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        /* شرح الإجابة */
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-right: 3px solid #6c757d;
+        }
+        
+        /* حقول الإدخال */
+        .fill-in-blank input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .fill-in-blank input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+        
+        /* التنقل بين الأسئلة */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        /* الأزرار */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover:not(:disabled) {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover:not(:disabled) {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover:not(:disabled) {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+        
+        /* النتائج */
+        .results-container {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #007bff;
+        }
+        
+        .feedback {
+            text-align: center;
+            font-size: 18px;
+            margin: 15px 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .recommendations {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .correct-answer {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        /* عناصر التحكم */
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .exam-container {
+                padding: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .passage, .poem {
+                padding: 15px;
+            }
+        }
+    </style></head>
+<body>
+    <div class="exam-container">
+        <div class="exam-header">
+            <h1 id="exam-title">اختبار اللغة العربية - الصف الثالث الإعدادي (الوحدة الثانية) - الترم الأول</h1>
+        </div>
+        
+        <div class="stats">السؤال <span id="current-question">1</span> من <span id="total-questions">60</span></div>
+        
+        <div id="questions-container"></div>
+        
+        <div class="navigation">
+            <button id="prev-btn" class="btn btn-secondary" disabled>السابق</button>
+            <button id="next-btn" class="btn btn-primary">التالي</button>
+        </div>
+        
+        <div class="controls">
+            <button id="restart-btn" class="btn btn-warning">إعادة البدء</button>
+            <button id="print-btn" class="btn btn-info">طباعة النتائج</button>
+            <button id="share-btn" class="btn btn-success">مشاركة النتائج</button>
+            <button id="back-btn" class="btn btn-danger">العودة للامتحانات</button>
+        </div>
+        
+        <div class="results-container" id="results-container">
+            <h2>النتيجة</h2>
+            <div id="score"></div>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+
+    <audio id="correctSound" src="../../../assets/audio/correct.mp3" preload="auto"></audio>
+    <audio id="incorrectSound" src="../../../assets/audio/incorrect.mp3" preload="auto"></audio>
+
+
+   <script>
+    // أصوات
+    const correctSound = document.getElementById('correctSound');
+    const incorrectSound = document.getElementById('incorrectSound');
+
+    // معرف الامتحان
+    const examId = "arabic-grade1-term1";
+
+    // بيانات الأسئلة (كما أرسلتها)
+    const examData = {
+        title: "اختبار اللغة العربية - الصف الثالث الإعدادي (الوحدة الثانية) - الترم الأول",
+        questions: [
+            {
+        "id": 1,
+        "type": "multiple-choice",
+        "text": "من هو كاتب نص \"رحمة ومحبة\"؟",
+        "options": [
+            { "id": 1, "text": "طه حسين", "correct": false },
+            { "id": 2, "text": "قاسم أمين", "correct": true },
+            { "id": 3, "text": "محمد حسين هيكل", "correct": false },
+            { "id": 4, "text": "طهطاوي", "correct": false }
+        ],
+        "explanation": "قاسم أمين من رواد الحركة النسائية في مصر، وكتب \"تحرير المرأة\"."
+    },
+    {
+        "id": 2,
+        "type": "multiple-choice",
+        "text": "ما أهم كتاب لقاسم أمين؟",
+        "options": [
+            { "id": 1, "text": "النيل والحضارة", "correct": false },
+            { "id": 2, "text": "تحرير المرأة", "correct": true },
+            { "id": 3, "text": "السيرة الذاتية", "correct": false },
+            { "id": 4, "text": "العلم والمجتمع", "correct": false }
+        ],
+        "explanation": "\"تحرير المرأة\" من أبرز أعماله التي دعا فيها إلى تعليم المرأة."
+    },
+    {
+        "id": 3,
+        "type": "multiple-choice",
+        "text": "ما الفكرة العامة لنص \"رحمة ومحبة\"؟",
+        "options": [
+            { "id": 1, "text": "دعوة للحرب", "correct": false },
+            { "id": 2, "text": "دعوة لمعاملة المرأة بالرحمة والمحبة", "correct": true },
+            { "id": 3, "text": "دعوة للانعزال", "correct": false },
+            { "id": 4, "text": "نقد التعليم", "correct": false }
+        ],
+        "explanation": "النص يدعو إلى رحمة المرأة باعتبارها شريكة في المجتمع."
+    },
+    {
+        "id": 4,
+        "type": "multiple-choice",
+        "text": "ما معنى \"طبيعة العصر منافرة للاستبداد\"؟",
+        "options": [
+            { "id": 1, "text": "العصر يشجع على الظلم", "correct": false },
+            { "id": 2, "text": "العصر يرفض السيطرة الفردية", "correct": true },
+            { "id": 3, "text": "العصر يشجع على العبودية", "correct": false },
+            { "id": 4, "text": "العصر لا يهتم بالحرية", "correct": false }
+        ],
+        "explanation": "\"منافرة\" تعني معارضة، فالعصر الحديث يرفض الاستبداد."
+    },
+    {
+        "id": 5,
+        "type": "multiple-choice",
+        "text": "ما معنى \"سوق القوى الإنسانية\"؟",
+        "options": [
+            { "id": 1, "text": "بيع البشر", "correct": false },
+            { "id": 2, "text": "تشبيه البشر بقافلة تسير نحو التقدم", "correct": true },
+            { "id": 3, "text": "حرب بين الشعوب", "correct": false },
+            { "id": 4, "text": "تجارة القوى العاملة", "correct": false }
+        ],
+        "explanation": "تعبير مجازي يدل على وحدة البشرية في مسيرة التقدم."
+    },
+    {
+        "id": 6,
+        "type": "multiple-choice",
+        "text": "ما المقصود بـ\"الطائف الرحماني\"؟",
+        "options": [
+            { "id": 1, "text": "طائر نادر", "correct": false },
+            { "id": 2, "text": "ريح حارة", "correct": false },
+            { "id": 3, "text": "تعاليم الإسلام السمحة", "correct": true },
+            { "id": 4, "text": "صوت الآذان", "correct": false }
+        ],
+        "explanation": "استعارة تُصور الإسلام كنسمة رحمة تطوف على القلوب."
+    },
+    {
+        "id": 7,
+        "type": "multiple-choice",
+        "text": "ما الحديث النبوي الذي ذُكر في النص؟",
+        "options": [
+            { "id": 1, "text": "من كتم علماً...", "correct": false },
+            { "id": 2, "text": "اتقوا الله في الضعيفين: المرأة واليتيم", "correct": true },
+            { "id": 3, "text": "العلم فريضة على كل مسلم", "correct": false },
+            { "id": 4, "text": "خيركم من تعلم القرآن وعلمه", "correct": false }
+        ],
+        "explanation": "الحديث يُبرز مكانة المرأة كـ \"ضعيفة\" تحتاج حماية."
+    },
+    {
+        "id": 8,
+        "type": "multiple-choice",
+        "text": "ما نوع العلاقة التي يجب أن تكون بين الرجل والمرأة؟",
+        "options": [
+            { "id": 1, "text": "كره وقسوة", "correct": false },
+            { "id": 2, "text": "محبة ورحمة", "correct": true },
+            { "id": 3, "text": "تجاهل", "correct": false },
+            { "id": 4, "text": "هيمنة", "correct": false }
+        ],
+        "explanation": "العلاقة يجب أن تكون إنسانية، قوامها المحبة والرحمة."
+    },
+    {
+        "id": 9,
+        "type": "multiple-choice",
+        "text": "لماذا معاملة المرأة بالرحمة واجب وطني؟",
+        "options": [
+            { "id": 1, "text": "لأنها لا تُنتج شيئًا", "correct": false },
+            { "id": 2, "text": "لأن المجتمع لا يُبنى إلا بمشاركة جميع أفراده", "correct": true },
+            { "id": 3, "text": "لأنها تُنفق المال", "correct": false },
+            { "id": 4, "text": "لأنها لا تحتاج للتعليم", "correct": false }
+        ],
+        "explanation": "المرأة شريكة في بناء المجتمع، فتحريرها تقدم للأمة."
+    },
+    {
+        "id": 10,
+        "type": "multiple-choice",
+        "text": "ما نوع الجمال في \"منافرة للاستبداد، معادية للاستعباد\"؟",
+        "options": [
+            { "id": 1, "text": "تكرار", "correct": false },
+            { "id": 2, "text": "ترادف", "correct": true },
+            { "id": 3, "text": "تشبيه", "correct": false },
+            { "id": 4, "text": "استعارة", "correct": false }
+        ],
+        "explanation": "\"منافرة\" و\"معادية\" ترادف يُؤكد رفض الظلم."
+    },
+    {
+        "id": 11,
+        "type": "multiple-choice",
+        "text": "ما هو \"البدل\" في النحو؟",
+        "options": [
+            { "id": 1, "text": "اسم يُرفع دائمًا", "correct": false },
+            { "id": 2, "text": "تابع يُفسر المبدل منه ويتبعه في الإعراب", "correct": true },
+            { "id": 3, "text": "صفة تصف الاسم", "correct": false },
+            { "id": 4, "text": "فاعل في الجملة", "correct": false }
+        ],
+        "explanation": "البدل تابع يأخذ نفس إعراب المبدل منه."
+    },
+    {
+        "id": 12,
+        "type": "multiple-choice",
+        "text": "ما نوع البدل في \"قرأت الكتاب نصفَه\"؟",
+        "options": [
+            { "id": 1, "text": "مطابق", "correct": false },
+            { "id": 2, "text": "بعض من كل", "correct": true },
+            { "id": 3, "text": "اشتمال", "correct": false },
+            { "id": 4, "text": "تمييز", "correct": false }
+        ],
+        "explanation": "\"نصفه\" جزء مادي من \"الكتاب\"، ويعود عليه ضمير."
+    },
+    {
+        "id": 13,
+        "type": "multiple-choice",
+        "text": "ما نوع البدل في \"أعجبني محمد خلقَه\"؟",
+        "options": [
+            { "id": 1, "text": "مطابق", "correct": false },
+            { "id": 2, "text": "بعض من كل", "correct": false },
+            { "id": 3, "text": "اشتمال", "correct": true },
+            { "id": 4, "text": "تمييز", "correct": false }
+        ],
+        "explanation": "\"خلقُه\" صفة يشتمل عليها محمد، فهذا بدل اشتمال."
+    },
+    {
+        "id": 14,
+        "type": "multiple-choice",
+        "text": "ما الشروط في بدل البعض وبدل الاشتمال؟",
+        "options": [
+            { "id": 1, "text": "لا يعود عليه ضمير", "correct": false },
+            { "id": 2, "text": "يعود عليه ضمير", "correct": true },
+            { "id": 3, "text": "يكون معرفًا فقط", "correct": false },
+            { "id": 4, "text": "يكون نكرة فقط", "correct": false }
+        ],
+        "explanation": "في كلا النوعين، يجب أن يعود ضمير على المبدل منه."
+    },
+    {
+        "id": 15,
+        "type": "multiple-choice",
+        "text": "ما نوع البدل في \"سلمت على الأستاذ أحمدَ\"؟",
+        "options": [
+            { "id": 1, "text": "بعض من كل", "correct": false },
+            { "id": 2, "text": "اشتمال", "correct": false },
+            { "id": 3, "text": "مطابق", "correct": true },
+            { "id": 4, "text": "تمييز", "correct": false }
+        ],
+        "explanation": "\"أحمد\" يساوي \"الأستاذ\" في المعنى والإعراب."
+    },
+    {
+        "id": 16,
+        "type": "multiple-choice",
+        "text": "ما نوع البدل في \"يا أيها الرجلُ احفظ كرامتك\"؟",
+        "options": [
+            { "id": 1, "text": "مطابق", "correct": true },
+            { "id": 2, "text": "بعض من كل", "correct": false },
+            { "id": 3, "text": "اشتمال", "correct": false },
+            { "id": 4, "text": "تمييز", "correct": false }
+        ],
+        "explanation": "\"الرجل\" اسم جامد بعد \"يا أيها\"، يُعرب بدل مطابق."
+    },
+    {
+        "id": 17,
+        "type": "multiple-choice",
+        "text": "من هي سميرة موسى؟",
+        "options": [
+            { "id": 1, "text": "شاعرة مصرية", "correct": false },
+            { "id": 2, "text": "عالمة فيزياء نووية", "correct": true },
+            { "id": 3, "text": "طبيبة نفسية", "correct": false },
+            { "id": 4, "text": "مهندس فضاء", "correct": false }
+        ],
+        "explanation": "سميرة موسى من أوائل النساء العربيات في الفيزياء النووية."
+    },
+    {
+        "id": 18,
+        "type": "multiple-choice",
+        "text": "ما هدف سميرة موسى من بحوثها؟",
+        "options": [
+            { "id": 1, "text": "صنع قنابل نووية", "correct": false },
+            { "id": 2, "text": "استخدام الذرة في علاج السرطان", "correct": true },
+            { "id": 3, "text": "تصدير الطاقة النووية", "correct": false },
+            { "id": 4, "text": "تدمير الدول المعادية", "correct": false }
+        ],
+        "explanation": "دفعها لذلك معاناة والدتها مع السرطان."
+    },
+    {
+        "id": 19,
+        "type": "multiple-choice",
+        "text": "أين حصلت سميرة موسى على الدكتوراه؟",
+        "options": [
+            { "id": 1, "text": "في أمريكا", "correct": false },
+            { "id": 2, "text": "في إنجلترا", "correct": true },
+            { "id": 3, "text": "في فرنسا", "correct": false },
+            { "id": 4, "text": "في ألمانيا", "correct": false }
+        ],
+        "explanation": "نالت الدكتوراه في إنجلترا خلال 17 شهرًا فقط."
+    },
+    {
+        "id": 20,
+        "type": "multiple-choice",
+        "text": "ما سبب وفاة سميرة موسى؟",
+        "options": [
+            { "id": 1, "text": "مرض السرطان", "correct": false },
+            { "id": 2, "text": "حادث سيارة من قمة جبل", "correct": true },
+            { "id": 3, "text": "تسمم إشعاعي", "correct": false },
+            { "id": 4, "text": "حرب", "correct": false }
+        ],
+        "explanation": "توفيت في حادث سيارة في أمريكا عام 1952."
+    },
+    {
+        "id": 21,
+        "type": "multiple-choice",
+        "text": "ما التكريم الذي نالته من الرئيس السادات؟",
+        "options": [
+            { "id": 1, "text": "جائزة نوبل", "correct": false },
+            { "id": 2, "text": "وسام العلوم والفنون من الطبقة الأولى", "correct": true },
+            { "id": 3, "text": "منحة دراسية", "correct": false },
+            { "id": 4, "text": "دكتوراه فخرية", "correct": false }
+        ],
+        "explanation": "منحها وسام العلوم والفنون عام 1981."
+    },
+    {
+        "id": 22,
+        "type": "multiple-choice",
+        "text": "من هو شاعر نص \"العلم الحديث\"؟",
+        "options": [
+            { "id": 1, "text": "أحمد شوقي", "correct": false },
+            { "id": 2, "text": "حافظ إبراهيم", "correct": false },
+            { "id": 3, "text": "محمد الهراوي", "correct": true },
+            { "id": 4, "text": "نزار قباني", "correct": false }
+        ],
+        "explanation": "محمد الهراوي شاعر مصري كتب في العلم والوطن."
+    },
+    {
+        "id": 23,
+        "type": "multiple-choice",
+        "text": "ما الفكرة العامة للنص؟",
+        "options": [
+            { "id": 1, "text": "نقد العلم", "correct": false },
+            { "id": 2, "text": "المدح بالجهل", "correct": false },
+            { "id": 3, "text": "الدعوة لطلب العلم", "correct": true },
+            { "id": 4, "text": "وصف الطبيعة", "correct": false }
+        ],
+        "explanation": "النص يدعو الشباب إلى طلب العلم."
+    },
+    {
+        "id": 24,
+        "type": "multiple-choice",
+        "text": "ما تشبيه الجاهل في النص؟",
+        "options": [
+            { "id": 1, "text": "كالملك", "correct": false },
+            { "id": 2, "text": "كالطبيب", "correct": false },
+            { "id": 3, "text": "كالمحارب بلا سلاح", "correct": true },
+            { "id": 4, "text": "كالطالب المجتهد", "correct": false }
+        ],
+        "explanation": "\"كأنه سار إلى حرب بغير حسام\" → ضعف الجاهل."
+    },
+    {
+        "id": 25,
+        "type": "multiple-choice",
+        "text": "ما أثر العلم على الأمة؟",
+        "options": [
+            { "id": 1, "text": "يخفضها", "correct": false },
+            { "id": 2, "text": "يذلها", "correct": false },
+            { "id": 3, "text": "يرفعها إلى \"أجل مقام\"", "correct": true },
+            { "id": 4, "text": "يُضعفها", "correct": false }
+        ],
+        "explanation": "العلم يرفع الأمة ويعطيها مكانة عالية."
+    },
+    {
+        "id": 26,
+        "type": "multiple-choice",
+        "text": "ما معنى \"راكب متن الرياح\"؟",
+        "options": [
+            { "id": 1, "text": "الطيار", "correct": true },
+            { "id": 2, "text": "البحار", "correct": false },
+            { "id": 3, "text": "المزارع", "correct": false },
+            { "id": 4, "text": "المهندس", "correct": false }
+        ],
+        "explanation": "تعبير مجازي يشير إلى ركوب الطائرة."
+    },
+    {
+        "id": 27,
+        "type": "multiple-choice",
+        "text": "ما الدعوة في \"يا بنى الأهرام\"؟",
+        "options": [
+            { "id": 1, "text": "دعوة للهروب", "correct": false },
+            { "id": 2, "text": "نداء عاطفي للمصريين", "correct": true },
+            { "id": 3, "text": "دعوة للنوم", "correct": false },
+            { "id": 4, "text": "دعوة للسياحة", "correct": false }
+        ],
+        "explanation": "\"بنو الأهرام\" خطاب فخور يُشعر بالانتماء."
+    },
+    {
+        "id": 28,
+        "type": "multiple-choice",
+        "text": "ما إنجازات العلم الحديث حسب النص؟",
+        "options": [
+            { "id": 1, "text": "الحرف اليدوية فقط", "correct": false },
+            { "id": 2, "text": "الطيران، الكهرباء، الاتصالات", "correct": true },
+            { "id": 3, "text": "الزراعة التقليدية", "correct": false },
+            { "id": 4, "text": "صناعة السفن الخشبية", "correct": false }
+        ],
+        "explanation": "النص يعدد إنجازات مثل الطيران والغواصات."
+    },
+    {
+        "id": 29,
+        "type": "multiple-choice",
+        "text": "من هو لويس برايل؟",
+        "options": [
+            { "id": 1, "text": "طبيب مصري", "correct": false },
+            { "id": 2, "text": "عالم فرنسي واكب النور للمكفوفين", "correct": true },
+            { "id": 3, "text": "شاعر لبناني", "correct": false },
+            { "id": 4, "text": "مهندس معماري", "correct": false }
+        ],
+        "explanation": "لويس برايل اخترع طريقة قراءة للمكفوفين."
+    },
+    {
+        "id": 30,
+        "type": "multiple-choice",
+        "text": "كيف فقد بصره؟",
+        "options": [
+            { "id": 1, "text": "مرض وراثي", "correct": false },
+            { "id": 2, "text": "حادث مثقابين في ورشة والده", "correct": true },
+            { "id": 3, "text": "حرب", "correct": false },
+            { "id": 4, "text": "تسمم", "correct": false }
+        ],
+        "explanation": "وقع أثناء اللعب بالمثقابين، فطعنت عينيه."
+    },
+    {
+        "id": 31,
+        "type": "multiple-choice",
+        "text": "ما المشكلة في طريقة الحروف البارزة؟",
+        "options": [
+            { "id": 1, "text": "كانت جميلة", "correct": false },
+            { "id": 2, "text": "كانت عملية جدًا", "correct": false },
+            { "id": 3, "text": "كانت غير عملية وتحتاج مجلدات كثيرة", "correct": true },
+            { "id": 4, "text": "كانت سريعة القراءة", "correct": false }
+        ],
+        "explanation": "الحروف كانت ضخمة، والكتابة تستغرق مجلدات."
+    },
+    {
+        "id": 32,
+        "type": "multiple-choice",
+        "text": "من أين استلهم برايل فكرته؟",
+        "options": [
+            { "id": 1, "text": "من معلم في المدرسة", "correct": false },
+            { "id": 2, "text": "من طريقة عسكرية لقراءة الرسائل في الظلام", "correct": true },
+            { "id": 3, "text": "من كتاب قديم", "correct": false },
+            { "id": 4, "text": "من حلم", "correct": false }
+        ],
+        "explanation": "استلهمها من ضابط فرنسي طور طريقة للقراءة في الظلام."
+    },
+    {
+        "id": 33,
+        "type": "multiple-choice",
+        "text": "ما الذي اكتشفه برايل؟",
+        "options": [
+            { "id": 1, "text": "الحروف البارزة", "correct": false },
+            { "id": 2, "text": "نظام النقط والثقوب (طريقة برايل)", "correct": true },
+            { "id": 3, "text": "الآلة الكاتبة", "correct": false },
+            { "id": 4, "text": "الهاتف", "correct": false }
+        ],
+        "explanation": "طريقة برايل تعتمد على نقط تمثل الحروف."
+    },
+    {
+        "id": 34,
+        "type": "multiple-choice",
+        "text": "ما رد فعل الأكاديمية في باريس؟",
+        "options": [
+            { "id": 1, "text": "قبلوها فورًا", "correct": false },
+            { "id": 2, "text": "منحوه جائزة", "correct": false },
+            { "id": 3, "text": "رفضوها", "correct": true },
+            { "id": 4, "text": "نشروها عالميًا", "correct": false }
+        ],
+        "explanation": "رفضوها في البداية، لكنه استمر في تعليمها."
+    },
+    {
+        "id": 35,
+        "type": "multiple-choice",
+        "text": "من قال: \"اهتفوا لرجل عظيم أعطانا النور\"؟",
+        "options": [
+            { "id": 1, "text": "والدة برايل", "correct": false },
+            { "id": 2, "text": "تلميذته في حفل موسيقي", "correct": true },
+            { "id": 3, "text": "عالم فرنسي", "correct": false },
+            { "id": 4, "text": "صحفي", "correct": false }
+        ],
+        "explanation": "إحدى تلميذاته أشادت بجهوده في الحفل."
+    },
+    {
+        "id": 36,
+        "type": "multiple-choice",
+        "text": "ما وصف برايل الخالد؟",
+        "options": [
+            { "id": 1, "text": "عالم الفيزياء", "correct": false },
+            { "id": 2, "text": "واهب النور للمكفوفين", "correct": true },
+            { "id": 3, "text": "مخترع الهاتف", "correct": false },
+            { "id": 4, "text": "مؤسس مدرسة المكفوفين", "correct": false }
+        ],
+        "explanation": "لأن طريقة برايل جعلت المكفوفين يقرؤون."
+    },
+    {
+        "id": 37,
+        "type": "multiple-choice",
+        "text": "ما أسلوب المدح في النحو؟",
+        "options": [
+            { "id": 1, "text": "بئس", "correct": false },
+            { "id": 2, "text": "نعم", "correct": true },
+            { "id": 3, "text": "لا حبذا", "correct": false },
+            { "id": 4, "text": "كلا", "correct": false }
+        ],
+        "explanation": "\"نعم\" تُستخدم للثناء والتقدير."
+    },
+    {
+        "id": 38,
+        "type": "multiple-choice",
+        "text": "ما أسلوب الذم؟",
+        "options": [
+            { "id": 1, "text": "نعم", "correct": false },
+            { "id": 2, "text": "حبذا", "correct": false },
+            { "id": 3, "text": "بئس", "correct": true },
+            { "id": 4, "text": "صدق", "correct": false }
+        ],
+        "explanation": "\"بئس\" تُستخدم للذم والتنديد."
+    },
+    {
+        "id": 39,
+        "type": "multiple-choice",
+        "text": "ما معنى \"نعم القائد عمر\"؟",
+        "options": [
+            { "id": 1, "text": "عمر ليس قائدًا", "correct": false },
+            { "id": 2, "text": "هذا القائد جدير بالثناء", "correct": true },
+            { "id": 3, "text": "عمر قائد سيء", "correct": false },
+            { "id": 4, "text": "لا نريد قادة", "correct": false }
+        ],
+        "explanation": "\"نعم\" تُظهر الإعجاب والتقدير."
+    },
+    {
+        "id": 40,
+        "type": "multiple-choice",
+        "text": "ما معنى \"بئس الخلق الكذب\"؟",
+        "options": [
+            { "id": 1, "text": "الكذب خلق حسن", "correct": false },
+            { "id": 2, "text": "الكذب خلق قبيح", "correct": true },
+            { "id": 3, "text": "الكذب مفيد", "correct": false },
+            { "id": 4, "text": "الكذب لا يؤثر", "correct": false }
+        ],
+        "explanation": "\"بئس\" تُستخدم للذم."
+    },
+    {
+        "id": 41,
+        "type": "multiple-choice",
+        "text": "ما أسلوب التمني؟",
+        "options": [
+            { "id": 1, "text": "نعم", "correct": false },
+            { "id": 2, "text": "بئس", "correct": false },
+            { "id": 3, "text": "حبذا", "correct": true },
+            { "id": 4, "text": "لا", "correct": false }
+        ],
+        "explanation": "\"حبذا الصدق\" تعني \"جميل أن يكون الصدق\"."
+    },
+    {
+        "id": 42,
+        "type": "multiple-choice",
+        "text": "ما معنى \"لا حبذا الكذب\"؟",
+        "options": [
+            { "id": 1, "text": "الكذب جميل", "correct": false },
+            { "id": 2, "text": "الكذب قبيح", "correct": true },
+            { "id": 3, "text": "الكذب مقبول", "correct": false },
+            { "id": 4, "text": "الكذب ضروري", "correct": false }
+        ],
+        "explanation": "\"لا حبذا\" تُستخدم للنفور والذم."
+    },
+    {
+        "id": 43,
+        "type": "multiple-choice",
+        "text": "ما الفاعل في \"نعم الرجل محمد\"؟",
+        "options": [
+            { "id": 1, "text": "نعم", "correct": false },
+            { "id": 2, "text": "الرجل", "correct": true },
+            { "id": 3, "text": "محمد", "correct": false },
+            { "id": 4, "text": "لا فاعل", "correct": false }
+        ],
+        "explanation": "\"الرجل\" هو الفاعل، و\"محمد\" مبتدأ مؤخر."
+    },
+    {
+        "id": 44,
+        "type": "multiple-choice",
+        "text": "ما إعراب \"محمد\" في \"نعم القائد محمد\"؟",
+        "options": [
+            { "id": 1, "text": "فاعل", "correct": false },
+            { "id": 2, "text": "مبتدأ مؤخر", "correct": true },
+            { "id": 3, "text": "مفعول به", "correct": false },
+            { "id": 4, "text": "خبر", "correct": false }
+        ],
+        "explanation": "\"محمد\" مبتدأ مؤخر مرفوع."
+    },
+    {
+        "id": 45,
+        "type": "multiple-choice",
+        "text": "ما إعراب \"الصدق\" في \"الصدق نعم الخلق\"؟",
+        "options": [
+            { "id": 1, "text": "فاعل", "correct": false },
+            { "id": 2, "text": "مبتدأ", "correct": true },
+            { "id": 3, "text": "خبر", "correct": false },
+            { "id": 4, "text": "تمييز", "correct": false }
+        ],
+        "explanation": "\"الصدق\" مبتدأ، و\"نعم الخلق\" خبر."
+    },
+    {
+        "id": 46,
+        "type": "multiple-choice",
+        "text": "ما التمييز في \"نعم عملاً الإخلاص\"؟",
+        "options": [
+            { "id": 1, "text": "نعم", "correct": false },
+            { "id": 2, "text": "عملاً", "correct": true },
+            { "id": 3, "text": "الإخلاص", "correct": false },
+            { "id": 4, "text": "لا تمييز", "correct": false }
+        ],
+        "explanation": "\"عملاً\" تمييز منصوب بعد \"نعم\"."
+    },
+    {
+        "id": 47,
+        "type": "multiple-choice",
+        "text": "ما الفاعل في \"نعم خلقا الوفاء\"؟",
+        "options": [
+            { "id": 1, "text": "نعم", "correct": false },
+            { "id": 2, "text": "خلقا", "correct": false },
+            { "id": 3, "text": "الوفاء", "correct": false },
+            { "id": 4, "text": "ضمير مستتر (هو)", "correct": true }
+        ],
+        "explanation": "الفاعل ضمير مستتر \"هو\"، و\"خلقا\" تمييز."
+    },
+    {
+        "id": 48,
+        "type": "multiple-choice",
+        "text": "ما نوع \"نعم\" في النحو؟",
+        "options": [
+            { "id": 1, "text": "فعل ماضٍ جامد مبني على الفتح", "correct": true },
+            { "id": 2, "text": "اسم", "correct": false },
+            { "id": 3, "text": "حرف", "correct": false },
+            { "id": 4, "text": "ظرف", "correct": false }
+        ],
+        "explanation": "\"نعم\" فعل ماضٍ جامد، لا يتصرف."
+    },
+    {
+        "id": 49,
+        "type": "multiple-choice",
+        "text": "ما التكريم الذي نالته سميرة موسى في قريتها؟",
+        "options": [
+            { "id": 1, "text": "تمثال", "correct": false },
+            { "id": 2, "text": "قصر ثقافة باسمها", "correct": true },
+            { "id": 3, "text": "مستشفى", "correct": false },
+            { "id": 4, "text": "جامعة", "correct": false }
+        ],
+        "explanation": "أُنشئ قصر ثقافة باسمها عام 1998."
+    },
+    {
+        "id": 50,
+        "type": "multiple-choice",
+        "text": "ما الدعوة في \"ربوا بنيكم، علموهم هذبوا\"؟",
+        "options": [
+            { "id": 1, "text": "إهمال التعليم", "correct": false },
+            { "id": 2, "text": "تربية الأبناء بالعلم والهذب", "correct": true },
+            { "id": 3, "text": "ترك الأطفال", "correct": false },
+            { "id": 4, "text": "تعليمهم الكذب", "correct": false }
+        ],
+        "explanation": "نصيحة للآباء برعاية الأبناء بالعلم."
+    },
+    {
+        "id": 51,
+        "type": "multiple-choice",
+        "text": "ما معنى \"العلم مال المعلمين\"؟",
+        "options": [
+            { "id": 1, "text": "العلم يُسرق", "correct": false },
+            { "id": 2, "text": "العلم ثروة لا تفنى", "correct": true },
+            { "id": 3, "text": "العلم يُباع", "correct": false },
+            { "id": 4, "text": "العلم يُوزع", "correct": false }
+        ],
+        "explanation": "العلم كمال لا يُستهلك، بل يزداد."
+    },
+    {
+        "id": 52,
+        "type": "multiple-choice",
+        "text": "ما وصف برايل عند وفاته؟",
+        "options": [
+            { "id": 1, "text": "غاضب", "correct": false },
+            { "id": 2, "text": "نادم", "correct": false },
+            { "id": 3, "text": "مطمئن لأنه حقق هدفه", "correct": true },
+            { "id": 4, "text": "خائف", "correct": false }
+        ],
+        "explanation": "قال: \"الآن أموت مطمئنًا\"."
+    },
+    {
+        "id": 53,
+        "type": "multiple-choice",
+        "text": "ما الدور الاجتماعي للمرأة حسب قاسم أمين؟",
+        "options": [
+            { "id": 1, "text": "لا دور لها", "correct": false },
+            { "id": 2, "text": "شريكة في بناء المجتمع", "correct": true },
+            { "id": 3, "text": "يجب أن تبقى في المنزل فقط", "correct": false },
+            { "id": 4, "text": "لا تحتاج للتعليم", "correct": false }
+        ],
+        "explanation": "المرأة شريكة، وواجب تحريرها وتعليمها."
+    },
+    {
+        "id": 54,
+        "type": "multiple-choice",
+        "text": "ما نوع الجمال في \"يد المساعدة\"؟",
+        "options": [
+            { "id": 1, "text": "تعبير مجازي", "correct": true },
+            { "id": 2, "text": "تكرار", "correct": false },
+            { "id": 3, "text": "تشبيه", "correct": false },
+            { "id": 4, "text": "استعارة", "correct": false }
+        ],
+        "explanation": "تعبير مجازي يدل على الدعم."
+    },
+    {
+        "id": 55,
+        "type": "multiple-choice",
+        "text": "ما الفرق بين \"البدل\" و\"التمييز\"؟",
+        "options": [
+            { "id": 1, "text": "لا فرق", "correct": false },
+            { "id": 2, "text": "البدل يأخذ إعراب المبدل منه، والتمييز يوضح النوع", "correct": true },
+            { "id": 3, "text": "البدل يأتي قبل الفاعل", "correct": false },
+            { "id": 4, "text": "التمييز يُرفع دائمًا", "correct": false }
+        ],
+        "explanation": "التمييز يوضح نوع الشيء (مثل: \"عملًا\"، \"خلقاً\")."
+    },
+    {
+        "id": 56,
+        "type": "multiple-choice",
+        "text": "ما الجملة التي تدل على بدل اشتمال؟",
+        "options": [
+            { "id": 1, "text": "قرأت الكتاب نصفه", "correct": false },
+            { "id": 2, "text": "أعجبني محمد خلقه", "correct": true },
+            { "id": 3, "text": "سلمت على الأستاذ أحمد", "correct": false },
+            { "id": 4, "text": "أكلت التفاحة قشرها", "correct": false }
+        ],
+        "explanation": "\"خلقُه\" صفة تشتمل عليها محمد."
+    },
+    {
+        "id": 57,
+        "type": "multiple-choice",
+        "text": "ما نوع \"نعمت\" في \"نعمت الصديقة هنا\"؟",
+        "options": [
+            { "id": 1, "text": "فعل ماضٍ مبني على الفتح", "correct": true },
+            { "id": 2, "text": "فعل ماضٍ مبني على السكون", "correct": false },
+            { "id": 3, "text": "فعل ماضٍ مبني على الكسر", "correct": false },
+            { "id": 4, "text": "اسم", "correct": false }
+        ],
+        "explanation": "تُضاف تاء التأنيث إذا كان الفاعل مؤنثًا."
+    },
+    {
+        "id": 58,
+        "type": "multiple-choice",
+        "text": "ما الرسالة في \"العلم خير قوام\"؟",
+        "options": [
+            { "id": 1, "text": "العلم أساس البناء", "correct": true },
+            { "id": 2, "text": "العلم عبء", "correct": false },
+            { "id": 3, "text": "العلم لا فائدة منه", "correct": false },
+            { "id": 4, "text": "العلم للغنى فقط", "correct": false }
+        ],
+        "explanation": "تشبيه العلم بالأساس المتين للبناء."
+    },
+    {
+        "id": 59,
+        "type": "multiple-choice",
+        "text": "ما الفكرة الرئيسية لنص لويس برايل؟",
+        "options": [
+            { "id": 1, "text": "الإعاقة تُهزم بالإرادة", "correct": true },
+            { "id": 2, "text": "العجز دائم", "correct": false },
+            { "id": 3, "text": "المكفوفون لا يستطيعون التعلم", "correct": false },
+            { "id": 4, "text": "العلم لا يفيد", "correct": false }
+        ],
+        "explanation": "برايل حوّل محنته إلى منحة للبشرية."
+    },
+    {
+        "id": 60,
+        "type": "multiple-choice",
+        "text": "ما الخلاصة المختصرة لنص \"العلم الحديث\"؟",
+        "options": [
+            { "id": 1, "text": "العلم قوة، والشباب ورثة الفراعنة", "correct": true },
+            { "id": 2, "text": "الجهل أفضل من العلم", "correct": false },
+            { "id": 3, "text": "العلم يضر", "correct": false },
+            { "id": 4, "text": "لا حاجة للتعليم", "correct": false }
+        ],
+        "explanation": "النص يربط بين العلم والهوية والمستقبل."
+    }
+        ]
+    };
+
+   // متغيرات
+    let currentQuestionIndex = 0;
+    let userAnswers = {};
+    let answered = {};
+
+    // تحميل البيانات المحفوظة
+    function loadSavedData() {
+        const saved = localStorage.getItem(`exam_${examId}`);
+        if (saved) {
+            const data = JSON.parse(saved);
+            userAnswers = data.answers || {};
+            currentQuestionIndex = data.currentQuestionIndex || 0;
+            return true;
+        }
+        return false;
+    }
+
+    // حفظ البيانات
+    function saveData() {
+        const data = {
+            answers: userAnswers,
+            currentQuestionIndex: currentQuestionIndex,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem(`exam_${examId}`, JSON.stringify(data));
+    }
+
+    // الحصول على رقم السؤال الحقيقي (باستثناء النصوص والشعر)
+    function getQuestionNumber(index) {
+        let realCount = 0;
+        for (let i = 0; i <= index; i++) {
+            if (examData.questions[i].type !== "passage" && examData.questions[i].type !== "poem") {
+                realCount++;
+            }
+        }
+        return realCount;
+    }
+
+    // تحديث زر التالي
+    function updateNextButton() {
+        const nextBtn = document.getElementById('next-btn');
+        const currentQuestion = examData.questions[currentQuestionIndex];
+        
+        // إذا كان السؤال الحالي نصًا أو شعرًا، فعّل الزر مباشرة
+        if (currentQuestion.type === "passage" || currentQuestion.type === "poem") {
+            nextBtn.disabled = false;
+            return;
+        }
+        
+        // تحقق مما إذا كان السؤال الحالي قد تمت الإجابة عليه
+        nextBtn.disabled = !answered[currentQuestionIndex];
+    }
+
+    // تحديد خيار في سؤال متعدد الخيارات
+    function selectOption(element, questionId, optionId, isCorrect) {
+        // منع التحديد إذا كانت الإجابة معروضة بالفعل
+        if (userAnswers[questionId]) return;
+        
+        // إلغاء تحديد جميع الخيارات الأخرى
+        const options = document.querySelectorAll(`.option[data-question="${questionId}"]`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        
+        // تحديد الخيار الحالي
+        element.classList.add('selected');
+        
+        // حفظ الإجابة
+        userAnswers[questionId] = {
+            selected: optionId,
+            correct: isCorrect
+        };
+        
+        // تشغيل الصوت المناسب
+        if (isCorrect) {
+            correctSound.play();
+        } else {
+            incorrectSound.play();
+        }
+        
+        // عرض التفسير
+        const explanationEl = document.getElementById(`explanation-${questionId}`);
+        if (explanationEl) {
+            explanationEl.style.display = 'block';
+        }
+        
+        // تمييز الإجابة الصحيحة والخاطئة
+        options.forEach(opt => {
+            const optCorrect = opt.getAttribute('data-correct') === 'true';
+            if (optCorrect) {
+                opt.classList.add('correct');
+            } else if (parseInt(opt.getAttribute('data-option')) === optionId && !isCorrect) {
+                opt.classList.add('incorrect');
+            }
+        });
+        
+        // تمكين زر التالي
+        answered[currentQuestionIndex] = true;
+        updateNextButton();
+        saveData();
+    }
+
+    // معالجة إدخال الإجابة في الأسئلة المقالية
+    function onFillInput(questionId) {
+        const input = document.getElementById(`fill-${questionId}`);
+        userAnswers[questionId] = {
+            answer: input.value
+        };
+        
+        // تمكين زر التالي إذا كان هناك إدخال
+        if (input.value.trim() !== '') {
+            answered[currentQuestionIndex] = true;
+        } else {
+            answered[currentQuestionIndex] = false;
+        }
+        
+        updateNextButton();
+        saveData();
+    }
+
+    // الانتقال إلى السؤال التالي
+    function nextQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex < examData.questions.length - 1) {
+            currentQuestionIndex++;
+            const nextId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${nextId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            
+            // إذا كان السؤال تاليًا نصًا أو شعرًا، فعّل الزر مباشرة
+            const nextQ = examData.questions[currentQuestionIndex];
+            if (nextQ.type === "passage" || nextQ.type === "poem") {
+                answered[currentQuestionIndex] = true;
+                document.getElementById('next-btn').disabled = false;
+            } else {
+                updateNextButton();
+            }
+            
+            saveData();
+        } else {
+            showResults();
+        }
+    }
+
+    // الانتقال إلى السؤال السابق
+    function prevQuestion() {
+        const currentId = examData.questions[currentQuestionIndex].id;
+        document.getElementById(`question-${currentId}`).style.display = 'none';
+        
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            const prevId = examData.questions[currentQuestionIndex].id;
+            document.getElementById(`question-${prevId}`).style.display = 'block';
+            
+            // تحديث رقم السؤال الحالي
+            document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+            
+            // تمكين أو تعطيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            updateNextButton();
+            
+            saveData();
+        }
+    }
+
+    // عرض النتائج
+// عرض النتائج - بدون حساب الأسئلة المقالية في الدرجة
+function showResults() {
+    // حساب النتيجة: فقط الأسئلة متعددة الخيارات
+    let correctCount = 0;
+    let totalQuestions = 0;
+
+    examData.questions.forEach(q => {
+        if (q.type === "multiple-choice") {
+            totalQuestions++;
+            if (userAnswers[q.id] && userAnswers[q.id].correct) {
+                correctCount++;
+            }
+        }
+    });
+
+    // حساب النسبة المئوية بناءً على الأسئلة متعددة الخيارات فقط
+    const score = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+
+    // كلمات تشجيعية
+    let feedback = "";
+    if (score >= 90) feedback = "ممتاز! أحسنت، استمر على هذا النحو 🌟";
+    else if (score >= 75) feedback = "جيد جدًا! أداء رائع 👏";
+    else if (score >= 60) feedback = "جيد، يمكنك التحسن أكثر 💪";
+    else feedback = "لا بأس، راجع الدروس وحاول مرة أخرى ❤️";
+
+    // توصيات
+    let recommendations = "";
+    if (score < 60) {
+        recommendations = "ننصحك بمراجعة القواعد النحوية والبلاغية، وحل المزيد من الأسئلة.";
+    } else if (score < 80) {
+        recommendations = "أداء جيد، ركّز على أنواع الأسئلة التي أخطأت فيها.";
+    } else {
+        recommendations = "أداء ممتاز! استمر في التقدم وجرّب امتحانات أصعب.";
+    }
+
+    // بناء النتائج التفصيلية
+    let detailedResults = '';
+    let questionNumber = 0; // رقم السؤال الحقيقي (للأسئلة القابلة للتصحيح فقط)
+
+    examData.questions.forEach(q => {
+        const userAnswer = userAnswers[q.id];
+        let answerText = 'لم تُجب';
+        let statusText = 'لم تُجب ❌';
+
+        // عرض الفقرات والشعر
+        if (q.type === "passage") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📖 فقرة نصية</h4>
+                    <div class="passage">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        if (q.type === "poem") {
+            detailedResults += `
+                <div class="result-item">
+                    <h4>📜 نص شعري</h4>
+                    <div class="poem">${q.content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            return;
+        }
+
+        // زيادة رقم السؤال فقط للأسئلة القابلة للتصحيح (اختيار من متعدد)
+        if (q.type === "multiple-choice") {
+            questionNumber++;
+        }
+
+        // معالجة الإجابة
+        if (q.type === "multiple-choice") {
+            const selectedOption = q.options.find(opt => opt.id == userAnswer?.selected);
+            answerText = selectedOption ? selectedOption.text : 'لم تُجب';
+            
+            if (userAnswer && selectedOption?.correct) {
+                statusText = 'إجابة صحيحة ✅';
+            } else if (userAnswer && !selectedOption?.correct) {
+                statusText = 'إجابة خاطئة ❌';
+            } else {
+                statusText = 'لم تُجب ❌';
+            }
+        } 
+        else if (q.type === "fill-in-blank") {
+            // السؤال المقالي: يظهر لكن بدون تأثير على العد
+            answerText = userAnswer?.answer?.trim() || 'لم تُجب';
+            statusText = (userAnswer && answerText !== 'لم تُجب') ? 'تمت الإجابة (تحت المراجعة)' : 'لم تُجب ❌';
+        }
+
+        // عرض السؤال بالشكل المطلوب
+        detailedResults += `
+            <div class="result-item">
+                ${q.type === "multiple-choice" ? `<p><strong>السؤال ${questionNumber}: ${q.text}</strong></p>` : `<p><strong>${q.text}</strong></p>`}
+                <p><strong>إجابتك:</strong> ${answerText}</p>
+                <p><strong>الحالة:</strong> ${statusText}</p>
+                <p><strong>📌 التفسير الكامل:</strong> ${q.explanation}</p>
+            </div>
+        `;
+    });
+
+    // عرض النتيجة النهائية
+    document.getElementById('score').innerHTML = `
+        <div class="stats">الإجابات الصحيحة: ${correctCount} من ${totalQuestions}</div>
+        <div class="stats">النسبة المئوية: ${score}%</div>
+        <div class="feedback">${feedback}</div>
+        <div class="recommendations"><strong>توصية:</strong> ${recommendations}</div>
+    `;
+
+    document.getElementById('detailed-results').innerHTML = detailedResults;
+
+    // إخفاء الأسئلة وإظهار النتائج
+    document.getElementById('questions-container').style.display = 'none';
+    document.querySelector('.navigation').style.display = 'none';
+    document.querySelector('.controls').style.display = 'flex';
+    document.getElementById('results-container').style.display = 'block';
+}
+    // طباعة النتائج
+    function printResults() {
+        window.print();
+    }
+
+    // مشاركة النتائج
+    function shareResults() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'نتيجة الامتحان',
+                text: `حصلت على ${document.getElementById('score').textContent} في امتحان اللغة العربية`,
+                url: window.location.href
+            })
+            .catch(error => {
+                console.log('Error sharing:', error);
+                alert('لم يتمكن المتصفح من مشاركة النتائج. يرجى المحاولة لاحقًا.');
+            });
+        } else {
+            alert('مشاركة النتائج غير مدعومة في هذا المتصفح. يمكنك استخدام زر الطباعة بدلاً من ذلك.');
+        }
+    }
+
+    // إعادة بدء الامتحان
+    function restartExam() {
+        if (confirm('هل تريد إعادة بدء الامتحان؟ سيتم حذف جميع إجاباتك الحالية.')) {
+            userAnswers = {};
+            answered = {};
+            currentQuestionIndex = 0;
+            localStorage.removeItem(`exam_${examId}`);
+            location.reload();
+        }
+    }
+
+    // العودة إلى قائمة الامتحانات
+    function backToExams() {
+        if (confirm('هل تريد العودة إلى قائمة الامتحانات؟ سيتم فقدان تقدمك الحالي إذا لم تحفظه.')) {
+            window.location.href = '/questions.html'; // تغيير هذا الرابط حسب الصفحة المناسبة
+        }
+    }
+
+    // تهيئة الامتحان
+    function initExam() {
+        const container = document.getElementById('questions-container');
+        const totalQuestions = examData.questions.filter(q => q.type !== "passage" && q.type !== "poem").length;
+        document.getElementById('total-questions').textContent = totalQuestions;
+        document.getElementById('current-question').textContent = getQuestionNumber(currentQuestionIndex);
+
+        // تحميل الحالة
+        const wasResumed = loadSavedData();
+
+        // إنشاء الأسئلة
+        examData.questions.forEach((q, index) => {
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question';
+            questionEl.id = `question-${q.id}`;
+            questionEl.style.display = index === currentQuestionIndex ? 'block' : 'none';
+
+            if (q.type === "passage") {
+                questionEl.innerHTML = `<div class="passage">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة النص كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else if (q.type === "poem") {
+                questionEl.innerHTML = `<div class="poem">${q.content.replace(/\n/g, '<br>')}</div>`;
+                // تمييز أسئلة الشعر كأسئلة تمت الإجابة عليها تلقائيًا
+                answered[index] = false;
+            } else {
+                let content = `<h3>السؤال ${getQuestionNumber(index)}: ${q.text}</h3>`;
+
+                if (q.type === "multiple-choice") {
+                    let optionsHtml = '<div class="options">';
+                    q.options.forEach(opt => {
+                        const selected = userAnswers[q.id]?.selected == opt.id;
+                        const isAnswered = userAnswers[q.id];
+                        const correct = opt.correct;
+                        optionsHtml += `
+                            <div class="option ${selected ? 'selected' : ''} ${isAnswered && correct ? 'correct' : ''} ${isAnswered && !correct && selected ? 'incorrect' : ''}"
+                                 data-question="${q.id}" data-option="${opt.id}" data-correct="${opt.correct}"
+                                 onclick="selectOption(this, ${q.id}, ${opt.id}, ${opt.correct})">
+                                ${opt.text}
+                            </div>
+                        `;
+                    });
+                    optionsHtml += '</div>';
+                    content += optionsHtml;
+                } else if (q.type === "fill-in-blank") {
+                    const value = userAnswers[q.id]?.answer || '';
+                    content += `
+                        <div class="fill-in-blank">
+                            <input type="text" id="fill-${q.id}" value="${value}" placeholder="أدخل إجابتك هنا" oninput="onFillInput(${q.id})">
+                        </div>
+                    `;
+                }
+
+                content += `<div class="explanation" id="explanation-${q.id}" style="${userAnswers[q.id] ? 'display:block' : 'display:none'}">
+                    <strong>التفسير:</strong> ${q.explanation}
+                </div>`;
+                questionEl.innerHTML = content;
+                
+                // تحديد ما إذا كان السؤال قد تمت الإجابة عليه
+                answered[index] = !!userAnswers[q.id];
+            }
+
+            container.appendChild(questionEl);
+        });
+
+        // تحديث زر التالي بناءً على السؤال الحالي
+        updateNextButton();
+
+        // ربط الأحداث
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+        document.getElementById('print-btn').addEventListener('click', printResults);
+        document.getElementById('share-btn').addEventListener('click', shareResults);
+        document.getElementById('restart-btn').addEventListener('click', restartExam);
+        document.getElementById('back-btn').addEventListener('click', backToExams);
+
+        if (wasResumed) {
+            alert(`تم استئناف الامتحان من السؤال ${getQuestionNumber(currentQuestionIndex)}`);
+        }
+    }
+
+    // بدء الامتحان عند تحميل الصفحة
+    window.onload = initExam;
+</script>
+</body>
+</html>
