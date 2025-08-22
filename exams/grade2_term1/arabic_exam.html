@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>امتحان اللغة العربية - الصف الثاني الإعدادي</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .exam-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .exam-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+        }
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .question h3 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        .options {
+            margin-right: 20px;
+        }
+        .option {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .option:hover {
+            background-color: #e9f5ff;
+        }
+        .option.selected {
+            background-color: #d4edff;
+            border-left: 4px solid #007bff;
+        }
+        .option.correct {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-right: 3px solid #6c757d;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .results-container {
+            display: none;
+            margin-top: 30px;
+        }
+        .result-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+        .score {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="exam-container">
+        <div class="exam-header">
+            <h1>امتحان اللغة العربية</h1>
+            <h2>الصف الثاني الإعدادي - الترم الأول</h2>
+        </div>
+
+        <div id="questions-container">
+            <!-- الأسئلة سيتم إضافتها ديناميكياً بواسطة الجافاسكريبت -->
+        </div>
+
+        <div class="navigation">
+            <button id="prev-btn" class="btn btn-secondary" disabled>
+                <i class="fas fa-arrow-right"></i> السابق
+            </button>
+            <button id="next-btn" class="btn btn-primary">
+                التالي <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+
+        <div id="results-container" class="results-container">
+            <h2>نتيجة الامتحان</h2>
+            <div class="score">درجتك: <span id="final-score">0</span>/<span id="total-questions">0</span></div>
+            <div id="results-list">
+                <!-- النتائج سيتم إضافتها ديناميكياً -->
+            </div>
+            <div class="navigation">
+                <button id="back-btn" class="btn btn-secondary">
+                    <i class="fas fa-home"></i> العودة لصفحة الامتحانات
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات الأسئلة والإجابات
+        const examData = {
+            title: "امتحان اللغة العربية - الصف الثاني الإعدادي - الترم الأول",
+            questions: [
+                {
+                    id: 1,
+                    text: "ما نوع الجملة التالية: 'السماء صافية اليوم'؟",
+                    options: [
+                        { id: 1, text: "جملة اسمية", correct: true },
+                        { id: 2, text: "جملة فعلية", correct: false },
+                        { id: 3, text: "جملة شرطية", correct: false },
+                        { id: 4, text: "جملة استفهامية", correct: false }
+                    ],
+                    explanation: "الجملة اسمية لأنها تبدأ باسم (السماء) والمبتدأ (السماء) والخبر (صافية)"
+                },
+                {
+                    id: 2,
+                    text: "ما إعراب كلمة 'الطالب' في الجملة: 'الطالب مجتهد'؟",
+                    options: [
+                        { id: 1, text: "مبتدأ مرفوع وعلامة رفعه الضمة", correct: true },
+                        { id: 2, text: "خبر مرفوع وعلامة رفعه الضمة", correct: false },
+                        { id: 3, text: "فاعل مرفوع وعلامة رفعه الضمة", correct: false },
+                        { id: 4, text: "مفعول به منصوب وعلامة نصبه الفتحة", correct: false }
+                    ],
+                    explanation: "'الطالب' هو المبتدأ لأنه يأتي في بداية الجملة الاسمية ويحتاج إلى خبر"
+                },
+                {
+                    id: 3,
+                    text: "ما ضد كلمة 'الضيقة'؟",
+                    options: [
+                        { id: 1, text: "الواسعة", correct: true },
+                        { id: 2, text: "الصغيرة", correct: false },
+                        { id: 3, text: "الكبيرة", correct: false },
+                        { id: 4, text: "الطويلة", correct: false }
+                    ],
+                    explanation: "الضد من الضيقة هو الواسعة، حيث أن الضد هو عكس المعنى"
+                },
+                {
+                    id: 4,
+                    text: "ما نوع الأسلوب في الجملة: 'ما أجمل السماء!'؟",
+                    options: [
+                        { id: 1, text: "أسلوب تعجب", correct: true },
+                        { id: 2, text: "أسلوب استفهام", correct: false },
+                        { id: 3, text: "أسلوب نداء", correct: false },
+                        { id: 4, text: "أسلوب أمر", correct: false }
+                    ],
+                    explanation: "هذا أسلوب تعجب لأنه يعبر عن انفعال المتكلم بإعجابه بجمال السماء"
+                },
+                {
+                    id: 5,
+                    text: "ما الجملة التي تحتوي على نعت؟",
+                    options: [
+                        { id: 1, text: "قرأت كتاباً مفيداً", correct: true },
+                        { id: 2, text: "ذهبت إلى المدرسة", correct: false },
+                        { id: 3, text: "الولد يلعب", correct: false },
+                        { id: 4, text: "الجو جميل", correct: false }
+                    ],
+                    explanation: "'مفيداً' هي نعت لأنها تتبع المنعوت (كتاباً) وتصفه"
+                }
+            ]
+        };
+
+        // متغيرات التطبيق
+        let currentQuestion = 0;
+        let userAnswers = {};
+        let examStarted = false;
+
+        // تهيئة الامتحان
+        function initExam() {
+            const container = document.getElementById('questions-container');
+            
+            // إضافة جميع الأسئلة
+            examData.questions.forEach((question, index) => {
+                const questionEl = document.createElement('div');
+                questionEl.className = 'question';
+                questionEl.id = `question-${question.id}`;
+                questionEl.style.display = index === 0 ? 'block' : 'none';
+                
+                let optionsHtml = '';
+                question.options.forEach(option => {
+                    optionsHtml += `
+                        <div class="option" data-question="${question.id}" data-option="${option.id}" onclick="selectOption(this, ${question.id}, ${option.id}, ${option.correct})">
+                            ${option.text}
+                        </div>
+                    `;
+                });
+                
+                questionEl.innerHTML = `
+                    <h3>السؤال ${index + 1}: ${question.text}</h3>
+                    <div class="options">${optionsHtml}</div>
+                    <div class="explanation" id="explanation-${question.id}">
+                        <strong>التفسير:</strong> ${question.explanation}
+                    </div>
+                `;
+                
+                container.appendChild(questionEl);
+            });
+            
+            // تحديث عدد الأسئلة الكلي
+            document.getElementById('total-questions').textContent = examData.questions.length;
+            
+            examStarted = true;
+        }
+
+        // اختيار إجابة
+        function selectOption(element, questionId, optionId, isCorrect) {
+            // إزالة التحديد من جميع خيارات هذا السؤال
+            document.querySelectorAll(`.option[data-question="${questionId}"]`).forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // تحديد الخيار المختار
+            element.classList.add('selected');
+            
+            // حفظ الإجابة
+            userAnswers[questionId] = {
+                optionId: optionId,
+                isCorrect: isCorrect,
+                questionText: examData.questions.find(q => q.id === questionId).text,
+                selectedText: element.textContent.trim(),
+                explanation: examData.questions.find(q => q.id === questionId).explanation
+            };
+            
+            // تمكين زر التالي إذا كان هناك إجابة مختارة
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        // عرض السؤال التالي أو النتائج
+        function nextQuestion() {
+            if (currentQuestion < examData.questions.length - 1) {
+                // إخفاء السؤال الحالي
+                document.getElementById(`question-${examData.questions[currentQuestion].id}`).style.display = 'none';
+                
+                // عرض السؤال التالي
+                currentQuestion++;
+                document.getElementById(`question-${examData.questions[currentQuestion].id}`).style.display = 'block';
+                
+                // تعطيل زر التالي حتى يتم اختيار إجابة
+                document.getElementById('next-btn').disabled = true;
+                
+                // تمكين زر السابق
+                document.getElementById('prev-btn').disabled = false;
+                
+                // تغيير نص زر التالي إذا كان هذا آخر سؤال
+                if (currentQuestion === examData.questions.length - 1) {
+                    document.getElementById('next-btn').innerHTML = 'عرض النتائج <i class="fas fa-list-alt"></i>';
+                }
+            } else {
+                // عرض النتائج
+                showResults();
+            }
+        }
+
+        // عرض السؤال السابق
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                // إخفاء السؤال الحالي
+                document.getElementById(`question-${examData.questions[currentQuestion].id}`).style.display = 'none';
+                
+                // عرض السؤال السابق
+                currentQuestion--;
+                document.getElementById(`question-${examData.questions[currentQuestion].id}`).style.display = 'block';
+                
+                // تعطيل زر السابق إذا كان هذا أول سؤال
+                document.getElementById('prev-btn').disabled = currentQuestion === 0;
+                
+                // تغيير نص زر التالي إذا لم يكن آخر سؤال
+                document.getElementById('next-btn').innerHTML = 'التالي <i class="fas fa-arrow-left"></i>';
+                document.getElementById('next-btn').disabled = false;
+            }
+        }
+
+        // عرض النتائج
+        function showResults() {
+            // إخفاء أسئلة الامتحان
+            document.getElementById('questions-container').style.display = 'none';
+            
+            // إخفاء أزرار التنقل
+            document.querySelector('.navigation').style.display = 'none';
+            
+            // حساب النتيجة
+            const correctAnswers = Object.values(userAnswers).filter(answer => answer.isCorrect).length;
+            const totalQuestions = examData.questions.length;
+            const scorePercentage = Math.round((correctAnswers / totalQuestions) * 100);
+            
+            // عرض النتيجة
+            document.getElementById('final-score').textContent = correctAnswers;
+            
+            // عرض تفاصيل الإجابات
+            const resultsList = document.getElementById('results-list');
+            resultsList.innerHTML = '';
+            
+            examData.questions.forEach(question => {
+                const userAnswer = userAnswers[question.id];
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                
+                let resultHtml = `
+                    <h4>السؤال ${question.id}: ${question.text}</h4>
+                    <p><strong>إجابتك:</strong> ${userAnswer?.selectedText || 'لم يتم الإجابة'}</p>
+                `;
+                
+                if (userAnswer) {
+                    resultHtml += `
+                        <p class="${userAnswer.isCorrect ? 'correct' : 'incorrect'}">
+                            <strong>${userAnswer.isCorrect ? 'إجابة صحيحة' : 'إجابة خاطئة'}</strong>
+                        </p>
+                    `;
+                }
+                
+                resultHtml += `<p><strong>التفسير:</strong> ${question.explanation}</p>`;
+                
+                resultItem.innerHTML = resultHtml;
+                resultsList.appendChild(resultItem);
+            });
+            
+            // عرض قسم النتائج
+            document.getElementById('results-container').style.display = 'block';
+        }
+
+        // العودة إلى صفحة الامتحانات
+        function backToExams() {
+            window.location.href = '../../exam.html';
+        }
+
+        // ربط الأحداث
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+        document.getElementById('back-btn').addEventListener('click', backToExams);
+
+        // بدء الامتحان عند تحميل الصفحة
+        window.onload = initExam;
+    </script>
+</body>
+</html>
