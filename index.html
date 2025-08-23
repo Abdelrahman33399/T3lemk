@@ -1008,27 +1008,9 @@ document.addEventListener('DOMContentLoaded', function() {
     animate();
 });
 </script>
-    <script>
-function openExternalForm() {
-    // الرابط بتاع الجوجل فورم
-    const formUrl = 'https://abdelrahman33399.github.io/message/';
-
-    // حاول افتحه في المتصفح الخارجي
-    window.open(formUrl, '_system'); // '_system' بيشتغل مع Cordova
-    // لو ماستخدش Cordova، نستخدم الفاليتات التالية:
-    
-    // الطريقة الأكيد:
-    const link = document.createElement('a');
-    link.href = formUrl;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-</script>
 </body>
 </html> 
+
 
 
 
