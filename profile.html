@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <title>لوحة التحكم</title>
-  <!-- ✅ إزالة المسافات الزائدة -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #e0f7fa, #f3e5f5);
       min-height: 100vh;
       padding: 20px;
@@ -20,6 +20,7 @@
       justify-content: center;
       text-align: center;
     }
+
     body::before {
       content: '';
       position: fixed;
@@ -32,6 +33,7 @@
         radial-gradient(circle at 50% 80%, rgba(255, 152, 0, 0.05) 0%, transparent 15%);
       z-index: -1;
     }
+
     .card {
       background: white;
       width: 100%;
@@ -43,19 +45,23 @@
       margin: 10px auto;
       transition: transform 0.3s ease;
     }
+
     .card:hover { transform: translateY(-5px); }
+
     h2 {
       color: #1a237e;
       font-size: 22px;
       margin-bottom: 12px;
       font-weight: 600;
     }
+
     p {
       color: #555;
       font-size: 16px;
       line-height: 1.7;
       margin-bottom: 15px;
     }
+
     .btn {
       display: flex;
       align-items: center;
@@ -76,7 +82,9 @@
       max-width: 320px;
       margin: 15px auto;
     }
+
     .btn:hover { transform: scale(1.03); }
+
     .wave {
       position: fixed;
       bottom: 0;
@@ -88,10 +96,12 @@
       z-index: -1;
       animation: wave 15s linear infinite;
     }
+
     @keyframes wave {
       0% { background-position: 0 0; }
       100% { background-position: 1440px 0; }
     }
+
     .content { position: relative; z-index: 2; }
   </style>
 </head>
@@ -104,6 +114,7 @@
       <p><strong>الهاتف:</strong> <span id="user-phone">جاري التحميل...</span></p>
       <p><strong>رقم العضوية:</strong> <span id="user-id">جاري التحميل...</span></p>
       <p><strong>الحالة:</strong> <span id="user-status">جاري التحقق...</span></p>
+
       <a href="index.html" class="btn">
         <i class="fas fa-home"></i> العودة للرئيسية
       </a>
@@ -112,17 +123,18 @@
       </button>
     </div>
   </div>
+
   <div class="wave"></div>
+
   <script type="module">
-    // ✅ الاستيراد الصحيح بدون مسافات
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAIT5jqkhezfzXMoPmBrwqiM1Inktoc1P8",
       authDomain: "t3lemk.firebaseapp.com",
-      databaseURL: "https://t3lemk-default-rtdb.firebaseio.com", // ✅ إزالة المسافة الزائدة
+      databaseURL: "https://t3lemk-default-rtdb.firebaseio.com",
       projectId: "t3lemk",
       storageBucket: "t3lemk.firebasestorage.app",
       messagingSenderId: "208265987315",
@@ -136,28 +148,61 @@
 
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const q = query(collection(db, "users"), where("email", "==", user.email));
-        const querySnapshot = await getDocs(q);
-
-        if (!querySnapshot.empty) {
-          const data = querySnapshot.docs[0].data();
-          document.getElementById("user-name").textContent = data.name || "غير معروف";
-          document.getElementById("user-email").textContent = data.email || "غير معروف";
-          document.getElementById("user-phone").textContent = data.phone || "غير معروف";
-          document.getElementById("user-id").textContent = data.userId || "غير معروف";
-          document.getElementById("user-status").textContent = data.enrolled ? "مفعل" : "معطل";
-        } else {
-          document.getElementById("user-status").textContent = "بيانات غير موجودة";
+        console.log("المستخدم مسجل دخول:", user.uid);
+        
+        try {
+          // البحث عن مستند المستخدم باستخدام UID
+          const userDocRef = doc(db, "users", user.uid);
+          const userDocSnap = await getDoc(userDocRef);
+          
+          if (userDocSnap.exists()) {
+            const data = userDocSnap.data();
+            console.log("بيانات المستخدم:", data);
+            
+            document.getElementById("user-name").textContent = data.name || "غير معروف";
+            document.getElementById("user-email").textContent = data.email || "غير معروف";
+            document.getElementById("user-phone").textContent = data.phone || "غير معروف";
+            document.getElementById("user-id").textContent = data.userId || "غير معروف";
+            document.getElementById("user-status").textContent = data.enrolled ? "مفعل" : "معطل";
+          } else {
+            // إذا لم يتم العثور على المستند باستخدام UID، نبحث باستخدام البريد الإلكتروني
+            console.log("لم يتم العثور على المستخدم باستخدام UID، جار البحث باستخدام البريد الإلكتروني...");
+            
+            const q = query(collection(db, "users"), where("email", "==", user.email));
+            const querySnapshot = await getDocs(q);
+            
+            if (!querySnapshot.empty) {
+              const data = querySnapshot.docs[0].data();
+              console.log("بيانات المستخدم (تم العثور باستخدام البريد الإلكتروني):", data);
+              
+              document.getElementById("user-name").textContent = data.name || "غير معروف";
+              document.getElementById("user-email").textContent = data.email || "غير معروف";
+              document.getElementById("user-phone").textContent = data.phone || "غير معروف";
+              document.getElementById("user-id").textContent = data.userId || "غير معروف";
+              document.getElementById("user-status").textContent = data.enrolled ? "مفعل" : "معطل";
+            } else {
+              console.error("لم يتم العثور على بيانات المستخدم في Firestore");
+              document.getElementById("user-name").textContent = "غير متوفر";
+              document.getElementById("user-email").textContent = user.email || "غير متوفر";
+              document.getElementById("user-phone").textContent = "غير متوفر";
+              document.getElementById("user-id").textContent = "غير متوفر";
+              document.getElementById("user-status").textContent = "غير معروف";
+            }
+          }
+        } catch (error) {
+          console.error("خطأ في جلب بيانات المستخدم:", error);
+          alert("حدث خطأ في تحميل البيانات. يرجى المحاولة مرة أخرى.");
         }
       } else {
-        window.location.href = "index.html";
+        window.location.href = "login.html";
       }
     });
 
     window.logout = function() {
       signOut(auth).then(() => {
         window.location.href = "index.html";
-      }).catch(() => {
+      }).catch((error) => {
+        console.error("خطأ في تسجيل الخروج:", error);
         alert("خطأ في تسجيل الخروج");
       });
     };
