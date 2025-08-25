@@ -4,12 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>تسجيل الدخول / إنشاء حساب</title>
-  <!-- ✅ إزالة المسافة الزائدة -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* إعادة تعيين */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* خلفية هادئة */
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #e0f7fa, #f3e5f5);
       min-height: 100vh;
       padding: 20px;
@@ -22,6 +28,8 @@
       text-align: center;
       overflow-x: hidden;
     }
+
+    /* تأثير فقاعات خفيفة */
     body::before {
       content: '';
       position: fixed;
@@ -34,6 +42,8 @@
         radial-gradient(circle at 50% 80%, rgba(255, 152, 0, 0.05) 0%, transparent 15%);
       z-index: -1;
     }
+
+    /* الكرت الرئيسي */
     .card {
       background: white;
       width: 100%;
@@ -45,23 +55,32 @@
       margin: 15px auto;
       transition: transform 0.3s ease;
     }
-    .card:hover { transform: translateY(-5px); }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* أيقونة في الأعلى */
     .icon-container {
       font-size: 60px;
       color: #039be5;
       margin-bottom: 20px;
       animation: pulse 2s infinite;
     }
+
     @keyframes pulse {
       0%, 100% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.1); opacity: 0.8; }
     }
+
     h2 {
       color: #1a237e;
       font-size: 22px;
       margin: 20px 0 15px;
       font-weight: 600;
     }
+
+    /* حقول الإدخال */
     input {
       width: 90%;
       max-width: 340px;
@@ -74,12 +93,15 @@
       background: #f9f9f9;
       transition: border 0.3s ease;
     }
+
     input:focus {
       outline: none;
       border-color: #039be5;
       background: white;
       box-shadow: 0 0 5px rgba(3, 169, 244, 0.2);
     }
+
+    /* الأزرار */
     .btn {
       display: flex;
       align-items: center;
@@ -100,31 +122,46 @@
       max-width: 320px;
       margin: 20px auto;
     }
+
     .btn:hover, .btn:active {
       transform: scale(1.03);
       box-shadow: 0 8px 25px rgba(3, 169, 244, 0.4);
       background: linear-gradient(45deg, #0288d1, #6a1b9a);
     }
+
     .btn i {
       font-size: 18px;
       transition: transform 0.3s;
     }
-    .btn:hover i { transform: translateX(3px); }
+
+    .btn:hover i {
+      transform: translateX(3px);
+    }
+
+    /* قسم الفصل */
     hr {
       width: 80%;
       border: 1px solid #eee;
       margin: 30px auto;
     }
+
+    /* رابط تبديل */
     .switch {
       margin-top: 20px;
       font-size: 15px;
     }
+
     .switch a {
       color: #039be5;
       text-decoration: none;
       font-weight: bold;
     }
-    .switch a:hover { text-decoration: underline; }
+
+    .switch a:hover {
+      text-decoration: underline;
+    }
+
+    /* تأثير الموجات في الأسفل */
     .wave {
       position: fixed;
       bottom: 0;
@@ -137,11 +174,18 @@
       z-index: -1;
       animation: wave 15s linear infinite;
     }
+
     @keyframes wave {
       0% { background-position: 0 0; }
       100% { background-position: 1440px 0; }
     }
-    .content { position: relative; z-index: 2; width: 100%; }
+
+    /* تأمين أن المحتوى يظهر فوق الموجات */
+    .content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -151,27 +195,37 @@
         <i class="fas fa-user-plus"></i>
       </div>
       <h2>إنشاء حساب جديد</h2>
+
       <input type="text" id="name" placeholder="الاسم الرباعي" />
       <input type="tel" id="phone" placeholder="رقم الهاتف" />
       <input type="email" id="email" placeholder="الإيميل" />
       <input type="password" id="password" placeholder="كلمة المرور" />
       <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور" />
+
       <button onclick="signup()" class="btn">
-        <i class="fas fa-user-check"></i> إنشاء حساب
+        <i class="fas fa-user-check"></i>
+        إنشاء حساب
       </button>
+
       <hr />
+
       <h2>تسجيل الدخول</h2>
       <input type="email" id="loginEmail" placeholder="الإيميل" />
       <input type="password" id="loginPassword" placeholder="كلمة المرور" />
+
       <button onclick="login()" class="btn">
-        <i class="fas fa-sign-in-alt"></i> تسجيل دخول
+        <i class="fas fa-sign-in-alt"></i>
+        تسجيل دخول
       </button>
+
       <div class="switch">
         <p>هل لديك حساب؟ <a href="login.html">سجل دخولك الآن</a></p>
       </div>
     </div>
   </div>
+
   <div class="wave"></div>
+
   <script type="module">
     // ✅ الاستيراد الصحيح بدون مسافات
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -189,7 +243,7 @@
     const firebaseConfig = {
       apiKey: "AIzaSyAIT5jqkhezfzXMoPmBrwqiM1Inktoc1P8",
       authDomain: "t3lemk.firebaseapp.com",
-      databaseURL: "https://t3lemk-default-rtdb.firebaseio.com", // ✅ إزالة المسافة الزائدة
+      databaseURL: "https://t3lemk-default-rtdb.firebaseio.com",
       projectId: "t3lemk",
       storageBucket: "t3lemk.firebasestorage.app",
       messagingSenderId: "208265987315",
@@ -235,15 +289,15 @@
 
         const customUserId = `T3LEMK-${newIdNumber}`;
 
-        await addDoc(collection(db, "users"), {
-          uid: user.uid,
-          userId: customUserId,
-          name: name,
-          phone: phone,
-          email: email,
-          enrolled: true,
-          createdAt: new Date()
-        });
+       await setDoc(doc(db, "users", user.uid), {
+  uid: user.uid,
+  userId: customUserId,
+  name: name,
+  phone: phone,
+  email: email,
+  enrolled: true,
+  createdAt: new Date()
+});
 
         alert(`تم الإنشاء! رقم عضويتك: ${customUserId}`);
         window.location.href = "index.html";
