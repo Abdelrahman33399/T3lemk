@@ -127,116 +127,154 @@
   <div class="wave"></div>
 
   <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { 
-            getAuth, 
-            onAuthStateChanged, 
-            signOut 
-        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { 
-            getFirestore, 
-            doc, 
-            getDoc 
-        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // إعدادات Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyAIT5jqkhezfzXMoPmBrwqiM1Inktoc1P8",
-            authDomain: "t3lemk.firebaseapp.com",
-            databaseURL: "https://t3lemk-default-rtdb.firebaseio.com",
-            projectId: "t3lemk",
-            storageBucket: "t3lemk.firebasestorage.app",
-            messagingSenderId: "208265987315",
-            appId: "1:208265987315:web:fc5f9ea2b2cafb8ab0a386",
-            measurementId: "G-S8RL2ENP17"
-        };
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIT5jqkhezfzXMoPmBrwqiM1Inktoc1P8",
+      authDomain: "t3lemk.firebaseapp.com",
+      databaseURL: "https://t3lemk-default-rtdb.firebaseio.com",
+      projectId: "t3lemk",
+      storageBucket: "t3lemk.firebasestorage.app",
+      messagingSenderId: "208265987315",
+      appId: "1:208265987315:web:fc5f9ea2b2cafb8ab0a386",
+      measurementId: "G-S8RL2ENP17"
+    };
 
-        // تهيئة Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth();
-        const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const db = getFirestore(app); // أضفت (app) هنا
 
-        // دالة لجلب بيانات المستخدم من Firestore
-        async function fetchUserData(userId) {
-            try {
-                const docRef = doc(db, "users", userId);
-                const docSnap = await getDoc(docRef);
-                
-                if (docSnap.exists()) {
-                    const userData = docSnap.data();
-                    
-                    // تحديث واجهة المستخدم بالبيانات
-                    document.getElementById('user-name').textContent = userData.name || "غير متوفر";
-                    document.getElementById('user-name').className = "";
-                    
-                    document.getElementById('user-email').textContent = userData.email || "غير متوفر";
-                    document.getElementById('user-email').className = "";
-                    
-                    document.getElementById('user-phone').textContent = userData.phone || "غير متوفر";
-                    document.getElementById('user-phone').className = "";
-                    
-                    document.getElementById('user-membership').textContent = userData.membershipNumber || "غير متوفر";
-                    document.getElementById('user-membership').className = "";
-                    
-                    document.getElementById('user-status').textContent = userData.status || "غير معروف";
-                    document.getElementById('user-status').className = "";
-                    
-                } else {
-                    // إذا لم توجد بيانات
-                    document.getElementById('user-name').textContent = "غير متوفر";
-                    document.getElementById('user-email').textContent = "غير متوفر";
-                    document.getElementById('user-phone').textContent = "غير متوفر";
-                    document.getElementById('user-membership').textContent = "غير متوفر";
-                    document.getElementById('user-status').textContent = "غير معروف";
-                    
-                    // إزالة كلاس التحميل
-                    const elements = document.querySelectorAll('.loading');
-                    elements.forEach(el => el.className = "");
-                }
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-                showError("حدث خطأ في تحميل البيانات. يرجى المحاولة لاحقاً.");
-                
-                // إزالة كلاس التحميل في حالة الخطأ
-                const elements = document.querySelectorAll('.loading');
-                elements.forEach(el => el.className = "");
+    // دالة لعرض رسائل التحميل والخطأ
+    function setLoadingState(loading) {
+        const elements = document.querySelectorAll('.user-data');
+        elements.forEach(el => {
+            if (loading) {
+                el.innerHTML = '<span class="loading">جاري التحميل...</span>';
+            } else if (el.textContent === "جاري التحميل...") {
+                el.textContent = "غير متوفر";
             }
-        }
+        });
+    }
 
-        // دالة لإظهار رسائل الخطأ
-        function showError(message) {
-            const errorDiv = document.getElementById('error-message');
+    // دالة لعرض رسالة خطأ
+    function showError(message) {
+        const errorDiv = document.getElementById('error-message');
+        if (errorDiv) {
             errorDiv.textContent = message;
             errorDiv.style.display = 'block';
-            
-            // إخفاء الرسالة بعد 5 ثواني
             setTimeout(() => {
                 errorDiv.style.display = 'none';
             }, 5000);
+        } else {
+            alert(message);
         }
+    }
 
-        // تتبع حالة المستخدم
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // لو مسجل دخول - استدعاء بيانات المستخدم
-                fetchUserData(user.uid);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        console.log("المستخدم مسجل دخول:", user.uid);
+        setLoadingState(true); // بدء التحميل
+        
+        try {
+          // المحاولة الأولى: البحث باستخدام UID كمُعرِّف المستند
+          const userDocRef = doc(db, "users", user.uid);
+          const userDocSnap = await getDoc(userDocRef);
+          
+          if (userDocSnap.exists()) {
+            const data = userDocSnap.data();
+            console.log("بيانات المستخدم (تم العثور باستخدام UID):", data);
+            
+            // تحديث البيانات في الواجهة
+            updateUserInterface(data, user);
+            
+          } else {
+            // المحاولة الثانية: البحث باستخدام البريد الإلكتروني
+            console.log("لم يتم العثور على المستخدم باستخدام UID، جار البحث باستخدام البريد الإلكتروني...");
+            
+            const q = query(collection(db, "users"), where("email", "==", user.email));
+            const querySnapshot = await getDocs(q);
+            
+            if (!querySnapshot.empty) {
+              const data = querySnapshot.docs[0].data();
+              console.log("بيانات المستخدم (تم العثور باستخدام البريد الإلكتروني):", data);
+              
+              updateUserInterface(data, user);
+              
             } else {
-                // لو مش مسجل دخول - توجيه لصفحة Login
-                window.location.href = "login.html";
+              // المحاولة الثالثة: البحث باستخدام UID كحقل في المستند
+              console.log("جار البحث باستخدام UID كحقل...");
+              
+              const q2 = query(collection(db, "users"), where("userId", "==", user.uid));
+              const querySnapshot2 = await getDocs(q2);
+              
+              if (!querySnapshot2.empty) {
+                const data = querySnapshot2.docs[0].data();
+                console.log("بيانات المستخدم (تم العثور باستخدام UID كحقل):", data);
+                
+                updateUserInterface(data, user);
+                
+              } else {
+                // إذا لم يتم العثور على البيانات في أي مكان
+                console.error("لم يتم العثور على بيانات المستخدم في Firestore");
+                setDefaultUserData(user);
+                showError("لم يتم العثور على بياناتك في النظام. يرجى التواصل مع الدعم.");
+              }
             }
-        });
+          }
+        } catch (error) {
+          console.error("خطأ في جلب بيانات المستخدم:", error);
+          setDefaultUserData(user);
+          showError("حدث خطأ في تحميل البيانات. يرجى المحاولة مرة أخرى.");
+        } finally {
+          setLoadingState(false); // إنهاء التحميل
+        }
+      } else {
+        window.location.href = "login.html";
+      }
+    });
 
-        // وظيفة تسجيل الخروج
-        window.logout = function() {
-            signOut(auth).then(() => {
-                alert("تم تسجيل الخروج بنجاح");
-                window.location.href = "index.html";
-            }).catch((error) => {
-                console.error("Error signing out:", error);
-                showError("حدث خطأ أثناء تسجيل الخروج");
-            });
-        };
-    </script>
+    // دالة لتحديث واجهة المستخدم
+    function updateUserInterface(data, user) {
+        document.getElementById("user-name").textContent = data.name || "غير معروف";
+        document.getElementById("user-email").textContent = data.email || user.email || "غير معروف";
+        document.getElementById("user-phone").textContent = data.phone || data.mobile || data.phoneNumber || "غير معروف";
+        document.getElementById("user-id").textContent = data.userId || data.id || data.membershipNumber || "غير معروف";
+        
+        // معالجة حالة المستخدم بأنواع مختلفة ممكنة
+        if (data.enrolled !== undefined) {
+            document.getElementById("user-status").textContent = data.enrolled ? "مفعل" : "معطل";
+        } else if (data.status) {
+            document.getElementById("user-status").textContent = data.status;
+        } else if (data.active !== undefined) {
+            document.getElementById("user-status").textContent = data.active ? "نشط" : "غير نشط";
+        } else {
+            document.getElementById("user-status").textContent = "غير معروف";
+        }
+    }
+
+    // دالة لتعيين البيانات الافتراضية
+    function setDefaultUserData(user) {
+        document.getElementById("user-name").textContent = "غير متوفر";
+        document.getElementById("user-email").textContent = user.email || "غير متوفر";
+        document.getElementById("user-phone").textContent = "غير متوفر";
+        document.getElementById("user-id").textContent = "غير متوفر";
+        document.getElementById("user-status").textContent = "غير معروف";
+    }
+
+    window.logout = function() {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      }).catch((error) => {
+        console.error("خطأ في تسجيل الخروج:", error);
+        showError("خطأ في تسجيل الخروج: " + error.message);
+      });
+    };
+</script>
+<!-- أضف هذا في HTML -->
+<div id="error-message" class="error-message"></div>
 </body>
 </html>
+
 
